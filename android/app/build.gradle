@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -133,6 +135,7 @@ android {
 
     defaultConfig {
         applicationId "com.idcatch"
+        resValue "string", "build_config_package", "com.idcatch"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -153,10 +156,19 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if(project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            applicationIdSuffix ".dev"
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -164,6 +176,26 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        devDebug {
+            initWith debug
+            applicationIdSuffix ".dev"
+            matchingFallbacks = ['debug']
+        }
+        devRelease {
+            initWith release
+            applicationIdSuffix ".dev"
+            matchingFallbacks = ['release']
+        }
+        stageDebug {
+            initWith debug
+            applicationIdSuffix ".test"
+            matchingFallbacks = ['debug']
+        }
+        stageRelease {
+            initWith release
+            applicationIdSuffix ".test"
+            matchingFallbacks = ['release']
         }
     }
 
@@ -184,6 +216,7 @@ android {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
