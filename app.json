@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "IDCatch",
+    "slug": "IDCatch",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "IDCatch"
+}
