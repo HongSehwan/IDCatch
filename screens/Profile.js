@@ -52,8 +52,8 @@ const Title = styled.Text`
   margin-top: 40px;
   font-size: 20px;
   font-weight: 700;
-  border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
   border-bottom-color: tomato;
+  border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
   border-width: 3px;
 `
 

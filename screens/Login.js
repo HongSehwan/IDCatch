@@ -12,7 +12,7 @@ const Container = styled.View`
   padding: 60px 20px;
 `
 const Title = styled.Text`
-  font-size: 21;
+  font-size: 21px;
   font-weight: 700;
   color: tomato;
 `
@@ -22,7 +22,7 @@ const TextInput = styled.TextInput`
   margin-bottom: 10px;
   font-size: 16px;
   color: #2c3e50;
-  border-width: 5;
+  border-width: 5px;
   border-color: white;
   border-bottom-color: tomato;
 `
@@ -58,7 +58,7 @@ const Footer = styled.View`
 `
 const FooterText = styled.Text`
   color: black;
-  font-size: 10;
+  font-size: 10px;
   font-weight: 500;
 `
 
