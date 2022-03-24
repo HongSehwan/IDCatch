@@ -1,32 +1,41 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components/native'
 import auth from '@react-native-firebase/auth'
-import { BLACK_COLOR } from '../color'
-import { ActivityIndicator, Alert } from 'react-native'
+import { BLACK_COLOR, LIGHT_COLOR } from '../color'
+import { ActivityIndicator, Alert, useColorScheme } from 'react-native'
 
 const Container = styled.View`
-  background-color: ${BLACK_COLOR};
+  background-color: white;
   flex: 1;
-  align-items: center;
+  justify-content: center;
   color: white;
   padding: 60px 20px;
+`
+const Title = styled.Text`
+  font-size: 21;
+  font-weight: 700;
+  color: tomato;
 `
 const TextInput = styled.TextInput`
   width: 100%;
   padding: 10px 20px;
-  border-radius: 20px;
   margin-bottom: 10px;
   font-size: 16px;
-  color: white;
-  background-color: rgba(255, 255, 255, 0.5);
+  color: #2c3e50;
+  border-width: 5;
+  border-color: white;
+  border-bottom-color: tomato;
+`
+const InputLine = styled.View`
+  align-items: center;
 `
 const PhoneCheckBtn = styled.TouchableOpacity`
   width: 100%;
   padding: 10px 20px;
-  margin-bottom: 10px;
+  margin-bottom: 70px;
   border-width: 1px;
   border-radius: 20px;
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: tomato;
   justify-content: center;
   align-items: center;
 `
@@ -36,19 +45,27 @@ const PasswordCheckBtn = styled.TouchableOpacity`
   margin-bottom: 10px;
   border-width: 1px;
   border-radius: 20px;
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: tomato;
   justify-content: center;
   align-items: center;
 `
 const BtnText = styled.Text`
-  color: white;
+  color: tomato;
   font-size: 16px;
+`
+const Footer = styled.View`
+  align-items: center;
+`
+const FooterText = styled.Text`
+  color: black;
+  font-size: 10;
+  font-weight: 500;
 `
 
 const Login = ({ navigation: { navigate } }) => {
   const passwordInput = useRef()
   const [phoneNum, setPhoneNum] = useState('')
-  const [phoneState, setPhoneState] = useState(true)
+  const [phoneState, setPhoneState] = useState(false)
   const [password, setPassword] = useState('')
   const [sendLoading, setSendLoading] = useState(false)
   const [checkLoading, setCheckLoading] = useState(false)
@@ -65,25 +82,16 @@ const Login = ({ navigation: { navigate } }) => {
       await auth()
         .signInWithPhoneNumber('+82' + phoneNum, true)
         .then((user) => {
-          console.log(user)
           Alert.alert('인증번호가 전송되었습니다.')
           setToken(user._verificationId)
           setPhoneState(true)
           passwordInput.current.focus()
           setSendLoading(false)
         })
-      // navigate('Login')
     } catch (e) {
-      console.log(e.code)
       switch (e.code) {
         case 'auth/invalid-phone-number': {
           Alert.alert('유효한 전화번호가 아닙니다.')
-          setSendLoading(false)
-        }
-      }
-      switch (e.code) {
-        case 'auth/session-expired': {
-          Alert.alert('인증번호가 만료되었습니다.')
           setSendLoading(false)
         }
       }
@@ -93,15 +101,7 @@ const Login = ({ navigation: { navigate } }) => {
           setSendLoading(false)
         }
       }
-      switch (e.code) {
-        case 'auth/operation-not-allowed': {
-          Alert.alert('인증이 허용되지 않았습니다.')
-          setSendLoading(false)
-        }
-      }
     }
-
-    setPhoneState(false)
   }
 
   const onSubmitCheckEditing = async () => {
@@ -113,7 +113,6 @@ const Login = ({ navigation: { navigate } }) => {
     }
     setCheckLoading(true)
     try {
-      console.log('Data:' + auth.PhoneAuthProvider.credential(token, password))
       const credential = await auth.PhoneAuthProvider.credential(
         token,
         password,
@@ -121,13 +120,11 @@ const Login = ({ navigation: { navigate } }) => {
       await auth()
         .signInWithCredential(credential)
         .then((user) => {
-          console.log('어떤 Data를 포함하니?:' + user)
           Alert.alert('로그인에 성공했습니다.')
-          setPhoneState(true)
           setCheckLoading(false)
+          setPhoneState(false)
         })
     } catch (e) {
-      console.log(e.code)
       setCheckLoading(false)
       switch (e.code) {
         case 'auth/invalid-verification-code': {
@@ -139,12 +136,14 @@ const Login = ({ navigation: { navigate } }) => {
         case 'auth/session-expired': {
           Alert.alert('인증번호가 만료되었습니다.')
           setCheckLoading(false)
+          setPhoneState(false)
         }
       }
       switch (e.code) {
         case 'auth/too-many-requests': {
           Alert.alert('잠시 후 다시 시도해 주세요.')
           setCheckLoading(false)
+          setPhoneState(false)
         }
       }
       switch (e.code) {
@@ -153,49 +152,69 @@ const Login = ({ navigation: { navigate } }) => {
           setCheckLoading(false)
         }
       }
+      switch (e.code) {
+        case 'auth/operation-not-allowed': {
+          Alert.alert('인증이 허용되지 않았습니다.')
+          setSendLoading(false)
+          setPhoneState(false)
+        }
+      }
     }
   }
-  console.log('토큰:' + token)
-  console.log('패스워드:' + password)
+  const isDark = useColorScheme() === 'dark'
   return (
-    <Container>
-      <TextInput
-        placeholder="- 없이 입력"
-        autoCapitalize="none"
-        autoCorrect={false}
-        placeholderTextColor="grey"
-        keyboardType="number-pad"
-        returnKeyType="next"
-        value={phoneNum}
-        onChangeText={(num) => setPhoneNum(num)}
-        onSubmitEditing={onSubmitPhoneEditing}
-      />
-      <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
-        {sendLoading ? (
-          <ActivityIndicator color="white" />
-        ) : (
-          <BtnText>Send</BtnText>
-        )}
-      </PhoneCheckBtn>
-      <TextInput
-        ref={passwordInput}
-        placeholder="인증번호 6자리"
-        placeholderTextColor="grey"
-        // secureTextEntry
-        keyboardType="number-pad"
-        returnKeyType="done"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        onSubmitEditing={onSubmitCheckEditing}
-      />
-      <PasswordCheckBtn onPress={onSubmitCheckEditing}>
-        {checkLoading ? (
-          <ActivityIndicator color="white" />
-        ) : (
-          <BtnText>Log In</BtnText>
-        )}
-      </PasswordCheckBtn>
-    </Container>
+    <>
+      <Container>
+        <Title>휴대폰 번호</Title>
+        <InputLine>
+          <TextInput
+            placeholder="- 없이 입력"
+            autoCapitalize="none"
+            autoCorrect={false}
+            placeholderTextColor="grey"
+            keyboardType="number-pad"
+            returnKeyType="next"
+            value={phoneNum}
+            onChangeText={(num) => setPhoneNum(num)}
+            onSubmitEditing={onSubmitPhoneEditing}
+          />
+          <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
+            {sendLoading ? (
+              <ActivityIndicator color="tomato" />
+            ) : (
+              <BtnText>Send</BtnText>
+            )}
+          </PhoneCheckBtn>
+        </InputLine>
+        {phoneState ? (
+          <>
+            <Title>인증번호</Title>
+            <InputLine>
+              <TextInput
+                ref={passwordInput}
+                placeholder="인증번호 6자리"
+                placeholderTextColor="grey"
+                keyboardType="number-pad"
+                returnKeyType="done"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                onSubmitEditing={onSubmitCheckEditing}
+              />
+              <PasswordCheckBtn onPress={onSubmitCheckEditing}>
+                {checkLoading ? (
+                  <ActivityIndicator color="tomato" />
+                ) : (
+                  <BtnText>Log In</BtnText>
+                )}
+              </PasswordCheckBtn>
+            </InputLine>
+          </>
+        ) : null}
+      </Container>
+      <Footer>
+        <FooterText>&trade; {new Date().getFullYear()} IDCatch</FooterText>
+      </Footer>
+    </>
   )
 }
 

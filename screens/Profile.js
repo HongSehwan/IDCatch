@@ -3,26 +3,139 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Text, Dimensions, useColorScheme, FlatList, Alert } from 'react-native'
 import { useInfiniteQuery, useQuery, useQueryClient } from 'react-query'
 import styled from 'styled-components/native'
+import { BLACK_COLOR, GREEN_COLOR } from '../color'
 
-const UserContainer = styled.View`
+const Container = styled.View`
   flex: 1;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 `
 
-const UserId = styled.View``
+const Admin = styled.View`
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
+  background-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+`
 
-const UserIdText = styled.Text`
-  color: white;
+const AdminBtn = styled.TouchableOpacity`
+  margin: 0px 100px;
+  width: 285px;
+`
+
+const AdminBtnText = styled.Text`
+  color: ${(props) => (props.isDark ? 'white' : '#596275')};
+  font-weight: 700;
+  font-size: 18px;
+`
+
+const NoticeView = styled.View`
+  margin: 0px 20px;
+  padding: 20px 10px;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'grey')};
+  background-color: ${(props) => (props.isDark ? BLACK_COLOR : ' #f1f2f6')};
+`
+
+const Notice = styled.Text`
+  color: tomato;
+  font-size: 13px;
+`
+
+const Title = styled.Text`
+  color: ${(props) => (props.isDark ? 'white' : '#596275')};
+  margin-top: 40px;
+  font-size: 20px;
+  font-weight: 700;
+  border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+  border-bottom-color: tomato;
+  border-width: 3px;
+`
+
+const Certification = styled.View``
+
+const CardCertificationBtn = styled.TouchableOpacity`
+  margin: 0px 100px;
+  width: 285px;
+`
+
+const CardCertification = styled.View`
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
+  background-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+`
+
+const CardCertificationText = styled.Text`
+  color: ${(props) => (props.isDark ? 'white' : '#596275')};
+  font-weight: 700;
+  font-size: 18px;
+`
+
+const IdCertificationBtn = styled.TouchableOpacity`
+  margin: 0px 100px;
+  width: 285px;
+`
+
+const IdCertification = styled.View`
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
+  background-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+`
+
+const IdCertificationText = styled.Text`
+  color: ${(props) => (props.isDark ? 'white' : '#596275')};
+  font-weight: 700;
+  font-size: 18px;
 `
 
 const Profile = () => {
+  const isDark = useColorScheme() === 'dark'
   return (
-    <UserContainer>
-      <UserId>
-        <UserIdText>Profile</UserIdText>
-      </UserId>
-    </UserContainer>
+    <Container>
+      <NoticeView isDark={isDark}>
+        <Notice>
+          IDCatch는 주류 판매에 대한 지문 인증 APP 입니다. 해당 APP은 미성년자
+          주류 판매를 제한하는 다중 인증 시스템 APP으로 IDCatch는 법적인 책임을
+          가지고 있지 않습니다.
+        </Notice>
+      </NoticeView>
+      <Title>성인 인증</Title>
+      <Certification>
+        <IdCertificationBtn>
+          <IdCertification>
+            <IdCertificationText>신분증 인증</IdCertificationText>
+          </IdCertification>
+        </IdCertificationBtn>
+        <CardCertificationBtn>
+          <CardCertification>
+            <CardCertificationText isDark={isDark}>
+              카드 인증
+            </CardCertificationText>
+          </CardCertification>
+        </CardCertificationBtn>
+      </Certification>
+      <Title>사장님 모드</Title>
+      <AdminBtn>
+        <Admin>
+          <AdminBtnText isDark={isDark}>사장님 인증</AdminBtnText>
+        </Admin>
+      </AdminBtn>
+    </Container>
   )
 }
 

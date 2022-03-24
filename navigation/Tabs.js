@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useColorScheme } from 'react-native'
+import { Animated, useColorScheme } from 'react-native'
 import { LIGHT_COLOR, BLACK_COLOR, GREEN_COLOR, GREY_COLOR } from '../color'
 import { Ionicons } from '@expo/vector-icons'
 import { FontAwesome } from '@expo/vector-icons'
@@ -15,24 +15,19 @@ const Tabs = () => {
   return (
     <Tab.Navigator
       sceneContainerStyle={{
-        backgroundColor: isDark ? BLACK_COLOR : LIGHT_COLOR,
+        backgroundColor: isDark ? BLACK_COLOR : 'white',
       }}
       screenOptions={{
         unmountOnBlur: true,
         tabBarStyle: {
-          backgroundColor: isDark ? BLACK_COLOR : LIGHT_COLOR,
+          backgroundColor: isDark ? BLACK_COLOR : '#ff4d4d',
         },
-        tabBarActiveTintColor: isDark ? GREEN_COLOR : GREY_COLOR,
-        tabBarInactiveTintColor: isDark ? '#808e9b' : '#a4b0be',
-        headerStyle: {
-          backgroundColor: isDark ? BLACK_COLOR : LIGHT_COLOR,
-        },
-        headerTitleStyle: {
-          color: isDark ? GREEN_COLOR : GREY_COLOR,
-        },
+        tabBarActiveTintColor: isDark ? GREEN_COLOR : 'white',
+        tabBarInactiveTintColor: isDark ? '#808e9b' : '#f1f2f6',
+        headerShown: false,
         tabBarLabelStyle: {
           marginTop: -5,
-          fontSize: 12,
+          fontSize: 1,
           fontWeight: '600',
         },
       }}
@@ -71,6 +66,7 @@ const Tabs = () => {
         name="Setting"
         component={Setting}
         options={{
+          headerShown: true,
           tabBarIcon: ({ focused, color, size }) => {
             return (
               <Ionicons
