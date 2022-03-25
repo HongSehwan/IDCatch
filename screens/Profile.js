@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Text, Dimensions, useColorScheme, FlatList, Alert } from 'react-native'
-import { useInfiniteQuery, useQuery, useQueryClient } from 'react-query'
+import { useColorScheme } from 'react-native'
 import styled from 'styled-components/native'
 import { BLACK_COLOR, GREEN_COLOR } from '../color'
 
@@ -18,8 +16,8 @@ const Admin = styled.View`
   margin-top: 20px;
   border-radius: 20px;
   border-width: 1px;
-  border-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
-  background-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+  border-color: ${(props) => (props.isDark ? 'white' : 'grey')};
+  background-color: white;
 `
 
 const AdminBtn = styled.TouchableOpacity`
@@ -76,8 +74,8 @@ const CardCertification = styled.View`
   margin-top: 20px;
   border-radius: 20px;
   border-width: 1px;
-  border-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
-  background-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+  border-color: ${(props) => (props.isDark ? 'white' : 'grey')};
+  background-color: white;
 `
 
 const CardCertificationText = styled.Text`
@@ -98,8 +96,8 @@ const IdCertification = styled.View`
   margin-top: 20px;
   border-radius: 20px;
   border-width: 1px;
-  border-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
-  background-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+  border-color: ${(props) => (props.isDark ? 'white' : 'grey')};
+  background-color: white;
 `
 
 const IdCertificationText = styled.Text`
@@ -124,12 +122,12 @@ const Profile = () => {
       </TitleView>
       <Certification>
         <IdCertificationBtn>
-          <IdCertification>
+          <IdCertification isDark={isDark}>
             <IdCertificationText>신분증 인증</IdCertificationText>
           </IdCertification>
         </IdCertificationBtn>
         <CardCertificationBtn>
-          <CardCertification>
+          <CardCertification isDark={isDark}>
             <CardCertificationText>카드 인증</CardCertificationText>
           </CardCertification>
         </CardCertificationBtn>
@@ -138,7 +136,7 @@ const Profile = () => {
         <Title isDark={isDark}>사장님 모드</Title>
       </TitleView>
       <AdminBtn>
-        <Admin>
+        <Admin isDark={isDark}>
           <AdminBtnText>사장님 인증</AdminBtnText>
         </Admin>
       </AdminBtn>

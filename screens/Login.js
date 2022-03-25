@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components/native'
 import auth from '@react-native-firebase/auth'
-import { BLACK_COLOR, LIGHT_COLOR } from '../color'
 import { ActivityIndicator, Alert, useColorScheme } from 'react-native'
 
 const Container = styled.View`
@@ -62,7 +61,7 @@ const FooterText = styled.Text`
   font-weight: 500;
 `
 
-const Login = ({ navigation: { navigate } }) => {
+const Login = () => {
   const passwordInput = useRef()
   const [phoneNum, setPhoneNum] = useState('')
   const [phoneState, setPhoneState] = useState(false)
@@ -161,7 +160,6 @@ const Login = ({ navigation: { navigate } }) => {
       }
     }
   }
-  const isDark = useColorScheme() === 'dark'
   return (
     <>
       <Container>

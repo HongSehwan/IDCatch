@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Text, Dimensions, useColorScheme, FlatList, Alert } from 'react-native'
-import { useInfiniteQuery, useQuery, useQueryClient } from 'react-query'
+import { useColorScheme } from 'react-native'
 import styled from 'styled-components/native'
 
 const CheckContainer = styled.View`

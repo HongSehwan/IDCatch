@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Text, Dimensions, useColorScheme, FlatList, Alert } from 'react-native'
-import { useInfiniteQuery, useQuery, useQueryClient } from 'react-query'
+import { useColorScheme } from 'react-native'
 import styled from 'styled-components/native'
 import auth from '@react-native-firebase/auth'
-import { BLACK_COLOR, GREEN_COLOR } from '../color'
+import { BLACK_COLOR } from '../color'
 
 const SettingContainer = styled.View`
   flex: 1;
