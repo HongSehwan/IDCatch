@@ -2,6 +2,7 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { BLACK_COLOR, LIGHT_COLOR, GREEN_COLOR, GREY_COLOR } from '../color'
 import { useColorScheme } from 'react-native'
+import Fingerprint from '../screens/Fingerprint'
 
 const NativeStack = createNativeStackNavigator()
 
@@ -18,7 +19,9 @@ const Stack = () => {
           color: isDark ? GREEN_COLOR : GREY_COLOR,
         },
       }}
-    ></NativeStack.Navigator>
+    >
+      <NativeStack.Screen name="Fingerprint" component={Fingerprint} />
+    </NativeStack.Navigator>
   )
 }
 
