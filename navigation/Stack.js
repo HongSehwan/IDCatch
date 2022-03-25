@@ -13,10 +13,10 @@ const Stack = () => {
       screenOptions={{
         headerBackTitleVisible: false,
         headerStyle: {
-          backgroundColor: isDark ? BLACK_COLOR : LIGHT_COLOR,
+          backgroundColor: isDark ? BLACK_COLOR : 'tomato',
         },
         headerTitleStyle: {
-          color: isDark ? GREEN_COLOR : GREY_COLOR,
+          color: 'white',
         },
       }}
     >
