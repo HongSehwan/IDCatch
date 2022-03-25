@@ -22,7 +22,7 @@ const Tabs = () => {
         tabBarStyle: {
           backgroundColor: isDark ? BLACK_COLOR : '#ff4d4d',
         },
-        tabBarActiveTintColor: isDark ? GREEN_COLOR : 'white',
+        tabBarActiveTintColor: isDark ? 'white' : 'white',
         tabBarInactiveTintColor: isDark ? '#808e9b' : '#f1f2f6',
         headerShown: false,
         tabBarLabelStyle: {

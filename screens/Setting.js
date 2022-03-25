@@ -15,16 +15,16 @@ const SignOut = styled.View`
   align-items: center;
   justify-content: center;
   border-width: 5px;
-  margin: 0px 15px;
+  margin: 0px 40px;
   border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
-  border-bottom-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
+  border-bottom-color: grey;
 `
 
 const SignOutBtn = styled.TouchableOpacity``
 
 const SignOutText = styled.Text`
   color: ${(props) => (props.isDark ? 'white' : '#596275')};
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   margin-bottom: 10px;
 `
@@ -37,14 +37,14 @@ const History = styled.View`
   align-items: center;
   justify-content: center;
   border-width: 5px;
-  margin: 0px 15px;
+  margin: 0px 40px;
   border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
-  border-bottom-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
+  border-bottom-color: grey;
 `
 
 const HistoryText = styled.Text`
   color: ${(props) => (props.isDark ? 'white' : '#596275')};
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   margin-bottom: 10px;
 `
@@ -57,14 +57,14 @@ const Regular = styled.View`
   align-items: center;
   justify-content: center;
   border-width: 5px;
-  margin: 0px 15px;
+  margin: 0px 40px;
   border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
-  border-bottom-color: ${(props) => (props.isDark ? GREEN_COLOR : 'grey')};
+  border-bottom-color: grey;
 `
 
 const RegularText = styled.Text`
   color: ${(props) => (props.isDark ? 'white' : '#596275')};
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   margin-bottom: 10px;
 `
@@ -80,17 +80,17 @@ const Setting = () => {
     <SettingContainer>
       <SignOutBtn onPress={onPress}>
         <SignOut isDark={isDark}>
-          <SignOutText>Log Out</SignOutText>
+          <SignOutText isDark={isDark}>Log Out</SignOutText>
         </SignOut>
       </SignOutBtn>
       <HistoryBtn>
-        <History>
-          <HistoryText>History</HistoryText>
+        <History isDark={isDark}>
+          <HistoryText isDark={isDark}>History</HistoryText>
         </History>
       </HistoryBtn>
       <RegularBtn>
-        <Regular>
-          <RegularText>A regular customer</RegularText>
+        <Regular isDark={isDark}>
+          <RegularText isDark={isDark}>A regular customer</RegularText>
         </Regular>
       </RegularBtn>
     </SettingContainer>

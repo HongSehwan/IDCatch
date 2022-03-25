@@ -28,7 +28,7 @@ const AdminBtn = styled.TouchableOpacity`
 `
 
 const AdminBtnText = styled.Text`
-  color: ${(props) => (props.isDark ? 'white' : '#596275')};
+  color: #596275;
   font-weight: 700;
   font-size: 18px;
 `
@@ -39,7 +39,7 @@ const NoticeView = styled.View`
   border-width: 1px;
   border-radius: 5px;
   border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'grey')};
-  background-color: ${(props) => (props.isDark ? BLACK_COLOR : ' #f1f2f6')};
+  background-color: ${(props) => (props.isDark ? '#2f3542' : ' #f1f2f6')};
 `
 
 const Notice = styled.Text`
@@ -47,12 +47,17 @@ const Notice = styled.Text`
   font-size: 13px;
 `
 
+const TitleView = styled.View`
+  border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+  border-bottom-color: tomato;
+  border-width: 3px;
+`
+
 const Title = styled.Text`
   color: ${(props) => (props.isDark ? 'white' : '#596275')};
   margin-top: 40px;
   font-size: 20px;
   font-weight: 700;
-  border-bottom-color: tomato;
   border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
   border-width: 3px;
 `
@@ -76,7 +81,7 @@ const CardCertification = styled.View`
 `
 
 const CardCertificationText = styled.Text`
-  color: ${(props) => (props.isDark ? 'white' : '#596275')};
+  color: #596275;
   font-weight: 700;
   font-size: 18px;
 `
@@ -98,7 +103,7 @@ const IdCertification = styled.View`
 `
 
 const IdCertificationText = styled.Text`
-  color: ${(props) => (props.isDark ? 'white' : '#596275')};
+  color: #596275;
   font-weight: 700;
   font-size: 18px;
 `
@@ -114,7 +119,9 @@ const Profile = () => {
           가지고 있지 않습니다.
         </Notice>
       </NoticeView>
-      <Title>성인 인증</Title>
+      <TitleView isDark={isDark}>
+        <Title isDark={isDark}>성인 인증</Title>
+      </TitleView>
       <Certification>
         <IdCertificationBtn>
           <IdCertification>
@@ -123,16 +130,16 @@ const Profile = () => {
         </IdCertificationBtn>
         <CardCertificationBtn>
           <CardCertification>
-            <CardCertificationText isDark={isDark}>
-              카드 인증
-            </CardCertificationText>
+            <CardCertificationText>카드 인증</CardCertificationText>
           </CardCertification>
         </CardCertificationBtn>
       </Certification>
-      <Title>사장님 모드</Title>
+      <TitleView isDark={isDark}>
+        <Title isDark={isDark}>사장님 모드</Title>
+      </TitleView>
       <AdminBtn>
         <Admin>
-          <AdminBtnText isDark={isDark}>사장님 인증</AdminBtnText>
+          <AdminBtnText>사장님 인증</AdminBtnText>
         </Admin>
       </AdminBtn>
     </Container>
