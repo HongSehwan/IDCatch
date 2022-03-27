@@ -218,6 +218,7 @@ android {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.2.1')
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':react-native-restart')
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

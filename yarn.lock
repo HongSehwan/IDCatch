@@ -4882,6 +4882,11 @@
   "resolved" "https://registry.npmjs.org/react-native-config/-/react-native-config-1.4.5.tgz"
   "version" "1.4.5"
 
+"react-native-restart@^0.0.20":
+  "integrity" "sha512-lpWqKvfKaCfolosRHHH9+hDdjqMntEedRiLdVqmwNJejjfA4gUH+VEn0uhSaVueBgQJl5525X6B/0bSP55g+iQ=="
+  "resolved" "https://registry.npmjs.org/react-native-restart/-/react-native-restart-0.0.20.tgz"
+  "version" "0.0.20"
+
 "react-native-safe-area-context@>= 3.0.0", "react-native-safe-area-context@3.3.2":
   "integrity" "sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q=="
   "resolved" "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz"

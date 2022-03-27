@@ -3,6 +3,9 @@ import { useColorScheme, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 import TouchID from 'react-native-touch-id'
+import { useRef } from 'react'
+import { useEffect } from 'react'
+import RNRestart from 'react-native-restart'
 
 const CheckContainer = styled.View`
   flex: 1;
@@ -53,8 +56,45 @@ const PasswordText = styled.Text`
   font-size: 18px;
 `
 
+const Timer = styled.View``
+
+const TimerText = styled.Text`
+  font-size: 20px;
+  color: black;
+`
+
 const Check = () => {
   const navigation = useNavigation()
+  const [min, setMin] = useState(3, 2)
+  const [sec, setSec] = useState(0, 2)
+  const [timeState, setTiemState] = useState(false)
+  const time = useRef(180)
+  const timerId = useRef(null)
+
+  const startTimer = () => {
+    clearInterval(timerId.current)
+    time.current = 5
+    setMin(3, 2)
+    setSec(0, 2)
+    timerId.current = setInterval(() => {
+      time.current -= 1
+      setSec(time.current % 60, 2)
+      setMin(parseInt(time.current / 60), 2)
+    }, 1000)
+  }
+  const stopTimer = () => {
+    setMin(3, 2)
+    setSec(0, 2)
+    clearInterval(timerId.current)
+  }
+  useEffect(() => {
+    if (time.current <= 0) {
+      clearInterval(timerId.current)
+      // RNRestart.Restart()
+      // stopTimer()
+    }
+  }, [sec])
+
   const goToCheck = () => {
     navigation.navigate('Stack', {
       screen: 'Fingerprint',
@@ -67,17 +107,20 @@ const Check = () => {
     sensorDescription: 'Touch sensor', // 터치센서
     sensorErrorDescription: 'Failed', // 터치센서 Fail Text 변경
     cancelText: 'Cancel', // Android // 취소버튼 Text 변경
-    fallbackLabel: 'Show Passcode', // ios ( 비어있으면 레이블이 숨겨짐 )
+    fallbackLabel: '', // ios ( 비어있으면 레이블이 숨겨짐 )
     unifiedErrors: false, // 통합 오류 메시지 사용 ( 기본값 false)
     passcodeFallback: false, // ios-faceId / touch 사용할 수 없는 경우 기기비밀번호 사용여부
   }
+
   const TouchId = () => {
+    // startTimer()
     TouchID.authenticate('description', optionalConfigObject)
       .then((success) => {
-        console.log('지문인식 성공') // 지문인식 성공했을 때 코드를 넣으면 됨
+        console.log('지문인식 성공')
       })
       .catch((error) => {
-        console.log(error.details)
+        // stopTimer()
+        console.log(error)
         switch (error.name) {
           case 'LAErrorTouchIDNotEnrolled': {
             Alert.alert('등록된 지문이 없습니다. 휴대폰 지문 등록을 해주세요.')
@@ -99,20 +142,30 @@ const Check = () => {
           }
         }
         switch (error.name) {
+          case 'LAErrorAuthenticationFailed': {
+            Alert.alert(
+              '유효한 자격 증명을 제공하지 못했습니다. 잠시후 다시 시도해주세요.',
+            )
+          }
+        }
+        switch (error.name) {
           case 'LAErrorPasscodeNotSet': {
             Alert.alert('암호가 설정되어 있지 않아 인증을 시작할 수 없습니다.')
           }
         }
         switch (error.name) {
           case 'LAErrorTouchIDLockout': {
-            Alert.alert(
-              '실패 횟수가 초과되었습니다. 잠시 후 다시 시도해주세요.',
-            )
+            Alert.alert('실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요.')
           }
         }
         switch (error.name) {
           case 'RCTTouchIDNotSupported': {
             Alert.alert('지문 인식을 사용할 수 없는 기기입니다.')
+          }
+        }
+        switch (error.name) {
+          case 'LAErrorUserFallback': {
+            Alert.alert('대체 비밀번호 입력을 선택하였습니다.')
           }
         }
         switch (error.details) {
@@ -127,9 +180,7 @@ const Check = () => {
         }
         switch (error.details) {
           case 'Too many attempts. Try again Later.': {
-            Alert.alert(
-              '실패 횟수가 초과되었습니다. 잠시 후 다시 시도해주세요.',
-            )
+            Alert.alert('실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요.')
           }
         }
         switch (error.details) {
@@ -141,13 +192,20 @@ const Check = () => {
         }
       })
   }
+
   return (
     <CheckContainer>
+      {/* <Timer>
+        <TimerText>
+          {min}분 {sec}초
+        </TimerText>
+      </Timer> */}
       <IdCheckBtn onPress={TouchId}>
         <UserIdCheck>
           <IdCheckText>지문인식</IdCheckText>
         </UserIdCheck>
       </IdCheckBtn>
+
       <PasswordBtn>
         <Password>
           <PasswordText>간편 비밀번호</PasswordText>

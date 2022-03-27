@@ -4,20 +4,18 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import androidx.annotation.NonNull;
-
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.rnfingerprint.FingerprintAuthPackage;
+import com.reactnativerestart.RestartPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.JSIModulePackage;
 import com.facebook.soloader.SoLoader;
-
+import com.reactnativerestart.RestartPackage;
+import com.rnfingerprint.FingerprintAuthPackage;
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
-
-import com.facebook.react.bridge.JSIModulePackage;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -25,25 +23,28 @@ public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
     this,
     new ReactNativeHost(this) {
-    @Override
-    public boolean getUseDeveloperSupport() {
-      return BuildConfig.DEBUG;
-    }
 
-    @Override
-    protected List<ReactPackage> getPackages() {
-      @SuppressWarnings("UnnecessaryLocalVariable")
-      List<ReactPackage> packages = new PackageList(this).getPackages();
-      // Packages that cannot be autolinked yet can be added manually here, for example:
-      // packages.add(new MyReactNativePackage());
-      return packages;
-    }
+      @Override
+      public boolean getUseDeveloperSupport() {
+        return BuildConfig.DEBUG;
+      }
 
-    @Override
-    protected String getJSMainModuleName() {
-      return "index";
+      @Override
+      protected List<ReactPackage> getPackages() {
+        @SuppressWarnings("UnnecessaryLocalVariable")
+        List<ReactPackage> packages = new PackageList(this).getPackages(); 
+        // Packages that cannot be autolinked yet can be added manually here, for example:
+        // packages.add(new MyReactNativePackage());
+        return packages;
+        new RestartPackage();
+      }
+
+      @Override
+      protected String getJSMainModuleName() {
+        return "index";
+      }
     }
-  });
+  );
 
   @Override
   public ReactNativeHost getReactNativeHost() {
@@ -53,7 +54,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
+    SoLoader.init(this, /* native exopackage */false);
 
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
@@ -73,7 +74,9 @@ public class MainApplication extends Application implements ReactApplication {
    * @param reactInstanceManager
    */
   private static void initializeFlipper(
-      Context context, ReactInstanceManager reactInstanceManager) {
+    Context context,
+    ReactInstanceManager reactInstanceManager
+  ) {
     if (BuildConfig.DEBUG) {
       try {
         /*
@@ -82,8 +85,12 @@ public class MainApplication extends Application implements ReactApplication {
         */
         Class<?> aClass = Class.forName("com.idcatch.ReactNativeFlipper");
         aClass
-            .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
-            .invoke(null, context, reactInstanceManager);
+          .getMethod(
+            "initializeFlipper",
+            Context.class,
+            ReactInstanceManager.class
+          )
+          .invoke(null, context, reactInstanceManager);
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
       } catch (NoSuchMethodException e) {
