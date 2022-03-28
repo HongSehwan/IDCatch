@@ -65,8 +65,8 @@ const TimerText = styled.Text`
 
 const Check = () => {
   const navigation = useNavigation()
-  const [min, setMin] = useState(3, 2)
-  const [sec, setSec] = useState(0, 2)
+  const [min, setMin] = useState(3)
+  const [sec, setSec] = useState(0)
   const [timeState, setTiemState] = useState(false)
   const time = useRef(180)
   const timerId = useRef(null)
@@ -74,17 +74,17 @@ const Check = () => {
   const startTimer = () => {
     clearInterval(timerId.current)
     time.current = 5
-    setMin(3, 2)
-    setSec(0, 2)
+    setMin(3)
+    setSec(0)
     timerId.current = setInterval(() => {
       time.current -= 1
-      setSec(time.current % 60, 2)
-      setMin(parseInt(time.current / 60), 2)
+      setSec(time.current % 60)
+      setMin(parseInt(time.current / 60))
     }, 1000)
   }
   const stopTimer = () => {
-    setMin(3, 2)
-    setSec(0, 2)
+    setMin(3)
+    setSec(0)
     clearInterval(timerId.current)
   }
   useEffect(() => {
@@ -120,7 +120,6 @@ const Check = () => {
       })
       .catch((error) => {
         // stopTimer()
-        console.log(error)
         switch (error.name) {
           case 'LAErrorTouchIDNotEnrolled': {
             Alert.alert('등록된 지문이 없습니다. 휴대폰 지문 등록을 해주세요.')
