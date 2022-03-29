@@ -1489,15 +1489,15 @@
     "sudo-prompt" "^9.0.0"
     "wcwidth" "^1.0.1"
 
-"@react-native-firebase/analytics@^14.5.1":
-  "integrity" "sha512-kYKoQWLUTWC0e8weKrRv4vXNB2beCAvrdZVFFrheiFrztfcoXK6XFPmSHdziSuBcfbc13NmQiT7aSyqOZnKn7w=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-14.5.1.tgz"
-  "version" "14.5.1"
+"@react-native-firebase/analytics@^14.7.0":
+  "integrity" "sha512-HsNIIUaiEYDu2pwn5/NxH1TCq30y9Gig6iPxEEhgWj/MX583BxGlLCyFD7+BgeHQLn8KWWouaB3lqa/72JWb1g=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-14.7.0.tgz"
+  "version" "14.7.0"
 
-"@react-native-firebase/app@^14.5.1", "@react-native-firebase/app@14.5.1":
-  "integrity" "sha512-PmoiKU3DBnuaMZ5Nw71qCmDbJMJQJoYknm5gTI+j09iF0PDzzF0t+Qe/lCWEKMrDs6TuYpJvxFoocSFlAF6BHg=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-14.5.1.tgz"
-  "version" "14.5.1"
+"@react-native-firebase/app@^14.7.0", "@react-native-firebase/app@14.5.1", "@react-native-firebase/app@14.7.0":
+  "integrity" "sha512-/TdFv0L4AOEdKbAqmUu0yDXWq0Viw9sEX5mprPQDQbnctEJVwDLWehJkKx2CMiGeZox7VU2cshBLD0AC82XTtQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-14.7.0.tgz"
+  "version" "14.7.0"
   dependencies:
     "@expo/config-plugins" "^4.0.18"
     "opencollective-postinstall" "^2.0.1"
@@ -1507,6 +1507,11 @@
   "integrity" "sha512-zioU88bUz3sOGzEQw3VhvkWURKjgWk46P8wd0ukPrTeWj0pY1YsCosyy+0Svk9upTBkvHlywXmEHmkNeZLq7Uw=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-14.5.1.tgz"
   "version" "14.5.1"
+
+"@react-native-firebase/storage@^14.7.0":
+  "integrity" "sha512-iiIe3IxIHCXqIT+CJGakMOE1GfOVLAIyZQJ/lFwHMIO0nNHJxPP772Nt8MhE/9aftEBvXE1xGh66GGwvnhR/Lw=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-14.7.0.tgz"
+  "version" "14.7.0"
 
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="
@@ -4870,7 +4875,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@^15.6.0", "prop-types@^15.7.2":
+"prop-types@^15.6.0", "prop-types@^15.7.2", "prop-types@^15.8.1":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -4981,7 +4986,7 @@
     "react-freeze" "^1.0.0"
     "warn-once" "^0.1.0"
 
-"react-native-svg@*":
+"react-native-svg@*", "react-native-svg@^12.3.0":
   "integrity" "sha512-ESG1g1j7/WLD7X3XRFTQHVv0r6DpbHNNcdusngAODIxG88wpTWUZkhcM3A2HJTb+BbXTFDamHv7FwtRKWQ/ALg=="
   "resolved" "https://registry.npmjs.org/react-native-svg/-/react-native-svg-12.3.0.tgz"
   "version" "12.3.0"

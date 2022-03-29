@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useColorScheme } from 'react-native'
 import styled from 'styled-components/native'
+import storage from '@react-native-firebase/storage'
 import { BLACK_COLOR, GREEN_COLOR } from '../color'
 
 const Container = styled.View`
