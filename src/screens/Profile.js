@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useColorScheme } from 'react-native'
 import styled from 'styled-components/native'
 import storage from '@react-native-firebase/storage'
+import RectangleCamera from '../components/RectangleCamera'
 import { BLACK_COLOR, GREEN_COLOR } from '../color'
 
 const Container = styled.View`
@@ -108,6 +109,15 @@ const IdCertificationText = styled.Text`
 `
 
 const Profile = () => {
+  handleOnPictureProcessed = ({ croppedImage, initialImage }) => {
+    this.props.doSomethingWithCroppedImagePath(croppedImage)
+    this.props.doSomethingWithOriginalImagePath(initialImage)
+  }
+
+  onCapture = () => {
+    this.camera.current.capture()
+  }
+
   const isDark = useColorScheme() === 'dark'
   return (
     <Container>
@@ -122,7 +132,7 @@ const Profile = () => {
         <Title isDark={isDark}>성인 인증</Title>
       </TitleView>
       <Certification>
-        <IdCertificationBtn>
+        <IdCertificationBtn onPress={RectangleCamera}>
           <IdCertification isDark={isDark}>
             <IdCertificationText>신분증 인증</IdCertificationText>
           </IdCertification>
