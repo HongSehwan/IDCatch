@@ -1,5 +1,6 @@
 import { PropTypes } from 'prop-types'
 import React, { PureComponent } from 'react'
+import RNRestart from 'react-native-restart'
 import {
   ActivityIndicator,
   Animated,
@@ -10,6 +11,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  LogBox,
 } from 'react-native'
 import Scanner, {
   Filters,
@@ -20,7 +22,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
 import { ScrollView } from 'react-native-gesture-handler'
-import Image from 'react-native-image-auto-height'
+import ImageAutoHeight from 'react-native-image-auto-height'
+
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+])
 
 const styles = StyleSheet.create({
   button: {
@@ -144,7 +150,9 @@ const styles = StyleSheet.create({
   },
   idCardResult: {
     fontSize: wp(5),
+    fontWeight: '700',
     fontFamily: 'DoHyeon-Regular',
+    color: 'grey',
   },
   btnContainer: {
     flex: 1,
@@ -165,16 +173,17 @@ const styles = StyleSheet.create({
   },
   delbtnoutline: {
     margin: wp(6),
-    marginRight: wp(2),
-    width: wp(42),
-    height: hp(5),
-    borderRadius: 30,
+    marginRight: wp(7),
+    width: wp(30),
+    height: hp(7),
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#82CBC4',
+    backgroundColor: 'tomato',
   },
   btn_l_text: {
     fontFamily: 'DoHyeon-Regular',
+    fontWeight: '700',
     color: 'white',
   },
   btnArea_r: {
@@ -184,17 +193,27 @@ const styles = StyleSheet.create({
   },
   delbtn: {
     margin: wp(6),
-    marginLeft: wp(2),
-    width: wp(42),
-    height: hp(5),
-    borderRadius: 30,
+    marginLeft: wp(7),
+    width: wp(30),
+    height: hp(7),
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#00B990',
+    backgroundColor: 'tomato',
   },
   btn_r_text: {
     fontFamily: 'DoHyeon-Regular',
+    fontWeight: '700',
     color: 'white',
+  },
+  completebtn: {
+    margin: wp(5),
+    width: wp(15),
+    height: hp(3.5),
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 })
 
@@ -394,7 +413,8 @@ export default class RectangleCamera extends PureComponent {
 
   // The picture was taken and cached. You can now go on to using it.
   onPictureProcessed = ({ croppedImage, initialImage }) => {
-    this.props.onPictureProcessed(event)
+    console.log(croppedImage)
+
     this.setState({
       takingPicture: false,
       processingImage: false,
@@ -478,10 +498,9 @@ export default class RectangleCamera extends PureComponent {
                 },
               ]}
             >
-              {this.renderFlashControl()}
               <TouchableOpacity
                 activeOpacity={0.8}
-                style={rectangleStyles.cameraButton}
+                style={styles.cameraButton}
                 onPress={this.capture}
               />
             </View>
@@ -496,10 +515,9 @@ export default class RectangleCamera extends PureComponent {
               { justifyContent: 'flex-end', marginBottom: 20 },
             ]}
           >
-            {this.renderFlashControl()}
             <TouchableOpacity
               activeOpacity={0.8}
-              style={rectangleStyles.cameraButton}
+              style={styles.cameraButton}
               onPress={this.capture}
             />
           </View>
@@ -528,12 +546,8 @@ export default class RectangleCamera extends PureComponent {
           >
             {this.state.isScanned && (
               <TouchableOpacity
-                style={rectangleStyles.completebtn}
-                onPress={() => {
-                  {
-                    this.postImages()
-                  }
-                }}
+                style={styles.completebtn}
+                onPress={RNRestart.Restart()}
               >
                 <Text style={{ color: 'black', fontSize: wp(4.5) }}>완료</Text>
               </TouchableOpacity>
@@ -546,14 +560,12 @@ export default class RectangleCamera extends PureComponent {
 
   feedback = (option) => {
     if (option == 1) {
-      //다시 찍기
       this.setState({
         feedbackState: false,
         googleVisionDetetion: false,
       })
     } else {
       const file = 'file://' + this.state.currentImage
-      //사용하기
       this.setState({
         feedbackState: false,
         preparedImgages: 'file://' + this.state.currentImage,
@@ -561,7 +573,7 @@ export default class RectangleCamera extends PureComponent {
       })
       const currentImage = this.state.currentImage.split('/')
 
-      this.props.setBusinessLicense(
+      this.props.setProfile(
         currentImage[currentImage.length - 1],
         'file://' + this.state.currentImage,
       )
@@ -581,19 +593,18 @@ export default class RectangleCamera extends PureComponent {
                 paddingBottom: hp(3),
               }}
             >
-              <Text style={styles.idCardResult}>Result</Text>
+              <Text style={styles.idCardResult}>신분증 촬영 사진</Text>
             </View>
             <ScrollView
               style={{
                 height: hp(65),
               }}
             >
-              <Image
+              <ImageAutoHeight
                 source={{
                   uri: this.state.currentImage,
                 }}
-                style={styles.feedbackImg}
-                width={wp(90)}
+                style={{ width: '100%', height: '100%' }}
               />
             </ScrollView>
 
@@ -613,7 +624,7 @@ export default class RectangleCamera extends PureComponent {
                       }
                     }}
                   >
-                    <Text style={styles.btn_l_text}>Take it again</Text>
+                    <Text style={styles.btn_l_text}>다시 찍기</Text>
                   </TouchableOpacity>
                 </View>
 
@@ -626,7 +637,7 @@ export default class RectangleCamera extends PureComponent {
                       }
                     }}
                   >
-                    <Text style={styles.btn_r_text}>Use it</Text>
+                    <Text style={styles.btn_r_text}>사용하기</Text>
                   </TouchableOpacity>
                 </View>
               </View>

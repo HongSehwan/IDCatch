@@ -97,7 +97,7 @@ const Check = () => {
 
   const goToCheck = () => {
     navigation.navigate('Stack', {
-      screen: 'Fingerprint',
+      screen: 'IDcardAuth',
     })
   }
   const optionalConfigObject = {
