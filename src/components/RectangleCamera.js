@@ -1,6 +1,7 @@
 import { PropTypes } from 'prop-types'
 import React, { PureComponent } from 'react'
 import RNRestart from 'react-native-restart'
+import firestore from '@react-native-firebase/firestore'
 import {
   ActivityIndicator,
   Animated,
