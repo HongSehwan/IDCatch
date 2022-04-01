@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components/native'
 import auth from '@react-native-firebase/auth'
+import RNRestart from 'react-native-restart'
 import { ActivityIndicator, Alert, useColorScheme } from 'react-native'
 
 const Container = styled.View`
@@ -15,7 +16,7 @@ const Title = styled.Text`
   font-weight: 700;
   color: tomato;
 `
-const TextInput = styled.TextInput`
+const PhoneTextInput = styled.TextInput`
   width: 100%;
   padding: 10px 20px;
   margin-bottom: 10px;
@@ -24,6 +25,12 @@ const TextInput = styled.TextInput`
   border-width: 5px;
   border-color: white;
   border-bottom-color: tomato;
+`
+const PasswordTextInput = styled.TextInput`
+  width: 84%;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #2c3e50;
 `
 const InputLine = styled.View`
   align-items: center;
@@ -61,14 +68,59 @@ const FooterText = styled.Text`
   font-weight: 500;
 `
 
+const Timer = styled.View`
+  margin-top: 10px;
+`
+
+const TimerText = styled.Text`
+  font-size: 17px;
+  color: black;
+`
+const CheckLine = styled.View`
+  flex-direction: row;
+  margin-bottom: 10px;
+  border-width: 5px;
+  border-color: white;
+  border-bottom-color: tomato;
+`
+
 const Login = () => {
   const passwordInput = useRef()
+  const time = useRef(180)
+  const timerId = useRef(null)
   const [phoneNum, setPhoneNum] = useState('')
   const [phoneState, setPhoneState] = useState(false)
   const [password, setPassword] = useState('')
   const [sendLoading, setSendLoading] = useState(false)
   const [checkLoading, setCheckLoading] = useState(false)
   const [token, setToken] = useState('')
+  const [min, setMin] = useState(3)
+  const [sec, setSec] = useState(0)
+
+  const startTimer = () => {
+    clearInterval(timerId.current)
+    time.current = 180
+    setMin(3)
+    setSec(0)
+    timerId.current = setInterval(() => {
+      time.current -= 1
+      setSec(time.current % 60)
+      setMin(parseInt(time.current / 60))
+    }, 1000)
+  }
+  const stopTimer = () => {
+    setMin(3)
+    setSec(0)
+    clearInterval(timerId.current)
+  }
+  useEffect(() => {
+    if (time.current <= 0) {
+      clearInterval(timerId.current)
+      RNRestart.Restart()
+      stopTimer()
+    }
+  }, [sec])
+
   const onSubmitPhoneEditing = async () => {
     if (phoneNum === '') {
       return Alert.alert('항목이 비어 있습니다.')
@@ -82,6 +134,7 @@ const Login = () => {
         .signInWithPhoneNumber('+82' + phoneNum, true)
         .then((user) => {
           Alert.alert('인증번호가 전송되었습니다.')
+          startTimer()
           setToken(user._verificationId)
           setPhoneState(true)
           passwordInput.current.focus()
@@ -122,8 +175,10 @@ const Login = () => {
           Alert.alert('로그인에 성공했습니다.')
           setCheckLoading(false)
           setPhoneState(false)
+          stopTimer()
         })
     } catch (e) {
+      stopTimer()
       setCheckLoading(false)
       switch (e.code) {
         case 'auth/invalid-verification-code': {
@@ -165,7 +220,7 @@ const Login = () => {
       <Container>
         <Title>휴대폰 번호</Title>
         <InputLine>
-          <TextInput
+          <PhoneTextInput
             placeholder="- 없이 입력"
             autoCapitalize="none"
             autoCorrect={false}
@@ -188,16 +243,23 @@ const Login = () => {
           <>
             <Title>인증번호</Title>
             <InputLine>
-              <TextInput
-                ref={passwordInput}
-                placeholder="인증번호 6자리"
-                placeholderTextColor="grey"
-                keyboardType="number-pad"
-                returnKeyType="done"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                onSubmitEditing={onSubmitCheckEditing}
-              />
+              <CheckLine>
+                <PasswordTextInput
+                  ref={passwordInput}
+                  placeholder="인증번호 6자리"
+                  placeholderTextColor="grey"
+                  keyboardType="number-pad"
+                  returnKeyType="done"
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  onSubmitEditing={onSubmitCheckEditing}
+                />
+                <Timer>
+                  <TimerText>
+                    {min}분 {sec}초
+                  </TimerText>
+                </Timer>
+              </CheckLine>
               <PasswordCheckBtn onPress={onSubmitCheckEditing}>
                 {checkLoading ? (
                   <ActivityIndicator color="tomato" />

@@ -8,6 +8,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components/native'
 import { darkTheme, lightTheme } from './styled'
+import { Provider } from 'react-redux'
+import store from './redux/store'
 import Root from './navigation/Root'
 import auth from '@react-native-firebase/auth'
 import OutNav from './navigation/OutNav'
@@ -53,12 +55,14 @@ export default function App() {
     )
   }
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <NavigationContainer>
-          {isLoggedIn ? <Root /> : <OutNav />}
-        </NavigationContainer>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+          <NavigationContainer>
+            {isLoggedIn ? <Root /> : <OutNav />}
+          </NavigationContainer>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </Provider>
   )
 }

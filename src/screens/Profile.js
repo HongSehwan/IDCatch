@@ -72,7 +72,7 @@ const CardCertification = styled.View`
   height: 40px;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 18px;
   border-radius: 20px;
   border-width: 1px;
   border-color: ${(props) => (props.isDark ? 'white' : 'grey')};
@@ -122,7 +122,7 @@ const Profile = () => {
     <Container>
       <NoticeView isDark={isDark}>
         <Notice>
-          IDCatch는 주류 판매에 대한 지문 인증 APP 입니다. 해당 APP은 미성년자
+          IDCatch는 주류 판매에 대한 성인 인증 APP 입니다. 해당 APP은 미성년자
           주류 판매를 제한하는 다중 인증 시스템 APP으로 IDCatch는 법적인 책임을
           가지고 있지 않습니다.
         </Notice>

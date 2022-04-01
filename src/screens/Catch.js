@@ -1,11 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useColorScheme, Alert } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 import TouchID from 'react-native-touch-id'
-import { useRef } from 'react'
-import { useEffect } from 'react'
-import RNRestart from 'react-native-restart'
 
 const CheckContainer = styled.View`
   flex: 1;
@@ -56,50 +52,7 @@ const PasswordText = styled.Text`
   font-size: 18px;
 `
 
-const Timer = styled.View``
-
-const TimerText = styled.Text`
-  font-size: 20px;
-  color: black;
-`
-
 const Check = () => {
-  const navigation = useNavigation()
-  const [min, setMin] = useState(3)
-  const [sec, setSec] = useState(0)
-  const [timeState, setTiemState] = useState(false)
-  const time = useRef(180)
-  const timerId = useRef(null)
-
-  const startTimer = () => {
-    clearInterval(timerId.current)
-    time.current = 5
-    setMin(3)
-    setSec(0)
-    timerId.current = setInterval(() => {
-      time.current -= 1
-      setSec(time.current % 60)
-      setMin(parseInt(time.current / 60))
-    }, 1000)
-  }
-  const stopTimer = () => {
-    setMin(3)
-    setSec(0)
-    clearInterval(timerId.current)
-  }
-  useEffect(() => {
-    if (time.current <= 0) {
-      clearInterval(timerId.current)
-      // RNRestart.Restart()
-      // stopTimer()
-    }
-  }, [sec])
-
-  const goToCheck = () => {
-    navigation.navigate('Stack', {
-      screen: 'IDcardAuth',
-    })
-  }
   const optionalConfigObject = {
     title: 'Authentication Required', // 타이틀
     imageColor: '#e00606', // 지문인식 기본 컬러
@@ -113,13 +66,11 @@ const Check = () => {
   }
 
   const TouchId = () => {
-    // startTimer()
     TouchID.authenticate('description', optionalConfigObject)
       .then((success) => {
         console.log('지문인식 성공')
       })
       .catch((error) => {
-        // stopTimer()
         switch (error.name) {
           case 'LAErrorTouchIDNotEnrolled': {
             Alert.alert('등록된 지문이 없습니다. 휴대폰 지문 등록을 해주세요.')
@@ -194,11 +145,6 @@ const Check = () => {
 
   return (
     <CheckContainer>
-      {/* <Timer>
-        <TimerText>
-          {min}분 {sec}초
-        </TimerText>
-      </Timer> */}
       <IdCheckBtn onPress={TouchId}>
         <UserIdCheck>
           <IdCheckText>지문인식</IdCheckText>

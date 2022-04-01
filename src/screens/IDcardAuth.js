@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import styled from 'styled-components/native'
 import { useNavigation } from '@react-navigation/native'
 import RectangleCamera from '../components/RectangleCamera'
+import { useDispatch } from 'react-redux'
+import { setIdcardData } from '../redux/actions'
 import storage from '@react-native-firebase/storage'
 
 const Container = styled.View`
   flex: 1;
 `
 
-const IDcardAuth = () => {
+const IDcardAuth = (props) => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
   const [fileInfo, setFileInfo] = useState(null)
 
@@ -19,12 +22,12 @@ const IDcardAuth = () => {
     <Container>
       <RectangleCamera
         style={{ flex: 5 }}
-        fileInfo={(ProfileName, ProfileFilePath) => {
-          const dataToSubmit = {
-            filename: ProfileName,
-            filepath: ProfileFilePath,
+        setIdcardData={(profileName, profileFilePath) => {
+          const idcardData = {
+            filename: profileName,
+            filepath: profileFilePath,
           }
-          setFileInfo(dataToSubmit)
+          dispatch(setIdcardData(idcardData))
         }}
       />
     </Container>

@@ -573,8 +573,8 @@ export default class RectangleCamera extends PureComponent {
         isScanned: true,
       })
       const currentImage = this.state.currentImage.split('/')
-
-      this.props.setProfile(
+      console.log('이미지보기==>' + currentImage[currentImage.length - 1])
+      this.props.setIdcardData(
         currentImage[currentImage.length - 1],
         'file://' + this.state.currentImage,
       )
