@@ -12,12 +12,12 @@ const Container = styled.View`
 
 const IDcardAuth = (props) => {
   const dispatch = useDispatch()
-  const navigation = useNavigation()
   const [fileInfo, setFileInfo] = useState(null)
 
   onCapture = () => {
     this.camera.current.capture()
   }
+
   return (
     <Container>
       <RectangleCamera

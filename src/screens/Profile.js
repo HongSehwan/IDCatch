@@ -63,12 +63,12 @@ const Title = styled.Text`
 
 const Certification = styled.View``
 
-const CardCertificationBtn = styled.TouchableOpacity`
+const SelfAuthenticationBtn = styled.TouchableOpacity`
   margin: 0px 100px;
   width: 285px;
 `
 
-const CardCertification = styled.View`
+const SelfAuthentication = styled.View`
   height: 40px;
   align-items: center;
   justify-content: center;
@@ -79,7 +79,7 @@ const CardCertification = styled.View`
   background-color: white;
 `
 
-const CardCertificationText = styled.Text`
+const SelfAuthenticationText = styled.Text`
   color: #596275;
   font-weight: 700;
   font-size: 18px;
@@ -107,6 +107,16 @@ const IdCertificationText = styled.Text`
   font-size: 18px;
 `
 
+const Auth = styled.View`
+  align-items: center;
+  margin-top: 10px;
+`
+
+const AuthText = styled.Text`
+  color: tomato;
+  font-size: 8.3px;
+`
+
 const Profile = () => {
   const navigation = useNavigation()
   const isDark = useColorScheme() === 'dark'
@@ -131,16 +141,22 @@ const Profile = () => {
         <Title isDark={isDark}>성인 인증</Title>
       </TitleView>
       <Certification>
+        <SelfAuthenticationBtn>
+          <SelfAuthentication isDark={isDark}>
+            <SelfAuthenticationText>본인 인증</SelfAuthenticationText>
+          </SelfAuthentication>
+        </SelfAuthenticationBtn>
         <IdCertificationBtn onPress={goToIDcardAuth}>
           <IdCertification isDark={isDark}>
             <IdCertificationText>신분증 인증</IdCertificationText>
           </IdCertification>
         </IdCertificationBtn>
-        <CardCertificationBtn>
-          <CardCertification isDark={isDark}>
-            <CardCertificationText>카드 인증</CardCertificationText>
-          </CardCertification>
-        </CardCertificationBtn>
+        <Auth>
+          <AuthText>
+            본인 인증과 신분증 인증은 최초 1회만 인증하며 모든 인증이
+            필요합니다.
+          </AuthText>
+        </Auth>
       </Certification>
       <TitleView isDark={isDark}>
         <Title isDark={isDark}>사장님 모드</Title>
