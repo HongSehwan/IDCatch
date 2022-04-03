@@ -16,8 +16,8 @@ export function Certification({ navigation }) {
     merchant_uid: `mid_${new Date().getTime()}`,
     company: '아임포트',
     carrier: 'SKT',
-    name: '홍길동',
-    phone: '01012341234',
+    name: '',
+    phone: '',
     min_age: '',
   }
 
