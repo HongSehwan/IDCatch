@@ -28,22 +28,23 @@ const loadImage = (images) =>
 
 export default function App() {
   const [ready, setReady] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const onFinish = () => setReady(true)
   const startLoading = async () => {
     const fonts = loadFonts([Ionicons.font])
-    const images = loadImage([require('./LoadingImg.png')])
+    const images = loadImage([require('./assets/img/LoadingImg.png')])
     await Promise.all([...fonts, ...images])
   }
-  // useEffect(() => {
-  //   auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       setIsLoggedIn(true)
-  //     } else {
-  //       setIsLoggedIn(false)
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true)
+      } else {
+        setIsLoggedIn(false)
+      }
+    })
+  }, [])
+
   const isDark = useColorScheme() === 'dark'
   if (!ready) {
     return (

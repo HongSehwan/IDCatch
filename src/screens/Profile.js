@@ -123,6 +123,11 @@ const Profile = () => {
   const goToIDcardAuth = () => {
     navigation.navigate('Stack', {
       screen: 'IDcardAuth',
+    })
+  }
+  const goToIamport = () => {
+    navigation.navigate('Stack', {
+      screen: 'Iamport',
       // params: {
       //   ...fullData,
       // },
@@ -141,7 +146,7 @@ const Profile = () => {
         <Title isDark={isDark}>성인 인증</Title>
       </TitleView>
       <Certification>
-        <SelfAuthenticationBtn>
+        <SelfAuthenticationBtn onPress={goToIamport}>
           <SelfAuthentication isDark={isDark}>
             <SelfAuthenticationText>본인 인증</SelfAuthenticationText>
           </SelfAuthentication>
