@@ -20,8 +20,7 @@ const Iamport = ({ route, navigation }) => {
     company: 'IDCatch',
     carrier: 'SKT',
     name: '홍길동',
-    phone: '0100000000',
-    // phone: 0 + auth().currentUser?.providerData[0].phoneNumber.split('+82')[1],
+    phone: 0 + auth().currentUser?.providerData[0].phoneNumber.split('+82')[1],
     min_age: '19',
   }
 
