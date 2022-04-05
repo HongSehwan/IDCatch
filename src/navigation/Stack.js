@@ -3,8 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { BLACK_COLOR, LIGHT_COLOR, GREEN_COLOR, GREY_COLOR } from '../color'
 import { useColorScheme } from 'react-native'
 import IDcardAuth from '../screens/IDcardAuth'
-import Iamport from '../components/iamport/Iamport'
-import CertificationResult from '../components/iamport/CertificationResult'
+import Iamport from '../components/kakaocert/Iamport'
+import CertificationResult from '../components/kakaocert/CertificationResult'
 import { IMPData } from 'iamport-react-native'
 
 export const CertificationParams = {

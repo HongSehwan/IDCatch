@@ -272,7 +272,9 @@ const Login = () => {
         ) : null}
       </Container>
       <Footer>
-        <FooterText>&trade; {new Date().getFullYear()} IDCatch</FooterText>
+        <FooterText>
+          &copy; {new Date().getFullYear()} IDCatch. All rights reserved.
+        </FooterText>
       </Footer>
     </>
   )
