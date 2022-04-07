@@ -1,10 +1,6 @@
 import { PropTypes } from 'prop-types'
 import React, { PureComponent } from 'react'
 import RNRestart from 'react-native-restart'
-import { useNavigation } from '@react-navigation/native'
-import ScrollableTabView, {
-  DefaultTabBar,
-} from 'react-native-scrollable-tab-view'
 import axios from 'axios'
 import Config from 'react-native-config'
 import {
