@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AppLoading from 'expo-app-loading'
 import * as Font from 'expo-font'
-import { Alert, Image, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 import { Asset } from 'expo-asset'
 import { Ionicons } from '@expo/vector-icons'
 import { NavigationContainer } from '@react-navigation/native'
