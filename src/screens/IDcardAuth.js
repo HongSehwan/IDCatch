@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { useNavigation } from '@react-navigation/native'
 import RectangleCamera from '../components/Idcard/RectangleCamera'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIdcardData, setFileData } from '../redux/actions'
+import { setIdcardData } from '../redux/actions'
 
 const Container = styled.View`
   flex: 1;
