@@ -114,7 +114,7 @@ const Auth = styled.View`
 
 const AuthText = styled.Text`
   color: tomato;
-  font-size: 8.3px;
+  font-size: 9.3px;
 `
 
 const Profile = () => {

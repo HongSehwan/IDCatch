@@ -7,7 +7,7 @@ import auth from '@react-native-firebase/auth'
 import Loading from './Loading'
 
 const Iamport = ({ route, navigation }) => {
-  console.log(IMP)
+  console.log(IMP.Certification)
   const userCode = 'imp78021912'
   // IMP.init(userCode)
   function callback(response) {

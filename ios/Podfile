@@ -26,6 +26,12 @@ target 'IDCatch' do
 
   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
 
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
+
   post_install do |installer|
     react_native_post_install(installer)
 

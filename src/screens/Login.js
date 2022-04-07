@@ -5,11 +5,14 @@ import RNRestart from 'react-native-restart'
 import { ActivityIndicator, Alert, useColorScheme } from 'react-native'
 
 const Container = styled.View`
-  background-color: white;
   flex: 1;
+  background-color: white;
   justify-content: center;
+`
+const InputContainer = styled.View`
   color: white;
   padding: 60px 20px;
+  background-color: white;
 `
 const Title = styled.Text`
   font-size: 21px;
@@ -82,6 +85,16 @@ const CheckLine = styled.View`
   border-width: 5px;
   border-color: white;
   border-bottom-color: tomato;
+`
+
+const ImgView = styled.View`
+  align-items: center;
+  margin-top: -10px;
+`
+
+const Img = styled.Image`
+  width: 100%;
+  height: 250px;
 `
 
 const Login = () => {
@@ -218,58 +231,66 @@ const Login = () => {
   return (
     <>
       <Container>
-        <Title>휴대폰 번호</Title>
-        <InputLine>
-          <PhoneTextInput
-            placeholder="- 없이 입력"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor="grey"
-            keyboardType="number-pad"
-            returnKeyType="next"
-            value={phoneNum}
-            onChangeText={(num) => setPhoneNum(num)}
-            onSubmitEditing={onSubmitPhoneEditing}
+        <ImgView>
+          <Img
+            resizeMode="stretch"
+            source={require('../assets/img/IDCatch_logo.png')}
           />
-          <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
-            {sendLoading ? (
-              <ActivityIndicator color="tomato" />
-            ) : (
-              <BtnText>Send</BtnText>
-            )}
-          </PhoneCheckBtn>
-        </InputLine>
-        {phoneState ? (
-          <>
-            <Title>인증번호</Title>
-            <InputLine>
-              <CheckLine>
-                <PasswordTextInput
-                  ref={passwordInput}
-                  placeholder="인증번호 6자리"
-                  placeholderTextColor="grey"
-                  keyboardType="number-pad"
-                  returnKeyType="done"
-                  value={password}
-                  onChangeText={(text) => setPassword(text)}
-                  onSubmitEditing={onSubmitCheckEditing}
-                />
-                <Timer>
-                  <TimerText>
-                    {min}분 {sec}초
-                  </TimerText>
-                </Timer>
-              </CheckLine>
-              <PasswordCheckBtn onPress={onSubmitCheckEditing}>
-                {checkLoading ? (
-                  <ActivityIndicator color="tomato" />
-                ) : (
-                  <BtnText>Log In</BtnText>
-                )}
-              </PasswordCheckBtn>
-            </InputLine>
-          </>
-        ) : null}
+        </ImgView>
+        <InputContainer>
+          <Title>휴대폰 번호</Title>
+          <InputLine>
+            <PhoneTextInput
+              placeholder="- 없이 입력"
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholderTextColor="grey"
+              keyboardType="number-pad"
+              returnKeyType="next"
+              value={phoneNum}
+              onChangeText={(num) => setPhoneNum(num)}
+              onSubmitEditing={onSubmitPhoneEditing}
+            />
+            <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
+              {sendLoading ? (
+                <ActivityIndicator color="tomato" />
+              ) : (
+                <BtnText>Send</BtnText>
+              )}
+            </PhoneCheckBtn>
+          </InputLine>
+          {phoneState ? (
+            <>
+              <Title>인증번호</Title>
+              <InputLine>
+                <CheckLine>
+                  <PasswordTextInput
+                    ref={passwordInput}
+                    placeholder="인증번호 6자리"
+                    placeholderTextColor="grey"
+                    keyboardType="number-pad"
+                    returnKeyType="done"
+                    value={password}
+                    onChangeText={(text) => setPassword(text)}
+                    onSubmitEditing={onSubmitCheckEditing}
+                  />
+                  <Timer>
+                    <TimerText>
+                      {min}분 {sec}초
+                    </TimerText>
+                  </Timer>
+                </CheckLine>
+                <PasswordCheckBtn onPress={onSubmitCheckEditing}>
+                  {checkLoading ? (
+                    <ActivityIndicator color="tomato" />
+                  ) : (
+                    <BtnText>Log In</BtnText>
+                  )}
+                </PasswordCheckBtn>
+              </InputLine>
+            </>
+          ) : null}
+        </InputContainer>
       </Container>
       <Footer>
         <FooterText>

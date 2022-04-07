@@ -16,24 +16,13 @@ import OutNav from './navigation/OutNav'
 
 const queryClient = new QueryClient()
 
-const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font))
-const loadImage = (images) =>
-  images.map((image) => {
-    if (typeof image === 'string') {
-      return Image.prefetch(image)
-    } else {
-      return Asset.loadAsync(image)
-    }
-  })
-
 export default function App() {
-  const [ready, setReady] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const onFinish = () => setReady(true)
+  const onFinish = () => setLoading(true)
   const startLoading = async () => {
-    const fonts = loadFonts([Ionicons.font])
-    const images = loadImage([require('./assets/img/LoadingImg.png')])
-    await Promise.all([...fonts, ...images])
+    await Asset.loadAsync(require('./assets/img/IDCatch_logo.png'))
+    await Font.loadAsync(Ionicons.font)
   }
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
@@ -46,7 +35,7 @@ export default function App() {
   }, [])
 
   const isDark = useColorScheme() === 'dark'
-  if (!ready) {
+  if (!loading) {
     return (
       <AppLoading
         startAsync={startLoading}

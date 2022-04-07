@@ -1,7 +1,12 @@
 import { PropTypes } from 'prop-types'
 import React, { PureComponent } from 'react'
 import RNRestart from 'react-native-restart'
-import firestore from '@react-native-firebase/firestore'
+import { useNavigation } from '@react-navigation/native'
+import ScrollableTabView, {
+  DefaultTabBar,
+} from 'react-native-scrollable-tab-view'
+import axios from 'axios'
+import Config from 'react-native-config'
 import {
   ActivityIndicator,
   Animated,
@@ -24,6 +29,8 @@ import {
 } from 'react-native-responsive-screen'
 import { ScrollView } from 'react-native-gesture-handler'
 import ImageAutoHeight from 'react-native-image-auto-height'
+import { ThemeProvider } from 'styled-components'
+import ResultScreen from './Result'
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -414,7 +421,11 @@ export default class RectangleCamera extends PureComponent {
 
   // The picture was taken and cached. You can now go on to using it.
   onPictureProcessed = ({ croppedImage, initialImage }) => {
-    console.log(croppedImage)
+    const saveImgPath = '.' + croppedImage.split('///')[1]
+    const copy = croppedImage.slice()
+    const currentImageData = copy.split('/')
+    const saveImgName = currentImageData[currentImageData.length - 1]
+    this.props.setIdcardData(saveImgPath, saveImgName)
 
     this.setState({
       takingPicture: false,
@@ -548,7 +559,10 @@ export default class RectangleCamera extends PureComponent {
             {this.state.isScanned && (
               <TouchableOpacity
                 style={styles.completebtn}
-                onPress={RNRestart.Restart()}
+                // onPress={() => RNRestart.Restart()}
+                onPress={() => {
+                  this.props.navigation.navigate({ name: 'Profile' })
+                }}
               >
                 <Text style={{ color: 'black', fontSize: wp(4.5) }}>완료</Text>
               </TouchableOpacity>
@@ -572,12 +586,11 @@ export default class RectangleCamera extends PureComponent {
         preparedImgages: 'file://' + this.state.currentImage,
         isScanned: true,
       })
-      const currentImage = this.state.currentImage.split('/')
-      console.log('이미지보기==>' + currentImage[currentImage.length - 1])
-      this.props.setIdcardData(
-        currentImage[currentImage.length - 1],
-        'file://' + this.state.currentImage,
-      )
+      // const currentImage = this.state.currentImage.split('/')
+      // this.props.setIdcardData(
+      //   currentImage[currentImage.length - 1],
+      //   'file://' + this.state.currentImage,
+      // )
     }
   }
 
@@ -642,6 +655,9 @@ export default class RectangleCamera extends PureComponent {
                   </TouchableOpacity>
                 </View>
               </View>
+            </View>
+            <View>
+              <Text>a</Text>
             </View>
           </SafeAreaView>
         </>

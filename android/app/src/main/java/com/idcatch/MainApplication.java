@@ -6,7 +6,11 @@ import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.reactnativerestart.RestartPackage;
+import org.reactnative.maskedview.RNCMaskedViewPackage;
+import org.reactnative.maskedview.RNCMaskedViewPackage;
+import com.swmansion.gesturehandler.RNGestureHandlerPackage;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.reactnativerestart.RestartPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -21,6 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import androidx.multidex.MultiDexApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
@@ -40,6 +45,7 @@ public class MainApplication extends Application implements ReactApplication {
         // packages.add(new MyReactNativePackage());
         new CameraRollPackage();
         new RestartPackage();
+        new ReactNativeConfigPackage();
         return packages;
       }
 

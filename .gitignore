@@ -57,5 +57,5 @@ dist/
 # dotenv environment variables file
 .env
 .env.production
-.env.staging
+.env.stage
 .env.dev

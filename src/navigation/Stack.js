@@ -3,8 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { BLACK_COLOR, LIGHT_COLOR, GREEN_COLOR, GREY_COLOR } from '../color'
 import { useColorScheme } from 'react-native'
 import IDcardAuth from '../screens/IDcardAuth'
-import Iamport from '../components/kakaocert/Iamport'
-import CertificationResult from '../components/kakaocert/CertificationResult'
+import Iamport from '../components/iamport/Iamport'
+import CertificationResult from '../components/iamport/CertificationResult'
+import Result from '../components/Idcard/Result'
+import Temp from '../components/Idcard/Temp'
+import RectangleCamera from '../components/Idcard/RectangleCamera'
 import { IMPData } from 'iamport-react-native'
 
 export const CertificationParams = {
@@ -28,7 +31,22 @@ const Stack = () => {
         },
       }}
     >
-      <NativeStack.Screen name="신분증 인증" component={IDcardAuth} />
+      <NativeStack.Screen
+        options={{
+          headerTitle: '신분증 인증',
+        }}
+        name="IDcardAuth"
+        component={IDcardAuth}
+      />
+      <NativeStack.Screen
+        options={{
+          headerTitle: '카메라 촬영',
+        }}
+        name="RectangleCamera"
+        component={RectangleCamera}
+      />
+      <NativeStack.Screen name="Result" component={Result} />
+      <NativeStack.Screen name="Temp" component={Temp} />
       <NativeStack.Screen
         options={{ headerShown: false }}
         name="Iamport"
