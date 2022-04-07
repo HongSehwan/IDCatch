@@ -59,3 +59,6 @@ dist/
 .env.production
 .env.stage
 .env.dev
+
+# .txt
+password.txt
