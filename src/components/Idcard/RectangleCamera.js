@@ -25,8 +25,6 @@ import {
 } from 'react-native-responsive-screen'
 import { ScrollView } from 'react-native-gesture-handler'
 import ImageAutoHeight from 'react-native-image-auto-height'
-import { ThemeProvider } from 'styled-components'
-import ResultScreen from './Result'
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",

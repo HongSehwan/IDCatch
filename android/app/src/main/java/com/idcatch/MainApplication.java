@@ -4,28 +4,24 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import androidx.annotation.NonNull;
+import androidx.multidex.MultiDexApplication;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import org.reactnative.maskedview.RNCMaskedViewPackage;
-import org.reactnative.maskedview.RNCMaskedViewPackage;
-import com.swmansion.gesturehandler.RNGestureHandlerPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.reactnativerestart.RestartPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JSIModulePackage;
 import com.facebook.soloader.SoLoader;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.reactnativecommunity.cameraroll.CameraRollPackage;
+import com.reactnativerestart.RestartPackage;
 import com.reactnativerestart.RestartPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
+import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import com.reactnativecommunity.cameraroll.CameraRollPackage;
-import androidx.multidex.MultiDexApplication;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
@@ -40,7 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
       @Override
       protected List<ReactPackage> getPackages() {
         @SuppressWarnings("UnnecessaryLocalVariable")
-        List<ReactPackage> packages = new PackageList(this).getPackages(); 
+        List<ReactPackage> packages = new PackageList(this).getPackages();
         // Packages that cannot be autolinked yet can be added manually here, for example:
         // packages.add(new MyReactNativePackage());
         new CameraRollPackage();

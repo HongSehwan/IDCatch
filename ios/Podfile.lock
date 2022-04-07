@@ -722,8 +722,6 @@ PODS:
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
     - React-Core
-  - react-native-randombytes (3.6.1):
-    - React-Core
   - react-native-restart (0.0.20):
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -892,7 +890,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-config (from `../node_modules/react-native-config`)
-  - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-tesseract-ocr (from `../node_modules/react-native-tesseract-ocr`)
@@ -1005,8 +1002,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/cameraroll"
   react-native-config:
     :path: "../node_modules/react-native-config"
-  react-native-randombytes:
-    :path: "../node_modules/react-native-randombytes"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
@@ -1119,7 +1114,6 @@ SPEC CHECKSUMS:
   React-jsinspector: 34e23860273a23695342f58eed3ffd3ba10c31e0
   react-native-cameraroll: 2957f2bce63ae896a848fbe0d5352c1bd4d20866
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
-  react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-restart: a01029aadfe8e71f9e8205fdb17da2f0a4472d50
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-tesseract-ocr: 006c624b53e5af49fcb56d305b832532e9159aaf
