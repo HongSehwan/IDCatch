@@ -33,7 +33,6 @@ const BtnText = styled.Text`
   color: white;
   font-size: 16px;
 `
-
 const Join = ({ navigation: { navigate } }) => {
   const passwordInput = useRef()
   const [email, setEmail] = useState('')
