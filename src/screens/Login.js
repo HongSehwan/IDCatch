@@ -30,7 +30,7 @@ const PhoneTextInput = styled.TextInput`
   border-bottom-color: tomato;
 `
 const PasswordTextInput = styled.TextInput`
-  width: 84%;
+  width: 81%;
   padding: 10px 20px;
   font-size: 16px;
   color: #2c3e50;
@@ -41,7 +41,7 @@ const InputLine = styled.View`
 const PhoneCheckBtn = styled.TouchableOpacity`
   width: 100%;
   padding: 10px 20px;
-  margin-bottom: 70px;
+  margin-bottom: 40px;
   border-width: 1px;
   border-radius: 20px;
   border-color: tomato;
@@ -197,6 +197,7 @@ const Login = () => {
         case 'auth/invalid-verification-code': {
           Alert.alert('인증번호가 유효하지 않습니다.')
           setCheckLoading(false)
+          startTimer()
         }
       }
       switch (e.code) {

@@ -64,6 +64,10 @@
 		<true/>
 		<key>NSCameraUsageDescription</key>
 		<string>카메라 접근이 필요합니다.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Give $(IDCatch) permission to access your photos</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Give $(IDCatch) permission to save photos</string>
 		<key>NSFaceIDUsageDescription</key>
 		<string>Enabling Face ID allows you quick and secure access to your account.</string>
 		<key>UILaunchStoryboardName</key>

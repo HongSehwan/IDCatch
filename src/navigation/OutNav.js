@@ -6,7 +6,11 @@ const Nav = createNativeStackNavigator()
 
 const OutNav = () => (
   <Nav.Navigator>
-    <Nav.Screen name="Login" component={Login} />
+    <Nav.Screen
+      options={{ headerShown: false }}
+      name="Login"
+      component={Login}
+    />
   </Nav.Navigator>
 )
 
