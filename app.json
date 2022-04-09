@@ -1,11 +1,21 @@
 {
-  "expo": {
-    "name": "IDCatch",
-    "slug": "IDCatch",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  },
-  "name": "IDCatch"
+    "ios": {
+        "usesIcloudStorage": true,
+        "bundleIdentifier": "com.yourname.yourapp"
+    },
+    "expo": {
+        "name": "IDCatch",
+        "slug": "IDCatch",
+        "version": "1.0.0",
+        "assetBundlePatterns": ["**/*"]
+    },
+    "plugins": [
+        [
+            "expo-document-picker",
+            {
+                "appleTeamId": "YOUR_TEAM_ID"
+            }
+        ]
+    ],
+    "name": "IDCatch"
 }

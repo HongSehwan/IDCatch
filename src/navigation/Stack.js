@@ -5,10 +5,11 @@ import { useColorScheme } from 'react-native'
 import IDcardAuth from '../screens/IDcardAuth'
 import Iamport from '../components/iamport/Iamport'
 import CertificationResult from '../components/iamport/CertificationResult'
-import Result from '../components/Idcard/Result'
-import Temp from '../components/Idcard/Temp'
-import RectangleCamera from '../components/Idcard/RectangleCamera'
 import { IMPData } from 'iamport-react-native'
+import CameraHandler from '../components/Idcard/Camera/Camera'
+import PhotoPreview from '../components/Idcard/Camera/PhotoPreview'
+import FsView from '../components/Idcard/Camera/FsView'
+import Certification from '../components/Idcard/Certification'
 
 export const CertificationParams = {
   params: IMPData.CertificationData,
@@ -32,21 +33,36 @@ const Stack = () => {
       }}
     >
       <NativeStack.Screen
-        options={{
-          headerTitle: '신분증 인증',
-        }}
+        options={{ headerShown: false }}
         name="IDcardAuth"
         component={IDcardAuth}
       />
       <NativeStack.Screen
         options={{
-          headerTitle: '카메라 촬영',
+          headerTitle: '신분증 촬영',
         }}
-        name="RectangleCamera"
-        component={RectangleCamera}
+        name="camera"
+        component={CameraHandler}
       />
-      <NativeStack.Screen name="Result" component={Result} />
-      <NativeStack.Screen name="Temp" component={Temp} />
+      <NativeStack.Screen
+        options={{
+          headerTitle: '사진 확인',
+        }}
+        name="photo preview"
+        component={PhotoPreview}
+      />
+      <NativeStack.Screen
+        options={{ headerShown: false }}
+        name="fsView"
+        component={FsView}
+      />
+      <NativeStack.Screen
+        options={{
+          headerTitle: '인증 결과',
+        }}
+        name="Certification"
+        component={Certification}
+      />
       <NativeStack.Screen
         options={{ headerShown: false }}
         name="Iamport"

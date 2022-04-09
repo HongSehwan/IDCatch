@@ -1,38 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/native'
-import { useNavigation } from '@react-navigation/native'
-import RectangleCamera from '../components/Idcard/RectangleCamera'
-import { useDispatch, useSelector } from 'react-redux'
 import { setIdcardData } from '../redux/actions'
+import HomeBtn from '../components/Idcard/Camera/HomeBtn'
 
 const Container = styled.View`
   flex: 1;
+  background-color: white;
 `
 
-const IDcardAuth = (props) => {
-  const navigation = useNavigation()
-  const { filename } = useSelector((state) => state.authReducer)
-  const { filepath } = useSelector((state) => state.authReducer)
-  useEffect(() => {
-    console.log(filename)
-    console.log(filepath)
-  }, [filepath, filename])
-  const dispatch = useDispatch()
-  const [fileInfo, setFileInfo] = useState(null)
+const LogoImg = styled.Image`
+  height: 60%;
+  width: 100%;
+`
 
+const Home = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+`
+
+const IDcardAuth = () => {
   return (
     <Container>
-      <RectangleCamera
-        navigation={navigation}
-        style={{ flex: 5 }}
-        setIdcardData={(fileName, filePath) => {
-          const idcardData = {
-            filename: fileName,
-            filepath: filePath,
-          }
-          dispatch(setIdcardData(idcardData))
-        }}
-      />
+      <Home>
+        <LogoImg
+          resizeMode="stretch"
+          source={require('../assets/img/IDCatch_logo.png')}
+        ></LogoImg>
+        <HomeBtn img="camera" text="신분증 촬영하기" />
+      </Home>
     </Container>
   )
 }

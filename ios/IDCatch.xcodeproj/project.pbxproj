@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		085CEDCF28002F010058E96B /* project.pbxproj in Resources */ = {isa = PBXBuildFile; fileRef = 085CEDCE28002F000058E96B /* project.pbxproj */; };
 		08768A1627EC172100D9B4DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08768A1527EC172100D9B4DC /* GoogleService-Info.plist */; };
 		08857F5427F091A0006922C7 /* Restart.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 08857F5327F091A0006922C7 /* Restart.xcworkspace */; };
 		08857F6D27F46F37006922C7 /* RNCCameraroll.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 08857F6C27F46F36006922C7 /* RNCCameraroll.xcworkspace */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		085CEDCE28002F000058E96B /* project.pbxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.pbxproject; name = project.pbxproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj/project.pbxproj"; sourceTree = "<group>"; };
 		08768A1527EC172100D9B4DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08857F5327F091A0006922C7 /* Restart.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = Restart.xcworkspace; path = "../node_modules/react-native-restart/ios/Restart.xcworkspace"; sourceTree = "<group>"; };
 		08857F6C27F46F36006922C7 /* RNCCameraroll.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = RNCCameraroll.xcworkspace; path = "../node_modules/@react-native-community/cameraroll/ios/RNCCameraroll.xcworkspace"; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				085CEDCE28002F000058E96B /* project.pbxproj */,
 				08857F8527FD3B42006922C7 /* project.xcworkspace */,
 				08857F6C27F46F36006922C7 /* RNCCameraroll.xcworkspace */,
 				08857F5327F091A0006922C7 /* Restart.xcworkspace */,
@@ -212,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08857F6D27F46F37006922C7 /* RNCCameraroll.xcworkspace in Resources */,
+				085CEDCF28002F010058E96B /* project.pbxproj in Resources */,
 				08857F5427F091A0006922C7 /* Restart.xcworkspace in Resources */,
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				08857F8627FD3B42006922C7 /* project.xcworkspace in Resources */,
@@ -507,6 +511,8 @@
 					"\"$(PODS_ROOT)/Headers/Private/React-Core\"",
 					"$(SRCROOT)/../node_modules/react-native-restart/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios",
 				);
 				INFOPLIST_FILE = IDCatch/Info.plist;
@@ -653,6 +659,8 @@
 					"\"$(PODS_ROOT)/Headers/Private/React-Core\"",
 					"$(SRCROOT)/../node_modules/react-native-restart/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios",
 				);
 				INFOPLIST_FILE = IDCatch/Info.plist;
@@ -741,6 +749,8 @@
 					"\"$(PODS_ROOT)/Headers/Private/React-Core\"",
 					"$(SRCROOT)/../node_modules/react-native-restart/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios",
 				);
 				INFOPLIST_FILE = IDCatch/Info.plist;
@@ -824,6 +834,8 @@
 					"\"$(PODS_ROOT)/Headers/Private/React-Core\"",
 					"$(SRCROOT)/../node_modules/react-native-restart/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios",
 				);
 				INFOPLIST_FILE = IDCatch/Info.plist;
