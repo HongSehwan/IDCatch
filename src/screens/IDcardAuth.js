@@ -9,27 +9,27 @@ const Container = styled.View`
 `
 
 const LogoImg = styled.Image`
-  height: 60%;
+  height: 65%;
   width: 100%;
 `
 
-const Home = styled.View`
+const CameraBtn = styled.View`
   align-items: center;
-  justify-content: center;
-  margin: auto;
+  justify-content: space-between;
+  margin: 0;
   width: 100%;
 `
 
 const IDcardAuth = () => {
   return (
     <Container>
-      <Home>
+      <CameraBtn>
         <LogoImg
           resizeMode="stretch"
           source={require('../assets/img/IDCatch_logo.png')}
-        ></LogoImg>
+        />
         <HomeBtn img="camera" text="신분증 촬영하기" />
-      </Home>
+      </CameraBtn>
     </Container>
   )
 }

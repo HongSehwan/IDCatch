@@ -12,12 +12,14 @@ const HomeBtn = ({ img, text }) => {
     }
   }
   return (
-    <TouchableOpacity style={styles.fnBtn} onPress={navPressHandler}>
-      <View style={styles.fnContainer}>
-        <Image style={styles.image} source={images[img]} />
-        <Text style={styles.text}>{text}</Text>
-      </View>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity style={styles.fnBtn} onPress={navPressHandler}>
+        <View style={styles.fn}>
+          <Image style={styles.image} source={images[img]} />
+          <Text style={styles.text}>{text}</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   )
 }
 
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  fnContainer: {
+  fn: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-evenly',
