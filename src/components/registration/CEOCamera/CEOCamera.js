@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera'
 import { useNavigation } from '@react-navigation/native'
 import { images } from '../../../styled'
 
-function CameraHandler() {
+function CEOCameraHandler() {
   const camera = useRef()
   const [hasPermission, setHasPermission] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back)
@@ -12,7 +12,7 @@ function CameraHandler() {
   const takePicture = async () => {
     try {
       const photo = await camera.current.takePictureAsync()
-      navigation.navigate('photo preview', { photo: photo })
+      navigation.navigate('ceo photo preview', { photo: photo })
     } catch (error) {
       console.log(error)
       alert('사진 촬영에 오류가 있습니다.')
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CameraHandler
+export default CEOCameraHandler

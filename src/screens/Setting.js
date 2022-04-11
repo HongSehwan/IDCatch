@@ -3,6 +3,7 @@ import { useColorScheme } from 'react-native'
 import styled from 'styled-components/native'
 import auth from '@react-native-firebase/auth'
 import { BLACK_COLOR } from '../color'
+import { useNavigation } from '@react-navigation/native'
 
 const SettingContainer = styled.View`
   flex: 1;
@@ -67,12 +68,38 @@ const RegularText = styled.Text`
   margin-bottom: 10px;
 `
 
+const ServiceBtn = styled.TouchableOpacity`
+  margin-top: 100px;
+`
+
+const Service = styled.View`
+  align-items: center;
+  justify-content: center;
+  border-width: 5px;
+  margin: 0px 40px;
+  border-color: ${(props) => (props.isDark ? BLACK_COLOR : 'white')};
+  border-bottom-color: grey;
+`
+
+const ServiceText = styled.Text`
+  color: ${(props) => (props.isDark ? 'white' : '#596275')};
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+`
+
 const Setting = () => {
+  const navigation = useNavigation()
   const isDark = useColorScheme() === 'dark'
   const onPress = () => {
     if (auth().currentUser) {
       auth().signOut()
     }
+  }
+  const goToTerms = () => {
+    navigation.navigate('Stack', {
+      screen: 'service',
+    })
   }
   return (
     <SettingContainer>
@@ -91,6 +118,11 @@ const Setting = () => {
           <RegularText isDark={isDark}>A regular customer</RegularText>
         </Regular>
       </RegularBtn>
+      <ServiceBtn onPress={goToTerms}>
+        <Service isDark={isDark}>
+          <ServiceText isDark={isDark}>Terms of service</ServiceText>
+        </Service>
+      </ServiceBtn>
     </SettingContainer>
   )
 }

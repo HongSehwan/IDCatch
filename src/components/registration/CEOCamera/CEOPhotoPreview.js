@@ -1,9 +1,9 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import * as MediaLibrary from 'expo-media-library'
-import CameraPreview from './CameraPreview'
+import CEOCameraPreview from './CEOCameraPreview'
 
-function PhotoPreview({ route }) {
+function CEOPhotoPreview({ route }) {
   const navigation = useNavigation()
   const { photo } = route.params
   const __retakePicture = () => {
@@ -20,13 +20,13 @@ function PhotoPreview({ route }) {
           const asset = await MediaLibrary.createAssetAsync(photoUri)
         }
       }
-      navigation.navigate('fsView', { uri: photoUri })
+      navigation.navigate('RegistrationView', { uri: photoUri })
     } catch (error) {
       alert('사진을 저장하지 못했습니다.')
     }
   }
   return (
-    <CameraPreview
+    <CEOCameraPreview
       photo={photo}
       retakePicture={__retakePicture}
       savePicture={__savePicture}
@@ -34,4 +34,4 @@ function PhotoPreview({ route }) {
   )
 }
 
-export default PhotoPreview
+export default CEOPhotoPreview

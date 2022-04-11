@@ -7,8 +7,8 @@ const Check = styled.View``
 
 const CheckText = styled.Text``
 
-const Certification = () => {
+const CEOCertification = () => {
   return <Container></Container>
 }
 
-export default Certification
+export default CEOCertification
