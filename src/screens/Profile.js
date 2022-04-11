@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useColorScheme } from 'react-native'
 import styled from 'styled-components/native'
 import { useNavigation } from '@react-navigation/native'
-import { BLACK_COLOR, GREEN_COLOR } from '../color'
+import { BLACK_COLOR } from '../color'
 
 const Container = styled.View`
   flex: 1;
@@ -10,7 +10,7 @@ const Container = styled.View`
   align-items: center;
 `
 
-const Admin = styled.View`
+const CEO = styled.View`
   height: 40px;
   align-items: center;
   justify-content: center;
@@ -21,12 +21,12 @@ const Admin = styled.View`
   background-color: white;
 `
 
-const AdminBtn = styled.TouchableOpacity`
+const CEOBtn = styled.TouchableOpacity`
   margin: 0px 100px;
   width: 285px;
 `
 
-const AdminBtnText = styled.Text`
+const CEOBtnText = styled.Text`
   color: #596275;
   font-weight: 700;
   font-size: 18px;
@@ -125,6 +125,11 @@ const Profile = () => {
       screen: 'IDcardAuth',
     })
   }
+  const goToCEOAuth = () => {
+    navigation.navigate('Stack', {
+      screen: 'CEOAuth',
+    })
+  }
   const goToIamport = () => {
     navigation.navigate('Stack', {
       screen: 'Iamport',
@@ -166,11 +171,11 @@ const Profile = () => {
       <TitleView isDark={isDark}>
         <Title isDark={isDark}>사장님 모드</Title>
       </TitleView>
-      <AdminBtn>
-        <Admin isDark={isDark}>
-          <AdminBtnText>사장님 인증</AdminBtnText>
-        </Admin>
-      </AdminBtn>
+      <CEOBtn onPress={goToCEOAuth}>
+        <CEO isDark={isDark}>
+          <CEOBtnText>사장님 인증</CEOBtnText>
+        </CEO>
+      </CEOBtn>
     </Container>
   )
 }

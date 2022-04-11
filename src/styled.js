@@ -28,6 +28,7 @@ export const fonts = {
 
 export const images = {
   camera: require('./assets/img/photo.png'),
+  ceocamera: require('./assets/img/photo.png'),
   retake: require('./assets/img/retake.png'),
   save: require('./assets/img/save.png'),
   flip: require('./assets/img/cameraFlip.png'),
