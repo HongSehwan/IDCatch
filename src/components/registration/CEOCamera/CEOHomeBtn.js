@@ -43,8 +43,9 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: fonts.fontSize,
-    fontFamily: fonts.font1,
+    fontSize: 14,
+    // fontSize: fonts.fontSize,
+    // fontFamily: fonts.font1,
   },
 })
 

@@ -23,7 +23,7 @@ const FsView = ({ route }) => {
   }, [])
 
   const TryAgain = () => {
-    navigation.navigate('camera')
+    navigation.navigate('IDcardAuth')
   }
 
   const CertificationCheck = () => {

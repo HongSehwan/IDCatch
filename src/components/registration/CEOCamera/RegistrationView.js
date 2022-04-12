@@ -23,7 +23,7 @@ const RegistrationView = ({ route }) => {
   }, [])
 
   const TryAgain = () => {
-    navigation.navigate('ceocamera')
+    navigation.navigate('CEOAuth')
   }
 
   const CertificationCheck = () => {

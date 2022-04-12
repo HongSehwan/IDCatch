@@ -7,7 +7,7 @@ function CEOPhotoPreview({ route }) {
   const navigation = useNavigation()
   const { photo } = route.params
   const __retakePicture = () => {
-    navigation.goBack()
+    navigation.navigate('CEOAuth')
   }
   const __savePicture = async (photoUri) => {
     try {

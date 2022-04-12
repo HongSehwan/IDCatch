@@ -7,21 +7,28 @@ function PhotoPreview({ route }) {
   const navigation = useNavigation()
   const { photo } = route.params
   const __retakePicture = () => {
-    navigation.goBack()
+    navigation.navigate('IDcardAuth')
   }
   const __savePicture = async (photoUri) => {
     try {
       const resPermission = await MediaLibrary.getPermissionsAsync()
-      if (resPermission.granted) {
+      console.log(resPermission)
+      console.log('photoUri11111=>' + photoUri)
+      if (resPermission.granted && photoUri) {
         const asset = await MediaLibrary.createAssetAsync(photoUri)
+        console.log('photoUri=>' + photoUri)
+        console.log('111111=>' + asset)
       } else {
         const res = await MediaLibrary.requestPermissionsAsync()
+        console.log('222000=>' + res)
         if (res.granted) {
           const asset = await MediaLibrary.createAssetAsync(photoUri)
+          console.log('222222=>' + asset)
         }
       }
       navigation.navigate('fsView', { uri: photoUri })
     } catch (error) {
+      console.log(error)
       alert('사진을 저장하지 못했습니다.')
     }
   }
