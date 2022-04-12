@@ -2,6 +2,11 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.idcatch"
 >
+  <uses-feature
+    android:name="android.hardware.camera2"
+    android:required="true"
+  />
+
   <uses-permission android:name="android.permission.USE_FINGERPRINT" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />

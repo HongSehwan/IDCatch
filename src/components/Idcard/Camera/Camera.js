@@ -14,7 +14,7 @@ function CameraHandler() {
       const photo = await camera.current.takePictureAsync()
       navigation.navigate('photo preview', { photo: photo })
     } catch (error) {
-      console.log(error)
+      console.log('카메라에러' + error)
       alert('사진 촬영에 오류가 있습니다.')
     }
   }
