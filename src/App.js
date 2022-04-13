@@ -18,21 +18,21 @@ const queryClient = new QueryClient()
 
 export default function App() {
   const [loading, setLoading] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const onFinish = () => setLoading(true)
   const startLoading = async () => {
     await Asset.loadAsync(require('./assets/img/IDCatch_logo.png'))
     await Font.loadAsync(Ionicons.font)
   }
-  // useEffect(() => {
-  //   auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       setIsLoggedIn(true)
-  //     } else {
-  //       setIsLoggedIn(false)
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true)
+      } else {
+        setIsLoggedIn(false)
+      }
+    })
+  }, [])
 
   const isDark = useColorScheme() === 'dark'
   if (!loading) {

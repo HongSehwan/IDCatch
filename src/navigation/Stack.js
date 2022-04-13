@@ -16,6 +16,9 @@ import CEOCameraHandler from '../components/registration/CEOCamera/CEOCamera'
 import CEOPhotoPreview from '../components/registration/CEOCamera/CEOPhotoPreview'
 import CEOCertification from '../components/registration/CEOCertification'
 import Terms from '../components/Terms'
+import Password from '../components/SimplePW/Password'
+import Edit from '../components/SimplePW/Edit'
+import PasswordCheck from '../components/SimplePW/PasswordCheck'
 
 export const CertificationParams = {
   params: IMPData.CertificationData,
@@ -118,6 +121,27 @@ const Stack = () => {
         }}
         name="service"
         component={Terms}
+      />
+      <NativeStack.Screen
+        options={{
+          headerTitle: '간편 비밀번호 확인',
+        }}
+        name="Password"
+        component={Password}
+      />
+      <NativeStack.Screen
+        options={{
+          headerTitle: '간편 비밀번호 등록',
+        }}
+        name="Edit"
+        component={Edit}
+      />
+      <NativeStack.Screen
+        options={{
+          headerTitle: '간편 비밀번호 등록',
+        }}
+        name="PasswordCheck"
+        component={PasswordCheck}
       />
     </NativeStack.Navigator>
   )

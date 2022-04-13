@@ -5,8 +5,12 @@ import { callGoogleVIsionApi } from '../../Idcard/Camera/TextDetection'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { BLACK_COLOR } from '../../../color'
 import { useNavigation } from '@react-navigation/native'
+import CryptoJS from 'react-native-crypto-js'
+import auth from '@react-native-firebase/auth'
+import { firebase } from '@react-native-firebase/firestore'
 
 const RegistrationView = ({ route }) => {
+  const db = firebase.firestore()
   const navigation = useNavigation()
   const [loadingExtract, setLoadingExtract] = useState(true)
   const [extract, setExtract] = useState('')
@@ -17,6 +21,15 @@ const RegistrationView = ({ route }) => {
         encoding: 'base64',
       })
       const extract = await callGoogleVIsionApi(result)
+      const userInfo = CryptoJS.AES.encrypt(
+        extract,
+        0 + auth().currentUser?.providerData[0].phoneNumber.split('+82')[1],
+      ).toString()
+      db.collection('IDcardAuth')
+        .doc(
+          0 + auth().currentUser?.providerData[0].phoneNumber.split('+82')[1],
+        )
+        .set({ name: userInfo })
       setExtract(extract)
       setLoadingExtract(false)
     }

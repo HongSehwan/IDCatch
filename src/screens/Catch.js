@@ -2,6 +2,7 @@ import React from 'react'
 import { useColorScheme, Alert } from 'react-native'
 import styled from 'styled-components/native'
 import TouchID from 'react-native-touch-id'
+import { useNavigation } from '@react-navigation/native'
 
 const CheckContainer = styled.View`
   flex: 1;
@@ -52,7 +53,19 @@ const PasswordText = styled.Text`
   font-size: 18px;
 `
 
+const NoticeView = styled.View`
+  margin: 0px 20px;
+  padding: 20px 10px;
+`
+
+const Notice = styled.Text`
+  color: tomato;
+  font-size: 13px;
+`
+
 const Check = () => {
+  const isDark = useColorScheme() === 'dark'
+  const navigation = useNavigation()
   const optionalConfigObject = {
     title: 'Authentication Required', // 타이틀
     imageColor: '#e00606', // 지문인식 기본 컬러
@@ -142,6 +155,11 @@ const Check = () => {
         }
       })
   }
+  const goToSimplePW = () => {
+    navigation.navigate('Stack', {
+      screen: 'Password',
+    })
+  }
 
   return (
     <CheckContainer>
@@ -150,12 +168,14 @@ const Check = () => {
           <IdCheckText>지문인식</IdCheckText>
         </UserIdCheck>
       </IdCheckBtn>
-
-      <PasswordBtn>
+      <PasswordBtn onPress={goToSimplePW}>
         <Password>
           <PasswordText>간편 비밀번호</PasswordText>
         </Password>
       </PasswordBtn>
+      <NoticeView isDark={isDark}>
+        <Notice>최초 성인인증 후 사용 가능합니다.</Notice>
+      </NoticeView>
     </CheckContainer>
   )
 }

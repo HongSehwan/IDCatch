@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useColorScheme } from 'react-native'
 import styled from 'styled-components/native'
 import { useNavigation } from '@react-navigation/native'
@@ -34,6 +34,7 @@ const CEOBtnText = styled.Text`
 
 const NoticeView = styled.View`
   margin: 0px 20px;
+  margin-bottom: 30px;
   padding: 20px 10px;
   border-width: 1px;
   border-radius: 5px;
@@ -138,6 +139,7 @@ const Profile = () => {
       // },
     })
   }
+
   return (
     <Container>
       <NoticeView isDark={isDark}>
