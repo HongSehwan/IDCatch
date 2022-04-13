@@ -7,11 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.multidex.MultiDexApplication;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.rnfs.RNFSPackage;
-import com.rnfs.RNFSPackage;
-import org.reactnative.camera.RNCameraPackage;
-import org.reactnative.camera.RNCameraPackage;
-import org.reactnative.camera.RNCameraPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -22,13 +17,18 @@ import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.reactnativerestart.RestartPackage;
 import com.reactnativerestart.RestartPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
+import com.rnfs.RNFSPackage;
+import com.rnfs.RNFSPackage;
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 import io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import org.reactnative.camera.RNCameraPackage;
+import org.reactnative.camera.RNCameraPackage;
+import org.reactnative.camera.RNCameraPackage;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(

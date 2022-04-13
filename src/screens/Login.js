@@ -3,6 +3,8 @@ import styled from 'styled-components/native'
 import auth from '@react-native-firebase/auth'
 import RNRestart from 'react-native-restart'
 import { ActivityIndicator, Alert, useColorScheme } from 'react-native'
+import { firebase } from '@react-native-firebase/firestore'
+import Config from 'react-native-config'
 
 const Container = styled.View`
   flex: 1;
@@ -94,10 +96,11 @@ const ImgView = styled.View`
 
 const Img = styled.Image`
   width: 100%;
-  height: 250px;
+  height: 300px;
 `
 
 const Login = () => {
+  const db = firebase.firestore()
   const passwordInput = useRef()
   const time = useRef(180)
   const timerId = useRef(null)
@@ -185,6 +188,35 @@ const Login = () => {
       await auth()
         .signInWithCredential(credential)
         .then((user) => {
+          db.collection('IDcardAuth')
+            .doc(
+              0 +
+                auth().currentUser?.providerData[0].phoneNumber.split('+82')[1],
+            )
+            .get()
+            .then((data) => {
+              if (
+                data.data().Existing === undefined ||
+                data.data().Existing === false
+              ) {
+                db.collection('IDcardAuth')
+                  .doc(
+                    0 +
+                      auth().currentUser?.providerData[0].phoneNumber.split(
+                        '+82',
+                      )[1],
+                  )
+                  .set({
+                    Existing: true,
+                    IDcardAuth: false,
+                    CEOAuth: false,
+                    SimplePW: Config.SIMPLE_PW_DEFAULT,
+                    SimplePWState: false,
+                  })
+              } else {
+                return
+              }
+            })
           Alert.alert('로그인에 성공했습니다.')
           setCheckLoading(false)
           setPhoneState(false)
