@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import CryptoJS from "react-native-crypto-js";
 import auth from "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/firestore";
+import BackgroundTimer from "react-native-background-timer";
 import { BLACK_COLOR } from "../../color";
 
 const Container = styled.View`
@@ -85,10 +86,41 @@ const EditText = styled.Text`
     font-size: 18px;
 `;
 
+const FindLine = styled.View`
+    flex-direction: row;
+`;
+
+const FindBtn = styled.TouchableOpacity`
+    margin-top: 15px;
+`;
+
+const Find = styled.View`
+    margin: 15px 0px;
+    padding: 0px 5px;
+`;
+
+const FindText = styled.Text`
+    text-align: center;
+    color: tomato;
+    font-size: 13px;
+`;
+
+const GoToFind = styled.View`
+    border-bottom-width: 1px;
+    border-bottom-color: tomato;
+`;
+
+const GoToFindText = styled.Text`
+    text-align: center;
+    color: tomato;
+    font-size: 13px;
+`;
+
 const Password = () => {
     const [password, setPassword] = useState(null);
     const [loading, setLoading] = useState(false);
     const inputRef = useRef(null);
+    const count = useRef(0);
     const db = firebase.firestore();
     const isDark = useColorScheme() === "dark";
     const navigation = useNavigation();
@@ -102,30 +134,58 @@ const Password = () => {
         setLoading(true);
         try {
             db.collection("Auth")
+                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
                 .get()
                 .then((data) => {
-                    data.forEach((doc) => {
-                        const cryptoPW = CryptoJS.AES.encrypt(
-                            password,
-                            0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
-                        ).toString();
-                        if (doc.data().SimplePW === cryptoPW) {
-                            Alert.alert("간편 인증을 완료했습니다. 간편 인증은 인증 후 10분 동안 유효합니다.");
-                            db.collection("Auth")
-                                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                                .update({ SimplePWState: true });
-                            navigation.navigate("Profile");
-                        }
-                        console.log(doc.data().SimplePW);
-                    });
+                    const cryptoPW = CryptoJS.AES.decrypt(
+                        data.data().SimplePW,
+                        0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
+                    );
+                    let originalPW = cryptoPW.toString(CryptoJS.enc.Utf8);
+                    if (originalPW === password) {
+                        Alert.alert("간편 인증을 완료했습니다.");
+                        db.collection("Auth")
+                            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+                            .update({ AuthState: true });
+                        count.current = 0;
+                        const intervalId = BackgroundTimer.setInterval(() => {
+                            console.log(count.current);
+                            count.current += 1;
+                            if (count.current === 30) {
+                                db.collection("Auth")
+                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+                                    .update({ AuthState: false });
+                                BackgroundTimer.clearInterval(intervalId);
+                                count.current = 0;
+                            }
+                        }, 1000);
+                        navigation.navigate("Profile");
+                    } else {
+                        return Alert.alert("간편 비밀번호를 잘못 입력하였습니다.");
+                    }
                 });
         } catch (e) {
             Alert.alert("간편 비밀번호 인증 오류입니다.");
         }
     };
     const goToEditPW = () => {
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                if (data.data().SimplePWEditState === true) {
+                    Alert.alert("이미 간편 비밀번호가 등록되어 있습니다.");
+                } else {
+                    navigation.navigate("Stack", {
+                        screen: "Edit",
+                    });
+                }
+            });
+    };
+
+    const goToFindPW = () => {
         navigation.navigate("Stack", {
-            screen: "Edit",
+            screen: "FindPW",
         });
     };
 
@@ -157,6 +217,16 @@ const Password = () => {
                     <EditText isDark={isDark}>간편 비밀번호 등록하기</EditText>
                 </EditLine>
             </EditBtn>
+            <FindLine>
+                <Find>
+                    <FindText>간편 비밀번호를 잊으셨나요?</FindText>
+                </Find>
+                <FindBtn onPress={goToFindPW}>
+                    <GoToFind>
+                        <GoToFindText>클릭하여 찾으러 가기</GoToFindText>
+                    </GoToFind>
+                </FindBtn>
+            </FindLine>
         </Container>
     );
 };

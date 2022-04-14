@@ -5,6 +5,7 @@ import RNRestart from "react-native-restart";
 import { ActivityIndicator, Alert, useColorScheme } from "react-native";
 import { firebase } from "@react-native-firebase/firestore";
 import Config from "react-native-config";
+import CryptoJS from "react-native-crypto-js";
 
 const Container = styled.View`
     flex: 1;
@@ -189,8 +190,6 @@ const Login = () => {
                         .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
                         .get()
                         .then((data) => {
-                            console.log(data);
-                            console.log(data.data());
                             if (data._data === undefined) {
                                 db.collection("Auth")
                                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
@@ -199,10 +198,8 @@ const Login = () => {
                                         IDcardAuth: false,
                                         CEOAuth: false,
                                         SimplePW: Config.SIMPLE_PW_DEFAULT,
-                                        SimplePWState: false,
                                         SimplePWEditState: false,
-                                        FingerprintState: false,
-                                        Token: token,
+                                        AuthState: false,
                                     });
                                 const cryptoPW = CryptoJS.AES.encrypt(
                                     token,
