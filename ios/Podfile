@@ -36,6 +36,8 @@ target 'IDCatch' do
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
+  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
+
   post_install do |installer|
     react_native_post_install(installer)
 

@@ -223,10 +223,13 @@ dependencies {
     implementation project(':react-native-restart')
     implementation project(':react-native-config')
     implementation project(':react-native-fs')
+    implementation project(':react-native-background-timer')
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-firestore'
+    implementation "com.google.firebase:firebase-functions"
+    implementation "com.google.firebase:firebase-messaging"
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
