@@ -5,6 +5,8 @@ import TouchID from "react-native-touch-id";
 import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/firestore";
+import BackgroundTimer from "react-native-background-timer";
+import { BLACK_COLOR, GREEN_COLOR } from "../color";
 
 const CheckContainer = styled.View`
     flex: 1;
@@ -93,39 +95,33 @@ const Title = styled.Text`
     border-width: 3px;
 `;
 
+const NoticeView = styled.View`
+    margin: 0px 20px;
+    margin-bottom: 30px;
+    padding: 20px 10px;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: ${(props) => (props.isDark ? BLACK_COLOR : "grey")};
+    background-color: ${(props) => (props.isDark ? "#2f3542" : " #f1f2f6")};
+`;
+
+const Notice = styled.Text`
+    color: tomato;
+    font-size: 14px;
+`;
+
+const Caution = styled.Text`
+    text-align: center;
+    margin-bottom: 5px;
+    color: tomato;
+    font-size: 17px;
+`;
+
 const Check = () => {
+    const db = firebase.firestore();
     const isDark = useColorScheme() === "dark";
     const navigation = useNavigation();
-    const time = useRef(180);
-    const timerId = useRef(null);
-    const [min, setMin] = useState(3);
-    const [sec, setSec] = useState(0);
-
-    const startTimer = () => {
-        clearInterval(timerId.current);
-        time.current = 30;
-        setMin(3);
-        setSec(0);
-        timerId.current = setInterval(() => {
-            time.current -= 1;
-            setSec(time.current % 60);
-            setMin(parseInt(time.current / 60));
-        }, 1000);
-    };
-    const stopTimer = () => {
-        setMin(3);
-        setSec(0);
-        clearInterval(timerId.current);
-    };
-    useEffect(() => {
-        if (time.current <= 0) {
-            clearInterval(timerId.current);
-            db.collection("Auth")
-                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                .update({ FingerprintState: false });
-            stopTimer();
-        }
-    }, [sec]);
+    const count = useRef(0);
 
     const optionalConfigObject = {
         title: "Authentication Required", // 타이틀
@@ -142,14 +138,23 @@ const Check = () => {
     const TouchId = () => {
         TouchID.authenticate("description", optionalConfigObject)
             .then((success) => {
-                Alert.alert("간편 인증을 완료했습니다. 간편 인증은 인증 후 10분 동안 유효합니다.");
+                Alert.alert("간편 인증을 완료했습니다.");
                 db.collection("Auth")
                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                    .update({ FingerprintState: true });
-                startTimer();
+                    .update({ AuthState: true });
+                count.current = 0;
+                const intervalId = BackgroundTimer.setInterval(() => {
+                    count.current += 1;
+                    if (count.current === 30) {
+                        db.collection("Auth")
+                            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+                            .update({ AuthState: false });
+                        BackgroundTimer.clearInterval(intervalId);
+                        count.current = 0;
+                    }
+                }, 1000);
             })
             .catch((error) => {
-                stopTimer();
                 switch (error.name) {
                     case "LAErrorTouchIDNotEnrolled": {
                         Alert.alert("등록된 지문이 없습니다. 휴대폰 지문 등록을 해주세요.");
@@ -225,6 +230,13 @@ const Check = () => {
 
     return (
         <CheckContainer>
+            <NoticeView isDark={isDark}>
+                <Caution>주 의</Caution>
+                <Notice>
+                    간편 인증 오류 최소화를 위해 인증 후 30초 동안 스마트폰 화면 하단에 내비게이션 버튼 클릭 후 모두 닫기 또는 로그아웃
+                    버튼을 누르지 마십시오. 백그라운드 실행이 종료될 경우 다시 인증을 해주셔야 합니다.
+                </Notice>
+            </NoticeView>
             <TitleView isDark={isDark}>
                 <Title isDark={isDark}>간편 인증</Title>
             </TitleView>
