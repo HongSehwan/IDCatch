@@ -1,8 +1,11 @@
-import React from "react";
-import { useColorScheme } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, useColorScheme } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { BLACK_COLOR } from "../color";
+import auth from "@react-native-firebase/auth";
+import { firebase } from "@react-native-firebase/firestore";
+import RNRestart from "react-native-restart";
 
 const Container = styled.View`
     flex: 1;
@@ -34,7 +37,7 @@ const CEOBtnText = styled.Text`
 
 const NoticeView = styled.View`
     margin: 0px 20px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     padding: 20px 10px;
     border-width: 1px;
     border-radius: 5px;
@@ -118,18 +121,63 @@ const AuthText = styled.Text`
     font-size: 9.3px;
 `;
 
+const TransformBtn = styled.TouchableOpacity`
+    margin: 0px 100px;
+    width: 285px;
+`;
+
+const Transform = styled.View`
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    border-radius: 20px;
+    border-width: 1px;
+    border-color: ${(props) => (props.isDark ? "white" : "grey")};
+    background-color: white;
+`;
+
+const TransformText = styled.Text`
+    color: #596275;
+    font-weight: 700;
+    font-size: 18px;
+`;
+
+const NView = styled.View`
+    align-items: center;
+    margin-top: 10px;
+`;
+
+const NText = styled.Text`
+    color: tomato;
+    font-size: 13px;
+`;
+
 const Profile = () => {
+    const db = firebase.firestore();
     const navigation = useNavigation();
     const isDark = useColorScheme() === "dark";
+    const [certification, setCertification] = useState(false);
+    const [transformResult, setTransformResult] = useState(false);
     const goToIDcardAuth = () => {
         navigation.navigate("Stack", {
             screen: "IDcardAuth",
         });
     };
     const goToCEOAuth = () => {
-        navigation.navigate("Stack", {
-            screen: "CEOAuth",
-        });
+        if (certification === true) {
+            Alert.alert("이미 사장님 인증을 완료했습니다. 인증 삭제 요청 시 gg9297@gmail.com으로 문의 바랍니다.");
+        } else {
+            navigation.navigate("Stack", {
+                screen: "CEOAuth",
+            });
+        }
+    };
+    const TransformData = () => {
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .update({ Transform: !transformResult });
+        RNRestart.Restart();
     };
     const goToIamport = () => {
         navigation.navigate("Stack", {
@@ -139,6 +187,16 @@ const Profile = () => {
             // },
         });
     };
+
+    useEffect(() => {
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                setCertification(data.data().CEOAuth);
+                setTransformResult(data.data().Transform);
+            });
+    }, []);
 
     return (
         <Container>
@@ -174,6 +232,18 @@ const Profile = () => {
                     <CEOBtnText>사장님 인증</CEOBtnText>
                 </CEO>
             </CEOBtn>
+            {certification ? (
+                <>
+                    <TransformBtn onPress={TransformData}>
+                        <Transform isDark={isDark}>
+                            <TransformText>모드 전환</TransformText>
+                        </Transform>
+                    </TransformBtn>
+                    <NView>
+                        <NText>사장님 / 고객님 모드 전환</NText>
+                    </NView>
+                </>
+            ) : null}
         </Container>
     );
 };
