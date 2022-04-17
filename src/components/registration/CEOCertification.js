@@ -34,9 +34,6 @@ const CEOCertification = ({ route }) => {
             db.collection("Auth")
                 .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
                 .update({ CEOAuth: true, Transform: true });
-            db.collection("Auth")
-                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
-                .set({ "000": "000" });
         } else {
             setResult(false);
         }

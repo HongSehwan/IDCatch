@@ -16,7 +16,6 @@ const CheckContainer = styled.View`
 
 const Container = styled.View`
     flex: 1;
-    background-color: white;
     justify-content: center;
 `;
 
@@ -134,14 +133,14 @@ const ClientPhoneNum = styled.View`
 const ClientPhoneText = styled.Text`
     font-size: 25px;
     font-weight: 700;
-    color: #57606f;
+    color: ${(props) => (props.isDark ? "white" : " #57606f")};
 `;
 
 const InputContainer = styled.View`
     color: white;
     margin-top: 10px;
     padding: 20px 20px;
-    background-color: white;
+    /* background-color: white; */
 `;
 
 const InputLine = styled.View`
@@ -155,7 +154,7 @@ const FirstPhoneNumTextInput = styled.TextInput`
     font-size: 20px;
     color: #2c3e50;
     border-width: 5px;
-    border-color: white;
+    border-color: ${(props) => (props.isDark ? BLACK_COLOR : "white")};
     border-bottom-color: tomato;
 `;
 
@@ -167,7 +166,7 @@ const SecondPhoneNumTextInput = styled.TextInput`
     font-size: 20px;
     color: #2c3e50;
     border-width: 5px;
-    border-color: white;
+    border-color: ${(props) => (props.isDark ? BLACK_COLOR : "white")};
     border-bottom-color: tomato;
 `;
 
@@ -179,7 +178,7 @@ const ThirdPhoneNumTextInput = styled.TextInput`
     font-size: 20px;
     color: #2c3e50;
     border-width: 5px;
-    border-color: white;
+    border-color: ${(props) => (props.isDark ? BLACK_COLOR : "white")};
     border-bottom-color: tomato;
 `;
 
@@ -396,6 +395,36 @@ const Check = () => {
                         try {
                             console.log(firstCount.current);
                             if (data.data().AuthState) {
+                                db.collection("Auth")
+                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                    .get()
+                                    .then((data) => {
+                                        if (data._data === undefined) {
+                                            db.collection("Auth")
+                                                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                .set({
+                                                    PhoneNumHistory: ["" + firstPhoneNum],
+                                                });
+                                        } else {
+                                            const firstNums = data.data().PhoneNumHistory[0];
+                                            const firstArr = firstNums.split(",");
+                                            if (firstArr.length >= 10) {
+                                                const firstList = firstArr.slice(1);
+                                                const firstText = firstList.join(",");
+                                                db.collection("Auth")
+                                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                    .update({
+                                                        PhoneNumHistory: [firstText + "," + firstPhoneNum],
+                                                    });
+                                            } else {
+                                                db.collection("Auth")
+                                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                    .update({
+                                                        PhoneNumHistory: [data.data().PhoneNumHistory + "," + firstPhoneNum],
+                                                    });
+                                            }
+                                        }
+                                    });
                                 const fInterval = BackgroundTimer.setInterval(() => {
                                     fCount.current += 1;
                                     if (fCount.current >= 1) {
@@ -452,6 +481,36 @@ const Check = () => {
                         try {
                             console.log(secondCount.current);
                             if (data.data().AuthState) {
+                                db.collection("Auth")
+                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                    .get()
+                                    .then((data) => {
+                                        if (data._data === undefined) {
+                                            db.collection("Auth")
+                                                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                .set({
+                                                    PhoneNumHistory: ["" + secondPhoneNum],
+                                                });
+                                        } else {
+                                            const secondNums = data.data().PhoneNumHistory[0];
+                                            const secondArr = secondNums.split(",");
+                                            if (secondArr.length >= 10) {
+                                                const secondList = secondArr.slice(1);
+                                                const secondText = secondList.join(",");
+                                                db.collection("Auth")
+                                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                    .update({
+                                                        PhoneNumHistory: [secondText + "," + secondPhoneNum],
+                                                    });
+                                            } else {
+                                                db.collection("Auth")
+                                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                    .update({
+                                                        PhoneNumHistory: [data.data().PhoneNumHistory + "," + secondPhoneNum],
+                                                    });
+                                            }
+                                        }
+                                    });
                                 const sInterval = BackgroundTimer.setInterval(() => {
                                     sCount.current += 1;
                                     if (sCount.current >= 1) {
@@ -464,7 +523,8 @@ const Check = () => {
                                 }, 1000);
                                 BackgroundTimer.clearInterval(secondInterval);
                                 secondCount.current = 0;
-                            } else if (secondCount.current >= 600) {
+                            }
+                            if (secondCount.current >= 600) {
                                 db.collection("Auth")
                                     .doc(secondPhoneNum + "A")
                                     .update({ AuthState: false });
@@ -507,6 +567,36 @@ const Check = () => {
                         try {
                             console.log(thirdCount.current);
                             if (data.data().AuthState) {
+                                db.collection("Auth")
+                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                    .get()
+                                    .then((data) => {
+                                        if (data._data === undefined) {
+                                            db.collection("Auth")
+                                                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                .set({
+                                                    PhoneNumHistory: ["" + thirdPhoneNum],
+                                                });
+                                        } else {
+                                            const thirdNums = data.data().PhoneNumHistory[0];
+                                            const thirdArr = thirdNums.split(",");
+                                            if (thirdArr.length >= 10) {
+                                                const thirdList = thirdArr.slice(1);
+                                                const thirdText = thirdList.join(",");
+                                                db.collection("Auth")
+                                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                    .update({
+                                                        PhoneNumHistory: [thirdText + "," + thirdPhoneNum],
+                                                    });
+                                            } else {
+                                                db.collection("Auth")
+                                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
+                                                    .update({
+                                                        PhoneNumHistory: [data.data().PhoneNumHistory + "," + thirdPhoneNum],
+                                                    });
+                                            }
+                                        }
+                                    });
                                 const tInterval = BackgroundTimer.setInterval(() => {
                                     tCount.current += 1;
                                     if (tCount.current >= 1) {
@@ -519,7 +609,8 @@ const Check = () => {
                                 }, 1000);
                                 BackgroundTimer.clearInterval(thirdInterval);
                                 thirdCount.current = 0;
-                            } else if (thirdCount.current >= 600) {
+                            }
+                            if (thirdCount.current >= 600) {
                                 db.collection("Auth")
                                     .doc(thirdPhoneNum + "A")
                                     .update({ AuthState: false });
@@ -582,12 +673,13 @@ const Check = () => {
                             </Notice>
                         </NoticeView>
                         <ClientPhoneNum>
-                            <ClientPhoneText>고객 휴대폰 번호</ClientPhoneText>
+                            <ClientPhoneText isDark={isDark}>고객 휴대폰 번호</ClientPhoneText>
                         </ClientPhoneNum>
                         <InputContainer>
                             <InputLine>
                                 <FirstView>
                                     <FirstPhoneNumTextInput
+                                        isDark={isDark}
                                         placeholder="- 없이 입력"
                                         autoCapitalize="none"
                                         autoCorrect={false}
@@ -606,6 +698,7 @@ const Check = () => {
                                 </FirstView>
                                 <SecondView>
                                     <SecondPhoneNumTextInput
+                                        isDark={isDark}
                                         placeholder="- 없이 입력"
                                         autoCapitalize="none"
                                         autoCorrect={false}
@@ -624,6 +717,7 @@ const Check = () => {
                                 </SecondView>
                                 <ThirdView>
                                     <ThirdPhoneNumTextInput
+                                        isDark={isDark}
                                         placeholder="- 없이 입력"
                                         autoCapitalize="none"
                                         autoCorrect={false}
