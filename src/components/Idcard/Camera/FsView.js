@@ -13,7 +13,7 @@ const FsView = ({ route }) => {
     const db = firebase.firestore();
     const navigation = useNavigation();
     const [loadingExtract, setLoadingExtract] = useState(true);
-    const [extract, setExtract] = useState("");
+    const [extractData, setExtractData] = useState("");
     const { uri } = route.params;
     useEffect(async () => {
         if (uri) {
@@ -22,16 +22,16 @@ const FsView = ({ route }) => {
             });
             const extract = await callGoogleVIsionApi(result);
             const userInfo = CryptoJS.AES.encrypt(extract, 0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]).toString();
-            db.collection("IDcardAuth")
+            db.collection("Auth")
                 .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                .set({ name: userInfo });
-            setExtract(extract);
+                .update({ name: userInfo });
+            setExtractData(extract);
             setLoadingExtract(false);
         }
     }, []);
 
     const TryAgain = () => {
-        navigation.navigate("IDcardAuth");
+        navigation.navigate("Auth");
     };
 
     const CertificationCheck = () => {
@@ -42,7 +42,7 @@ const FsView = ({ route }) => {
         <SafeAreaView style={styles.container}>
             <Image style={styles.image} source={{ uri: uri }} />
             <Text style={styles.heading}>신분증 촬영 결과</Text>
-            <Text style={styles.extracted}>{loadingExtract ? "Loading..." : extract ? extract : null}</Text>
+            <Text style={styles.extracted}>{loadingExtract ? "Loading..." : extractData ? extractData : null}</Text>
             <View style={styles.Btn}>
                 <View style={styles.Again}>
                     <TouchableOpacity onPress={TryAgain}>

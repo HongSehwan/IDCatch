@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useColorScheme, Alert } from "react-native";
+import { useColorScheme, Alert, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import TouchID from "react-native-touch-id";
 import { useNavigation } from "@react-navigation/native";
@@ -13,6 +13,13 @@ const CheckContainer = styled.View`
     align-items: center;
     justify-content: center;
 `;
+
+const Container = styled.View`
+    flex: 1;
+    background-color: white;
+    justify-content: center;
+`;
+
 const IdCheckBtn = styled.TouchableOpacity`
     margin: 0px 100px;
     width: 285px;
@@ -107,21 +114,126 @@ const NoticeView = styled.View`
 
 const Notice = styled.Text`
     color: tomato;
-    font-size: 14px;
+    font-size: 13.9px;
 `;
 
 const Caution = styled.Text`
     text-align: center;
     margin-bottom: 5px;
     color: tomato;
-    font-size: 17px;
+    font-size: 18.5px;
+    font-weight: 700;
+`;
+
+const ClientPhoneNum = styled.View`
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-left: 55px;
+`;
+
+const ClientPhoneText = styled.Text`
+    font-size: 25px;
+    font-weight: 700;
+    color: #57606f;
+`;
+
+const InputContainer = styled.View`
+    color: white;
+    margin-top: 10px;
+    padding: 20px 20px;
+    background-color: white;
+`;
+
+const InputLine = styled.View`
+    /* align-items: center; */
+`;
+const FirstPhoneNumTextInput = styled.TextInput`
+    width: 70%;
+    padding: 10px 20px;
+    margin-left: 15px;
+    margin-bottom: 60px;
+    font-size: 20px;
+    color: #2c3e50;
+    border-width: 5px;
+    border-color: white;
+    border-bottom-color: tomato;
+`;
+
+const SecondPhoneNumTextInput = styled.TextInput`
+    width: 70%;
+    padding: 10px 20px;
+    margin-bottom: 60px;
+    margin-left: 15px;
+    font-size: 20px;
+    color: #2c3e50;
+    border-width: 5px;
+    border-color: white;
+    border-bottom-color: tomato;
+`;
+
+const ThirdPhoneNumTextInput = styled.TextInput`
+    width: 70%;
+    padding: 10px 20px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #2c3e50;
+    border-width: 5px;
+    border-color: white;
+    border-bottom-color: tomato;
+`;
+
+const FirstView = styled.View`
+    flex-direction: row;
+`;
+
+const SecondView = styled.View`
+    flex-direction: row;
+`;
+
+const ThirdView = styled.View`
+    flex-direction: row;
+`;
+
+const SendBtn = styled.TouchableOpacity``;
+
+const SendView = styled.View`
+    width: 80px;
+    height: 38px;
+    margin-top: 20px;
+    margin-left: 20px;
+    background-color: tomato;
+    border-color: tomato;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+`;
+
+const SendText = styled.Text`
+    color: white;
 `;
 
 const Check = () => {
     const db = firebase.firestore();
     const isDark = useColorScheme() === "dark";
     const navigation = useNavigation();
-    const count = useRef(0);
+    // const count = useRef(0);
+    const firstCount = useRef(0);
+    const secondCount = useRef(0);
+    const thirdCount = useRef(0);
+    const fCount = useRef(0);
+    const sCount = useRef(0);
+    const tCount = useRef(0);
+    const [transformState, setTransformState] = useState(false);
+    const [firstPhoneNum, setFirstPhoneNum] = useState("");
+    const [secondPhoneNum, setSecondPhoneNum] = useState("");
+    const [thirdPhoneNum, setThirdPhoneNum] = useState("");
+    const [firstsendLoading, setFirstSendLoading] = useState(false);
+    const [secondsendLoading, setSecondSendLoading] = useState(false);
+    const [thirdsendLoading, setThirdSendLoading] = useState(false);
+    // const [firstState, setFirstState] = useState(false);
+    // const [secondState, setSecondState] = useState(false);
+    // const [thirdState, setThirdState] = useState(false);
 
     const optionalConfigObject = {
         title: "Authentication Required", // 타이틀
@@ -136,127 +248,404 @@ const Check = () => {
     };
 
     const TouchId = () => {
-        TouchID.authenticate("description", optionalConfigObject)
-            .then((success) => {
-                Alert.alert("간편 인증을 완료했습니다.");
-                db.collection("Auth")
-                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                    .update({ AuthState: true });
-                count.current = 0;
-                const intervalId = BackgroundTimer.setInterval(() => {
-                    count.current += 1;
-                    if (count.current === 30) {
-                        db.collection("Auth")
-                            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                            .update({ AuthState: false });
-                        BackgroundTimer.clearInterval(intervalId);
-                        count.current = 0;
-                    }
-                }, 1000);
-            })
-            .catch((error) => {
-                switch (error.name) {
-                    case "LAErrorTouchIDNotEnrolled": {
-                        Alert.alert("등록된 지문이 없습니다. 휴대폰 지문 등록을 해주세요.");
-                    }
-                }
-                switch (error.name) {
-                    case "LAErrorUserCancel": {
-                        Alert.alert("지문 인증을 취소했습니다.");
-                    }
-                }
-                switch (error.name) {
-                    case "LAErrorSystemCancel": {
-                        Alert.alert("시스템에서 인증을 취소했습니다.");
-                    }
-                }
-                switch (error.name) {
-                    case "LAErrorTouchIDNotAvailable": {
-                        Alert.alert("지문 인식 실행 오류입니다.");
-                    }
-                }
-                switch (error.name) {
-                    case "LAErrorAuthenticationFailed": {
-                        Alert.alert("유효한 자격 증명을 제공하지 못했습니다. 잠시후 다시 시도해주세요.");
-                    }
-                }
-                switch (error.name) {
-                    case "LAErrorPasscodeNotSet": {
-                        Alert.alert("암호가 설정되어 있지 않아 인증을 시작할 수 없습니다.");
-                    }
-                }
-                switch (error.name) {
-                    case "LAErrorTouchIDLockout": {
-                        Alert.alert("실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요.");
-                    }
-                }
-                switch (error.name) {
-                    case "RCTTouchIDNotSupported": {
-                        Alert.alert("지문 인식을 사용할 수 없는 기기입니다.");
-                    }
-                }
-                switch (error.name) {
-                    case "LAErrorUserFallback": {
-                        Alert.alert("대체 비밀번호 입력을 선택하였습니다.");
-                    }
-                }
-                switch (error.details) {
-                    case "cancelled": {
-                        Alert.alert("지문 인증을 취소했습니다.");
-                    }
-                }
-                switch (error.details) {
-                    case "failed": {
-                        Alert.alert("지문 인증에 실패했습니다.");
-                    }
-                }
-                switch (error.details) {
-                    case "Too many attempts. Try again Later.": {
-                        Alert.alert("실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요.");
-                    }
-                }
-                switch (error.details) {
-                    case "Too many attempts. Fingerprint sensor disabled.": {
-                        Alert.alert("시도 횟수가 너무 많아 지문 센서가 비활성화 되었습니다.");
-                    }
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                if (!data.data().SelfAuth || !data.data().IDcardAuth) {
+                    return Alert.alert("성인 인증(본인 인증 / 신분증 인증)이 필요합니다.");
+                } else {
+                    db.collection("Auth")
+                        .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
+                        .update({ AuthState: false });
+                    TouchID.authenticate("description", optionalConfigObject)
+                        .then((success) => {
+                            Alert.alert("간편 인증을 완료했습니다.");
+                            db.collection("Auth")
+                                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
+                                .update({ AuthState: true });
+                            // count.current = 0;
+                            // const intervalId = BackgroundTimer.setInterval(() => {
+                            //     count.current += 1;
+                            //     console.log(count.current);
+                            //     if (count.current >= 25) {
+                            //         db.collection("Auth")
+                            //             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
+                            //             .update({ AuthState: false });
+                            //         BackgroundTimer.clearInterval(intervalId);
+                            //         count.current = 0;
+                            //     }
+                            // }, 1000);
+                        })
+                        .catch((error) => {
+                            switch (error.name) {
+                                case "LAErrorTouchIDNotEnrolled": {
+                                    Alert.alert("등록된 지문이 없습니다. 휴대폰 지문 등록 바랍니다.");
+                                }
+                            }
+                            switch (error.name) {
+                                case "LAErrorUserCancel": {
+                                    Alert.alert("지문 인증을 취소했습니다.");
+                                }
+                            }
+                            switch (error.name) {
+                                case "LAErrorSystemCancel": {
+                                    Alert.alert("시스템에서 인증을 취소했습니다.");
+                                }
+                            }
+                            switch (error.name) {
+                                case "LAErrorTouchIDNotAvailable": {
+                                    Alert.alert("지문 인식 실행 오류입니다.");
+                                }
+                            }
+                            switch (error.name) {
+                                case "LAErrorAuthenticationFailed": {
+                                    Alert.alert("유효한 자격 증명을 제공하지 못했습니다. 잠시후 다시 시도해주세요.");
+                                }
+                            }
+                            switch (error.name) {
+                                case "LAErrorPasscodeNotSet": {
+                                    Alert.alert("암호가 설정되어 있지 않아 인증을 시작할 수 없습니다.");
+                                }
+                            }
+                            switch (error.name) {
+                                case "LAErrorTouchIDLockout": {
+                                    Alert.alert("실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요.");
+                                }
+                            }
+                            switch (error.name) {
+                                case "RCTTouchIDNotSupported": {
+                                    Alert.alert("지문 인식을 사용할 수 없는 기기입니다.");
+                                }
+                            }
+                            switch (error.name) {
+                                case "LAErrorUserFallback": {
+                                    Alert.alert("대체 비밀번호 입력을 선택하였습니다.");
+                                }
+                            }
+                            switch (error.details) {
+                                case "cancelled": {
+                                    Alert.alert("지문 인증을 취소했습니다.");
+                                }
+                            }
+                            switch (error.details) {
+                                case "failed": {
+                                    Alert.alert("지문 인증에 실패했습니다.");
+                                }
+                            }
+                            switch (error.details) {
+                                case "Too many attempts. Try again Later.": {
+                                    Alert.alert("실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요.");
+                                }
+                            }
+                            switch (error.details) {
+                                case "Too many attempts. Fingerprint sensor disabled.": {
+                                    Alert.alert("시도 횟수가 너무 많아 지문 센서가 비활성화 되었습니다.");
+                                }
+                            }
+                        });
                 }
             });
     };
     const goToSimplePW = () => {
-        navigation.navigate("Stack", {
-            screen: "Password",
-        });
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                if (!data.data().SelfAuth || !data.data().IDcardAuth) {
+                    return Alert.alert("성인 인증(본인 인증 / 신분증 인증)이 필요합니다.");
+                } else {
+                    navigation.navigate("Stack", {
+                        screen: "Password",
+                    });
+                }
+            });
+    };
+
+    useEffect(() => {
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                setTransformState(data.data().Transform);
+            });
+    }, []);
+
+    const firstCheck = async () => {
+        if (firstPhoneNum === "") {
+            return Alert.alert("항목이 비어 있습니다.");
+        }
+        if (firstPhoneNum.length !== 11) {
+            return Alert.alert("휴대폰 번호 형식이 아닙니다.");
+        }
+        if (firstsendLoading) {
+            return;
+        }
+        setFirstSendLoading(true);
+        try {
+            Alert.alert("SMS (APP 링크) 전송 완료");
+            db.collection("Auth")
+                .doc(firstPhoneNum + "A")
+                .set({ AuthState: false });
+            const firstInterval = BackgroundTimer.setInterval(() => {
+                firstCount.current += 1;
+                db.collection("Auth")
+                    .doc(firstPhoneNum + "A")
+                    .get()
+                    .then((data) => {
+                        try {
+                            console.log(firstCount.current);
+                            if (data.data().AuthState) {
+                                const fInterval = BackgroundTimer.setInterval(() => {
+                                    fCount.current += 1;
+                                    if (fCount.current >= 1) {
+                                        db.collection("Auth")
+                                            .doc(firstPhoneNum + "A")
+                                            .update({ AuthState: false });
+                                        BackgroundTimer.clearInterval(fInterval);
+                                        fCount.current = 0;
+                                    }
+                                }, 1000);
+                                BackgroundTimer.clearInterval(firstInterval);
+                                firstCount.current = 0;
+                            }
+                            if (firstCount.current >= 600) {
+                                db.collection("Auth")
+                                    .doc(firstPhoneNum + "A")
+                                    .update({ AuthState: false });
+                                BackgroundTimer.clearInterval(firstInterval);
+                                firstCount.current = 0;
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    });
+            }, 1000);
+            setFirstSendLoading(false);
+        } catch (error) {
+            setFirstSendLoading(false);
+        }
+    };
+
+    const secondCheck = async () => {
+        if (secondPhoneNum === "") {
+            return Alert.alert("항목이 비어 있습니다.");
+        }
+        if (secondPhoneNum.length !== 11) {
+            return Alert.alert("휴대폰 번호 형식이 아닙니다.");
+        }
+        if (secondsendLoading) {
+            return;
+        }
+        setSecondSendLoading(true);
+        try {
+            Alert.alert("SMS (APP 링크) 전송 완료");
+            db.collection("Auth")
+                .doc(secondPhoneNum + "A")
+                .set({ AuthState: false });
+            const secondInterval = BackgroundTimer.setInterval(() => {
+                secondCount.current += 1;
+                db.collection("Auth")
+                    .doc(secondPhoneNum + "A")
+                    .get()
+                    .then((data) => {
+                        try {
+                            console.log(secondCount.current);
+                            if (data.data().AuthState) {
+                                const sInterval = BackgroundTimer.setInterval(() => {
+                                    sCount.current += 1;
+                                    if (sCount.current >= 1) {
+                                        db.collection("Auth")
+                                            .doc(secondPhoneNum + "A")
+                                            .update({ AuthState: false });
+                                        BackgroundTimer.clearInterval(sInterval);
+                                        sCount.current = 0;
+                                    }
+                                }, 1000);
+                                BackgroundTimer.clearInterval(secondInterval);
+                                secondCount.current = 0;
+                            } else if (secondCount.current >= 600) {
+                                db.collection("Auth")
+                                    .doc(secondPhoneNum + "A")
+                                    .update({ AuthState: false });
+                                BackgroundTimer.clearInterval(secondInterval);
+                                secondCount.current = 0;
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    });
+            }, 1000);
+            setSecondSendLoading(false);
+        } catch (error) {
+            setSecondSendLoading(false);
+        }
+    };
+
+    const thirdCheck = async () => {
+        if (thirdPhoneNum === "") {
+            return Alert.alert("항목이 비어 있습니다.");
+        }
+        if (thirdPhoneNum.length !== 11) {
+            return Alert.alert("휴대폰 번호 형식이 아닙니다.");
+        }
+        if (thirdsendLoading) {
+            return;
+        }
+        setThirdSendLoading(true);
+        try {
+            Alert.alert("SMS (APP 링크) 전송 완료");
+            db.collection("Auth")
+                .doc(thirdPhoneNum + "A")
+                .set({ AuthState: false });
+            const thirdInterval = BackgroundTimer.setInterval(() => {
+                thirdCount.current += 1;
+                db.collection("Auth")
+                    .doc(thirdPhoneNum + "A")
+                    .get()
+                    .then((data) => {
+                        try {
+                            console.log(thirdCount.current);
+                            if (data.data().AuthState) {
+                                const tInterval = BackgroundTimer.setInterval(() => {
+                                    tCount.current += 1;
+                                    if (tCount.current >= 1) {
+                                        db.collection("Auth")
+                                            .doc(thirdPhoneNum + "A")
+                                            .update({ AuthState: false });
+                                        BackgroundTimer.clearInterval(tInterval);
+                                        tCount.current = 0;
+                                    }
+                                }, 1000);
+                                BackgroundTimer.clearInterval(thirdInterval);
+                                thirdCount.current = 0;
+                            } else if (thirdCount.current >= 600) {
+                                db.collection("Auth")
+                                    .doc(thirdPhoneNum + "A")
+                                    .update({ AuthState: false });
+                                BackgroundTimer.clearInterval(thirdInterval);
+                                thirdCount.current = 0;
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    });
+            }, 1000);
+            setThirdSendLoading(false);
+        } catch (error) {
+            setThirdSendLoading(false);
+        }
     };
 
     return (
-        <CheckContainer>
-            <NoticeView isDark={isDark}>
-                <Caution>주 의</Caution>
-                <Notice>
-                    간편 인증 오류 최소화를 위해 인증 후 30초 동안 스마트폰 화면 하단에 내비게이션 버튼 클릭 후 모두 닫기 또는 로그아웃
-                    버튼을 누르지 마십시오. 백그라운드 실행이 종료될 경우 다시 인증을 해주셔야 합니다.
-                </Notice>
-            </NoticeView>
-            <TitleView isDark={isDark}>
-                <Title isDark={isDark}>간편 인증</Title>
-            </TitleView>
-            <IdCheckBtn onPress={TouchId}>
-                <UserIdCheck>
-                    <IdCheckText>지문인식</IdCheckText>
-                </UserIdCheck>
-            </IdCheckBtn>
-            <PasswordBtn onPress={goToSimplePW}>
-                <Password>
-                    <PasswordText>간편 비밀번호</PasswordText>
-                </Password>
-            </PasswordBtn>
-            <FNoticeView isDark={isDark}>
-                <FNotice>지문인식 / 간편 비밀번호 중 하나의 인증만 필요하며</FNotice>
-            </FNoticeView>
-            <SNoticeView isDark={isDark}>
-                <SNotice>이용시마다 간편 인증이 필요합니다.</SNotice>
-            </SNoticeView>
-        </CheckContainer>
+        <>
+            {!transformState ? (
+                <>
+                    <CheckContainer>
+                        {/* <NoticeView isDark={isDark}>
+                            <Caution>주 의</Caution>
+                            <Notice>
+                                간편 인증 오류 최소화를 위해 인증 후 30초 동안 스마트폰 화면 하단에 내비게이션 버튼 클릭 후 모두 닫기 또는
+                                로그아웃 버튼을 누르지 마십시오. 백그라운드 실행이 종료될 경우 다시 인증을 해주셔야 합니다.
+                            </Notice>
+                        </NoticeView> */}
+                        <TitleView isDark={isDark}>
+                            <Title isDark={isDark}>간편 인증</Title>
+                        </TitleView>
+                        <IdCheckBtn onPress={TouchId}>
+                            <UserIdCheck>
+                                <IdCheckText>지문인식</IdCheckText>
+                            </UserIdCheck>
+                        </IdCheckBtn>
+                        <PasswordBtn onPress={goToSimplePW}>
+                            <Password>
+                                <PasswordText>간편 비밀번호</PasswordText>
+                            </Password>
+                        </PasswordBtn>
+                        <FNoticeView isDark={isDark}>
+                            <FNotice>지문인식 / 간편 비밀번호 중 하나의 인증만 필요하며</FNotice>
+                        </FNoticeView>
+                        <SNoticeView isDark={isDark}>
+                            <SNotice>이용시마다 간편 인증이 필요합니다.</SNotice>
+                        </SNoticeView>
+                    </CheckContainer>
+                </>
+            ) : (
+                <>
+                    <Container>
+                        <NoticeView isDark={isDark}>
+                            <Caution>주 의</Caution>
+                            <Notice>
+                                고객의 간편 인증 결과를 실시간 알림으로 받기 위해 SMS (IDCatch 링크) 발송 후 10분 동안 스마트폰 화면 하단에
+                                내비게이션 바 터치 후 모두 닫기 또는 로그아웃 버튼을 누르지 마십시오. 백그라운드 실행이 종료될 경우 인증
+                                결과 PUSH 알림이 수신 않을 수도 있습니다.
+                            </Notice>
+                        </NoticeView>
+                        <ClientPhoneNum>
+                            <ClientPhoneText>고객 휴대폰 번호</ClientPhoneText>
+                        </ClientPhoneNum>
+                        <InputContainer>
+                            <InputLine>
+                                <FirstView>
+                                    <FirstPhoneNumTextInput
+                                        placeholder="- 없이 입력"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        placeholderTextColor="grey"
+                                        keyboardType="number-pad"
+                                        returnKeyType="done"
+                                        value={firstPhoneNum}
+                                        onChangeText={(num) => setFirstPhoneNum(num)}
+                                        onSubmitEditing={firstCheck}
+                                    />
+                                    <SendBtn onPress={firstCheck}>
+                                        <SendView>
+                                            {firstsendLoading ? <ActivityIndicator color="white" /> : <SendText>SMS 전송</SendText>}
+                                        </SendView>
+                                    </SendBtn>
+                                </FirstView>
+                                <SecondView>
+                                    <SecondPhoneNumTextInput
+                                        placeholder="- 없이 입력"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        placeholderTextColor="grey"
+                                        keyboardType="number-pad"
+                                        returnKeyType="done"
+                                        value={secondPhoneNum}
+                                        onChangeText={(num) => setSecondPhoneNum(num)}
+                                        onSubmitEditing={secondCheck}
+                                    />
+                                    <SendBtn onPress={secondCheck}>
+                                        <SendView>
+                                            {secondsendLoading ? <ActivityIndicator color="white" /> : <SendText>SMS 전송</SendText>}
+                                        </SendView>
+                                    </SendBtn>
+                                </SecondView>
+                                <ThirdView>
+                                    <ThirdPhoneNumTextInput
+                                        placeholder="- 없이 입력"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        placeholderTextColor="grey"
+                                        keyboardType="number-pad"
+                                        returnKeyType="done"
+                                        value={thirdPhoneNum}
+                                        onChangeText={(num) => setThirdPhoneNum(num)}
+                                        onSubmitEditing={thirdCheck}
+                                    />
+                                    <SendBtn onPress={thirdCheck}>
+                                        <SendView>
+                                            {thirdsendLoading ? <ActivityIndicator color="white" /> : <SendText>SMS 전송</SendText>}
+                                        </SendView>
+                                    </SendBtn>
+                                </ThirdView>
+                            </InputLine>
+                        </InputContainer>
+                    </Container>
+                </>
+            )}
+        </>
     );
 };
 

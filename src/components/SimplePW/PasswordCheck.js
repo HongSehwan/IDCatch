@@ -64,15 +64,39 @@ const EditCheckText = styled.Text`
     font-size: 18px;
 `;
 
+const HintLine = styled.View`
+    width: 70%;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    border-radius: 20px;
+    border-width: 1px;
+    border-color: ${(props) => (props.isDark ? "white" : "grey")};
+    background-color: white;
+`;
+
+const HintTextInput = styled.TextInput`
+    width: 100%;
+    height: 40px;
+    color: #596275;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+`;
+
 const PasswordCheck = () => {
     const db = firebase.firestore();
     const navigation = useNavigation();
     const inputRef = useRef(null);
+    const hintRef = useRef(null);
     const { editpw } = useSelector((state) => state.authReducer);
-    const [password, setPassword] = useState(null);
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [hint, setHint] = useState("");
+
     const checkEditing = () => {
-        if (password === "") {
+        if (password === "" || hint === "") {
             return Alert.alert("항목이 비어 있습니다.");
         }
         if (password.length >= 1 && password.length < 6) {
@@ -85,9 +109,16 @@ const PasswordCheck = () => {
                     password,
                     0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
                 ).toString();
+                const cryptoHint = CryptoJS.AES.encrypt(
+                    hint,
+                    0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
+                ).toString();
                 db.collection("Auth")
                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
                     .update({ SimplePWEditState: true, SimplePW: cryptoPW });
+                db.collection("Auth")
+                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+                    .update({ Hint: cryptoHint });
                 navigation.navigate("Stack", {
                     screen: "Password",
                 });
@@ -102,6 +133,12 @@ const PasswordCheck = () => {
         inputRef.current.focus();
     }, []);
 
+    useEffect(() => {
+        if (password?.toString().length > 5) {
+            hintRef.current.focus();
+        }
+    }, [password]);
+
     const isDark = useColorScheme() === "dark";
     return (
         <Container isDark={isDark}>
@@ -115,9 +152,20 @@ const PasswordCheck = () => {
                     keyboardType="number-pad"
                     value={password}
                     onChangeText={(num) => setPassword(num)}
-                    onSubmitEditing={checkEditing}
                 />
             </PasswordCheckLine>
+            <HintLine>
+                <HintTextInput
+                    ref={hintRef}
+                    placeholder="비밀번호 변경 시 사용할 힌트 입력"
+                    placeholderTextColor="#bdc3c7"
+                    autoCorrect={false}
+                    maxLength={10}
+                    value={hint}
+                    onChangeText={(text) => setHint(text)}
+                    onSubmitEditing={checkEditing}
+                />
+            </HintLine>
             <EditCheckBtn onPress={checkEditing}>
                 <EditCheckLine isDark={isDark}>
                     <EditCheckText isDark={isDark}>간편 비밀번호 등록</EditCheckText>

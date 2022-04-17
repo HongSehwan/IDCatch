@@ -32,11 +32,11 @@ target 'IDCatch' do
 
   pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
 
-  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
-
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
   pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
+
+  pod 'RNCCheckbox', :path => '../node_modules/@react-native-community/checkbox'
 
   post_install do |installer|
     react_native_post_install(installer)

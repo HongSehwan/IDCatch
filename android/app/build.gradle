@@ -224,6 +224,7 @@ dependencies {
     implementation project(':react-native-config')
     implementation project(':react-native-fs')
     implementation project(':react-native-background-timer')
+    implementation project(':react-native-community-checkbox')
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.google.firebase:firebase-storage'

@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.multidex.MultiDexApplication;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
+import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -28,6 +30,7 @@ import io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.ocetnik.timer.BackgroundTimerPackage;
+import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
@@ -53,6 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactNativeFirebaseAuthPackage();
           new ReactNativeFirebaseAppPackage();
           new BackgroundTimerPackage();
+          new ReactCheckBoxPackage();
           return packages;
         }
 

@@ -2,10 +2,10 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components/native";
 import auth from "@react-native-firebase/auth";
 import RNRestart from "react-native-restart";
-import { ActivityIndicator, Alert, useColorScheme } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
 import { firebase } from "@react-native-firebase/firestore";
-import Config from "react-native-config";
 import CryptoJS from "react-native-crypto-js";
+import CheckBox from "@react-native-community/checkbox";
 
 const Container = styled.View`
     flex: 1;
@@ -39,7 +39,7 @@ const PasswordTextInput = styled.TextInput`
     color: #2c3e50;
 `;
 const InputLine = styled.View`
-    align-items: center;
+    /* align-items: center; */
 `;
 const PhoneCheckBtn = styled.TouchableOpacity`
     width: 100%;
@@ -100,6 +100,35 @@ const Img = styled.Image`
     height: 300px;
 `;
 
+const Agreement = styled.View`
+    flex-direction: row;
+    align-items: center;
+    /* margin-left: 5px; */
+    margin-bottom: 10px;
+`;
+
+const AgreementText = styled.Text`
+    margin-left: 8px;
+    font-size: 15px;
+    color: #34495e;
+`;
+
+const Disabled = styled.View`
+    width: 100%;
+    padding: 10px 20px;
+    margin-bottom: 40px;
+    border-width: 1px;
+    border-radius: 20px;
+    border-color: #95a5a6;
+    justify-content: center;
+    align-items: center;
+`;
+
+const DisabledText = styled.Text`
+    color: #95a5a6;
+    font-size: 16px;
+`;
+
 const Login = () => {
     const db = firebase.firestore();
     const passwordInput = useRef();
@@ -110,6 +139,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [sendLoading, setSendLoading] = useState(false);
     const [checkLoading, setCheckLoading] = useState(false);
+    const [toggleCheckBox, setToggleCheckBox] = useState(false);
     const [token, setToken] = useState("");
     const [min, setMin] = useState(3);
     const [sec, setSec] = useState(0);
@@ -190,25 +220,26 @@ const Login = () => {
                         .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
                         .get()
                         .then((data) => {
+                            const cryptoPW = CryptoJS.AES.encrypt(
+                                token,
+                                0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "T"
+                            ).toString();
+                            db.collection("Auth")
+                                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "T")
+                                .set({
+                                    Token: cryptoPW,
+                                });
                             if (data._data === undefined) {
                                 db.collection("Auth")
                                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
                                     .set({
                                         Existing: true,
                                         IDcardAuth: false,
+                                        SelfAuth: false,
                                         CEOAuth: false,
-                                        SimplePW: Config.SIMPLE_PW_DEFAULT,
                                         SimplePWEditState: false,
                                         AuthState: false,
-                                    });
-                                const cryptoPW = CryptoJS.AES.encrypt(
-                                    token,
-                                    0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "T"
-                                ).toString();
-                                db.collection("Auth")
-                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "T")
-                                    .set({
-                                        Token: cryptoPW,
+                                        Transform: false,
                                     });
                             } else {
                                 return;
@@ -278,9 +309,25 @@ const Login = () => {
                             onChangeText={(num) => setPhoneNum(num)}
                             onSubmitEditing={onSubmitPhoneEditing}
                         />
-                        <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
-                            {sendLoading ? <ActivityIndicator color="tomato" /> : <BtnText>Send</BtnText>}
-                        </PhoneCheckBtn>
+                        <Agreement>
+                            <CheckBox
+                                disabled={false}
+                                tintColor={"#b2bec3"}
+                                onTintColor={"white"}
+                                value={toggleCheckBox}
+                                onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                            />
+                            <AgreementText>개인정보 수집·이용 동의</AgreementText>
+                        </Agreement>
+                        {toggleCheckBox ? (
+                            <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
+                                {sendLoading ? <ActivityIndicator color="tomato" /> : <BtnText>Send</BtnText>}
+                            </PhoneCheckBtn>
+                        ) : (
+                            <Disabled>
+                                <DisabledText>Send</DisabledText>
+                            </Disabled>
+                        )}
                     </InputLine>
                     {phoneState ? (
                         <>
