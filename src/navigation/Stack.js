@@ -20,6 +20,7 @@ import Password from "../components/SimplePW/Password";
 import Edit from "../components/SimplePW/Edit";
 import PasswordCheck from "../components/SimplePW/PasswordCheck";
 import FindPW from "../components/SimplePW/FindPW";
+import History from "../components/History";
 
 export const CertificationParams = {
     params: IMPData.CertificationData,
@@ -130,6 +131,13 @@ const Stack = () => {
                 }}
                 name="FindPW"
                 component={FindPW}
+            />
+            <NativeStack.Screen
+                options={{
+                    headerTitle: "최근 인증 이력",
+                }}
+                name="History"
+                component={History}
             />
         </NativeStack.Navigator>
     );

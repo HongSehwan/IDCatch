@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, useColorScheme } from "react-native";
 import styled from "styled-components/native";
 import auth from "@react-native-firebase/auth";
@@ -109,6 +109,20 @@ const Setting = () => {
     const Alarm = () => {
         Alert.alert("해당 기능을 준비중입니다.");
     };
+    const goToHistory = () => {
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                if (data.data().CEOAuth) {
+                    navigation.navigate("Stack", {
+                        screen: "History",
+                    });
+                } else {
+                    return Alert.alert("사장님 모드 전용입니다.");
+                }
+            });
+    };
     return (
         <SettingContainer>
             <SignOutBtn onPress={onPress}>
@@ -116,7 +130,7 @@ const Setting = () => {
                     <SignOutText isDark={isDark}>로그아웃</SignOutText>
                 </SignOut>
             </SignOutBtn>
-            <HistoryBtn>
+            <HistoryBtn onPress={goToHistory}>
                 <History isDark={isDark}>
                     <HistoryText isDark={isDark}>최근 이력</HistoryText>
                 </History>
