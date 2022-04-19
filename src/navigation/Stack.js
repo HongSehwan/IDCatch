@@ -4,9 +4,8 @@ import { BLACK_COLOR, LIGHT_COLOR, GREEN_COLOR, GREY_COLOR } from "../color";
 import { useColorScheme } from "react-native";
 import IDcardAuth from "../screens/IDcardAuth";
 import CEOAuth from "../screens/CEOAuth";
-import Iamport from "../components/iamport/Iamport";
-import CertificationResult from "../components/iamport/CertificationResult";
-import { IMPData } from "iamport-react-native";
+import NICE from "../components/nice/NICE";
+import CertificationResult from "../components/nice/CertificationResult";
 import CameraHandler from "../components/Idcard/Camera/Camera";
 import PhotoPreview from "../components/Idcard/Camera/PhotoPreview";
 import FsView from "../components/Idcard/Camera/FsView";
@@ -21,11 +20,6 @@ import Edit from "../components/SimplePW/Edit";
 import PasswordCheck from "../components/SimplePW/PasswordCheck";
 import FindPW from "../components/SimplePW/FindPW";
 import History from "../components/History";
-
-export const CertificationParams = {
-    params: IMPData.CertificationData,
-    tierCode: "imp78021912",
-};
 
 const NativeStack = createNativeStackNavigator();
 
@@ -89,7 +83,7 @@ const Stack = () => {
                 name="CEOCertification"
                 component={CEOCertification}
             />
-            <NativeStack.Screen options={{ headerShown: false }} name="Iamport" component={Iamport} />
+            <NativeStack.Screen options={{ headerShown: false }} name="NICE" component={NICE} />
             <NativeStack.Screen
                 options={{
                     headerTitle: "아임포트 본인인증 결과",

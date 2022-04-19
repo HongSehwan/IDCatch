@@ -30,7 +30,7 @@ const callGoogleVIsionApi = async (base64) => {
     }
 };
 
-callGoogleVIsionApi("gs://idcatch/image/IDCatch_logo.png");
+// callGoogleVIsionApi("gs://idcatch/image/IDCatch_logo.png");
 module.exports = {
     callGoogleVIsionApi,
 };
