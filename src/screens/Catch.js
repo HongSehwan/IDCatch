@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useColorScheme, Alert, ActivityIndicator } from "react-native";
+import { useColorScheme, Alert, ActivityIndicator, Linking, Platform } from "react-native";
 import styled from "styled-components/native";
 import TouchID from "react-native-touch-id";
 import { useNavigation } from "@react-navigation/native";
@@ -103,8 +103,8 @@ const Title = styled.Text`
 
 const NoticeView = styled.View`
     margin: 0px 20px;
-    margin-bottom: 30px;
-    padding: 20px 10px;
+    margin-bottom: 20px;
+    padding: 15px 10px;
     border-width: 1px;
     border-radius: 5px;
     border-color: ${(props) => (props.isDark ? BLACK_COLOR : "grey")};
@@ -114,6 +114,12 @@ const NoticeView = styled.View`
 const Notice = styled.Text`
     color: tomato;
     font-size: 13.9px;
+`;
+
+const SMSNotice = styled.Text`
+    color: tomato;
+    font-size: 15px;
+    margin-top: 13px;
 `;
 
 const Caution = styled.Text`
@@ -216,6 +222,7 @@ const Check = () => {
     const db = firebase.firestore();
     const isDark = useColorScheme() === "dark";
     const navigation = useNavigation();
+    const SMSDivider = Platform.OS === "android" ? "?" : "&";
     // const count = useRef(0);
     const firstCount = useRef(0);
     const secondCount = useRef(0);
@@ -382,10 +389,13 @@ const Check = () => {
         }
         setFirstSendLoading(true);
         try {
-            Alert.alert("SMS (APP 링크) 전송 완료");
+            // Alert.alert("SMS (APP 링크)의 본문 내용을 수정하지 마십시오.");
             db.collection("Auth")
                 .doc(firstPhoneNum + "A")
                 .set({ AuthState: false });
+            Linking.openURL(
+                `sms:${firstPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
+            );
             const firstInterval = BackgroundTimer.setInterval(() => {
                 firstCount.current += 1;
                 db.collection("Auth")
@@ -468,10 +478,13 @@ const Check = () => {
         }
         setSecondSendLoading(true);
         try {
-            Alert.alert("SMS (APP 링크) 전송 완료");
+            // Alert.alert("SMS (APP 링크)의 본문 내용을 수정하지 마십시오.");
             db.collection("Auth")
                 .doc(secondPhoneNum + "A")
                 .set({ AuthState: false });
+            Linking.openURL(
+                `sms:${firstPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
+            );
             const secondInterval = BackgroundTimer.setInterval(() => {
                 secondCount.current += 1;
                 db.collection("Auth")
@@ -554,10 +567,13 @@ const Check = () => {
         }
         setThirdSendLoading(true);
         try {
-            Alert.alert("SMS (APP 링크) 전송 완료");
+            // Alert.alert("SMS (APP 링크)의 본문 내용을 수정하지 마십시오.");
             db.collection("Auth")
                 .doc(thirdPhoneNum + "A")
                 .set({ AuthState: false });
+            Linking.openURL(
+                `sms:${firstPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
+            );
             const thirdInterval = BackgroundTimer.setInterval(() => {
                 thirdCount.current += 1;
                 db.collection("Auth")
@@ -671,6 +687,7 @@ const Check = () => {
                                 내비게이션 바 터치 후 모두 닫기 또는 로그아웃 버튼을 누르지 마십시오. 백그라운드 실행이 종료될 경우 인증
                                 결과 PUSH 알림이 수신 않을 수도 있습니다.
                             </Notice>
+                            <SMSNotice>※ SMS (APP 링크)의 본문 내용을 수정하지 마십시오.</SMSNotice>
                         </NoticeView>
                         <ClientPhoneNum>
                             <ClientPhoneText isDark={isDark}>고객 휴대폰 번호</ClientPhoneText>

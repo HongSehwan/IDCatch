@@ -89,6 +89,26 @@ const ServiceText = styled.Text`
     margin-bottom: 10px;
 `;
 
+const InquiryBtn = styled.TouchableOpacity`
+    margin-top: 100px;
+`;
+
+const Inquiry = styled.View`
+    align-items: center;
+    justify-content: center;
+    border-width: 5px;
+    margin: 0px 40px;
+    border-color: ${(props) => (props.isDark ? BLACK_COLOR : "white")};
+    border-bottom-color: grey;
+`;
+
+const InquiryText = styled.Text`
+    color: ${(props) => (props.isDark ? "white" : "#596275")};
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+`;
+
 const Setting = () => {
     const db = firebase.firestore();
     const navigation = useNavigation();
@@ -123,6 +143,10 @@ const Setting = () => {
                 }
             });
     };
+
+    const InquiryMail = () => {
+        Alert.alert("gg9297@gmail.com으로 문의 바랍니다.");
+    };
     return (
         <SettingContainer>
             <SignOutBtn onPress={onPress}>
@@ -145,6 +169,11 @@ const Setting = () => {
                     <ServiceText isDark={isDark}>서비스 약관</ServiceText>
                 </Service>
             </ServiceBtn>
+            <InquiryBtn onPress={InquiryMail}>
+                <Inquiry isDark={isDark}>
+                    <InquiryText isDark={isDark}>이용 문의</InquiryText>
+                </Inquiry>
+            </InquiryBtn>
         </SettingContainer>
     );
 };
