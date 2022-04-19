@@ -30,7 +30,9 @@ const EmptyText = styled.Text`
     font-weight: 700;
     color: ${(props) => (props.isDark ? "white" : BLACK_COLOR)};
 `;
-
+const HistoryScroll = styled.ScrollView`
+    width: 100%;
+`;
 const HistoryLine = styled.View`
     width: 100%;
     background-color: white;
@@ -43,7 +45,7 @@ const HistoryView = styled.View`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 0px 30px;
+    margin: 13px 30px;
     width: 65%;
 `;
 
@@ -73,7 +75,9 @@ const ResultText = styled.Text`
 
 const NoticeView = styled.View`
     width: 85%;
-    margin: 40px 5%;
+    margin: 0px 5%;
+    margin-top: 50px;
+    margin-bottom: 30px;
     padding: 5% 25px;
     border-width: 1px;
     border-radius: 5px;
@@ -119,16 +123,18 @@ const History = () => {
                     <NoticeView isDark={isDark}>
                         <Notice>최근 인증 이력 10개가 보여집니다.</Notice>
                     </NoticeView>
-                    <HistoryLine isDark={isDark}>
-                        {historyData.map((data) => (
-                            <HistoryView>
-                                <HistoryText isDark={isDark}>{data}</HistoryText>
-                                <AuthResult>
-                                    <ResultText>인증 완료</ResultText>
-                                </AuthResult>
-                            </HistoryView>
-                        ))}
-                    </HistoryLine>
+                    <HistoryScroll>
+                        <HistoryLine isDark={isDark}>
+                            {historyData.map((data) => (
+                                <HistoryView>
+                                    <HistoryText isDark={isDark}>{data}</HistoryText>
+                                    <AuthResult>
+                                        <ResultText>인증 완료</ResultText>
+                                    </AuthResult>
+                                </HistoryView>
+                            ))}
+                        </HistoryLine>
+                    </HistoryScroll>
                 </>
             )}
         </Container>

@@ -36,6 +36,7 @@ const CEOBtnText = styled.Text`
 `;
 
 const NoticeView = styled.View`
+    align-items: center;
     margin: 0px 20px;
     margin-bottom: 10px;
     padding: 20px 10px;
@@ -48,6 +49,7 @@ const NoticeView = styled.View`
 const Notice = styled.Text`
     color: tomato;
     font-size: 13px;
+    margin-bottom: 2px;
 `;
 
 const TitleView = styled.View`
@@ -118,7 +120,7 @@ const Auth = styled.View`
 
 const AuthText = styled.Text`
     color: tomato;
-    font-size: 9.3px;
+    font-size: 10px;
 `;
 
 const TransformBtn = styled.TouchableOpacity`
@@ -160,9 +162,18 @@ const Profile = () => {
     const [certification, setCertification] = useState(false);
     const [transformResult, setTransformResult] = useState(false);
     const goToIDcardAuth = () => {
-        navigation.navigate("Stack", {
-            screen: "IDcardAuth",
-        });
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                if (data.data().SelfAuth) {
+                    navigation.navigate("Stack", {
+                        screen: "IDcardAuth",
+                    });
+                } else {
+                    Alert.alert("본인인증 완료 후 가능합니다.");
+                }
+            });
     };
     const goToCEOAuth = () => {
         if (certification === true) {
@@ -201,10 +212,8 @@ const Profile = () => {
     return (
         <Container>
             <NoticeView isDark={isDark}>
-                <Notice>
-                    IDCatch는 주류 판매에 대한 성인 인증 APP 입니다. 해당 APP은 미성년자 주류 판매를 제한하는 다중 인증 시스템 APP으로
-                    IDCatch는 법적인 책임을 가지고 있지 않습니다.
-                </Notice>
+                <Notice>IDCatch는 주류 배달 비대면 성인인증 애플리케이션으로</Notice>
+                <Notice>미성년자 주류 판매를 제한하는 다중 인증 시스템을 지원합니다.</Notice>
             </NoticeView>
             <TitleView isDark={isDark}>
                 <Title isDark={isDark}>성인 인증</Title>
@@ -221,7 +230,7 @@ const Profile = () => {
                     </IdCertification>
                 </IdCertificationBtn>
                 <Auth>
-                    <AuthText>본인 인증과 신분증 인증은 최초 1회만 인증하며 모든 인증이 필요합니다.</AuthText>
+                    <AuthText>본인인증과 신분증 인증 정보는 일치해야 하며 최초 1회만 인증합니다.</AuthText>
                 </Auth>
             </Certification>
             <TitleView isDark={isDark}>

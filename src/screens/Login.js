@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import auth from "@react-native-firebase/auth";
 import RNRestart from "react-native-restart";
 import { ActivityIndicator, Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { firebase } from "@react-native-firebase/firestore";
 import CryptoJS from "react-native-crypto-js";
 import CheckBox from "@react-native-community/checkbox";
@@ -68,6 +69,11 @@ const BtnText = styled.Text`
 const Footer = styled.View`
     align-items: center;
 `;
+const FooterInfo = styled.View`
+    align-items: center;
+    background-color: white;
+`;
+
 const FooterText = styled.Text`
     color: black;
     font-size: 10px;
@@ -129,8 +135,27 @@ const DisabledText = styled.Text`
     font-size: 16px;
 `;
 
+const DetailBtn = styled.TouchableOpacity`
+    margin-left: 10px;
+`;
+
+const Detail = styled.View`
+    background-color: #747d8c;
+    border-radius: 20px;
+    width: 50px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+`;
+
+const DetailText = styled.Text`
+    color: white;
+    font-weight: 600;
+`;
+
 const Login = () => {
     const db = firebase.firestore();
+    const navigation = useNavigation();
     const passwordInput = useRef();
     const time = useRef(180);
     const timerId = useRef(null);
@@ -289,6 +314,10 @@ const Login = () => {
             }
         }
     };
+
+    const goToAgreement = () => {
+        navigation.navigate("AgreementPage");
+    };
     return (
         <>
             <Container>
@@ -318,6 +347,11 @@ const Login = () => {
                                 onValueChange={(newValue) => setToggleCheckBox(newValue)}
                             />
                             <AgreementText>개인정보 수집·이용 동의</AgreementText>
+                            <DetailBtn onPress={goToAgreement}>
+                                <Detail>
+                                    <DetailText>보기</DetailText>
+                                </Detail>
+                            </DetailBtn>
                         </Agreement>
                         {toggleCheckBox ? (
                             <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
@@ -358,6 +392,9 @@ const Login = () => {
                     ) : null}
                 </InputContainer>
             </Container>
+            <FooterInfo>
+                <FooterText>사업자등록번호: 501-19-39107 상호: 에스캐처(S-Catcher) 문의: 043-255-9297</FooterText>
+            </FooterInfo>
             <Footer>
                 <FooterText>&copy; {new Date().getFullYear()} IDCatch. All rights reserved.</FooterText>
             </Footer>
