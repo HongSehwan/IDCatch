@@ -2,11 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components/native";
 import auth from "@react-native-firebase/auth";
 import RNRestart from "react-native-restart";
-import { ActivityIndicator, Alert } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { firebase } from "@react-native-firebase/firestore";
 import CryptoJS from "react-native-crypto-js";
 import CheckBox from "@react-native-community/checkbox";
+import MessageModal from "../components/MessageModal";
+import { useSelector, useDispatch } from "react-redux";
+import { setMessageModal } from "../redux/actions";
 
 const Container = styled.View`
     flex: 1;
@@ -154,6 +157,7 @@ const DetailText = styled.Text`
 `;
 
 const Login = () => {
+    const dispatch = useDispatch();
     const db = firebase.firestore();
     const navigation = useNavigation();
     const passwordInput = useRef();
@@ -168,6 +172,7 @@ const Login = () => {
     const [token, setToken] = useState("");
     const [min, setMin] = useState(3);
     const [sec, setSec] = useState(0);
+    const { messageModal } = useSelector((state) => state.modalReducer);
 
     const startTimer = () => {
         clearInterval(timerId.current);
@@ -195,7 +200,7 @@ const Login = () => {
 
     const onSubmitPhoneEditing = async () => {
         if (phoneNum === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         if (sendLoading) {
             return;
@@ -205,7 +210,7 @@ const Login = () => {
             await auth()
                 .signInWithPhoneNumber("+82" + phoneNum, true)
                 .then((user) => {
-                    Alert.alert("인증번호가 전송되었습니다.");
+                    dispatch(setMessageModal(true, "인증번호가 전송되었습니다."));
                     startTimer();
                     setToken(user._verificationId);
                     setPhoneState(true);
@@ -215,13 +220,13 @@ const Login = () => {
         } catch (e) {
             switch (e.code) {
                 case "auth/invalid-phone-number": {
-                    Alert.alert("유효한 전화번호가 아닙니다.");
+                    dispatch(setMessageModal(true, "유효한 전화번호가 아닙니다."));
                     setSendLoading(false);
                 }
             }
             switch (e.code) {
                 case "auth/too-many-requests": {
-                    Alert.alert("잠시 후 다시 시도해 주세요.");
+                    dispatch(setMessageModal(true, "잠시 후 다시 시도해 주세요."));
                     setSendLoading(false);
                 }
             }
@@ -230,7 +235,7 @@ const Login = () => {
 
     const onSubmitCheckEditing = async () => {
         if (password === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         if (checkLoading) {
             return;
@@ -270,7 +275,7 @@ const Login = () => {
                                 return;
                             }
                         });
-                    Alert.alert("로그인에 성공했습니다.");
+                    dispatch(setMessageModal(true, "로그인에 성공했습니다."));
                     setCheckLoading(false);
                     setPhoneState(false);
                     stopTimer();
@@ -280,34 +285,34 @@ const Login = () => {
             setCheckLoading(false);
             switch (e.code) {
                 case "auth/invalid-verification-code": {
-                    Alert.alert("인증번호가 유효하지 않습니다.");
+                    dispatch(setMessageModal(true, "인증번호가 유효하지 않습니다."));
                     setCheckLoading(false);
                     startTimer();
                 }
             }
             switch (e.code) {
                 case "auth/session-expired": {
-                    Alert.alert("인증번호가 만료되었습니다.");
+                    dispatch(setMessageModal(true, "인증번호가 만료되었습니다."));
                     setCheckLoading(false);
                     setPhoneState(false);
                 }
             }
             switch (e.code) {
                 case "auth/too-many-requests": {
-                    Alert.alert("잠시 후 다시 시도해 주세요.");
+                    dispatch(setMessageModal(true, "잠시 후 다시 시도해 주세요."));
                     setCheckLoading(false);
                     setPhoneState(false);
                 }
             }
             switch (e.code) {
                 case "missing-verification-id": {
-                    Alert.alert("인증 ID가 잘못되었습니다.");
+                    dispatch(setMessageModal(true, "인증 ID가 잘못되었습니다."));
                     setCheckLoading(false);
                 }
             }
             switch (e.code) {
                 case "auth/operation-not-allowed": {
-                    Alert.alert("인증이 허용되지 않았습니다.");
+                    dispatch(setMessageModal(true, "인증이 허용되지 않았습니다."));
                     setSendLoading(false);
                     setPhoneState(false);
                 }
@@ -321,6 +326,7 @@ const Login = () => {
     return (
         <>
             <Container>
+                <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
                 <ImgView>
                     <Img resizeMode="stretch" source={require("../assets/img/IDCatch_logo.png")} />
                 </ImgView>

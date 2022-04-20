@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components/native";
-import { useColorScheme, Alert } from "react-native";
+import { useColorScheme } from "react-native";
 import CryptoJS from "react-native-crypto-js";
 import auth from "@react-native-firebase/auth";
+import MessageModal from "../MessageModal";
 import { firebase } from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { BLACK_COLOR } from "../../color";
+import { setMessageModal } from "../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.View`
     flex: 1;
@@ -63,16 +66,18 @@ const HintTextInput = styled.TextInput`
 `;
 
 const FindPW = () => {
+    const dispatch = useDispatch();
     const db = firebase.firestore();
     const navigation = useNavigation();
     const hintRef = useRef(null);
     const [hint, setHint] = useState("");
     const [loading, setLoading] = useState(false);
+    const { messageModal } = useSelector((state) => state.modalReducer);
     const isDark = useColorScheme() === "dark";
 
     const hintCheckEditing = () => {
         if (hint === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         setLoading(true);
         try {
@@ -90,11 +95,11 @@ const FindPW = () => {
                             screen: "Edit",
                         });
                     } else {
-                        return Alert.alert("힌트를 잘못 입력하였습니다.");
+                        return dispatch(setMessageModal(true, "힌트를 잘못 입력하였습니다."));
                     }
                 });
         } catch (e) {
-            Alert.alert("간편 비밀번호 변경 오류입니다.");
+            dispatch(setMessageModal(true, "간편 비밀번호 변경 오류입니다."));
         }
     };
     useEffect(() => {
@@ -103,6 +108,7 @@ const FindPW = () => {
 
     return (
         <Container isDark={isDark}>
+            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             <HintText isDark={isDark}>간편 비밀번호 힌트 확인</HintText>
             <HintLine>
                 <HintTextInput

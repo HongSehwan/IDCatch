@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Alert, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import CryptoJS from "react-native-crypto-js";
 import auth from "@react-native-firebase/auth";
+import MessageModal from "../MessageModal";
 import BackgroundTimer from "react-native-background-timer";
 import { firebase } from "@react-native-firebase/firestore";
 import { BLACK_COLOR } from "../../color";
+import { setMessageModal } from "../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.View`
     flex: 1;
@@ -119,17 +122,19 @@ const GoToFindText = styled.Text`
 const Password = () => {
     const [password, setPassword] = useState(null);
     const [loading, setLoading] = useState(false);
+    const { messageModal } = useSelector((state) => state.modalReducer);
     const inputRef = useRef(null);
     // const count = useRef(0);
+    const dispatch = useDispatch();
     const db = firebase.firestore();
     const isDark = useColorScheme() === "dark";
     const navigation = useNavigation();
     const passowrdAuth = () => {
         if (password === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         if (password?.length >= 1 && password?.length < 6) {
-            return Alert.alert("간편 비밀번호는 6자리입니다.");
+            return dispatch(setMessageModal(true, "간편 비밀번호는 6자리입니다."));
         }
         setLoading(true);
         try {
@@ -138,7 +143,7 @@ const Password = () => {
                 .get()
                 .then((data) => {
                     if (data.data().SimplePW === undefined) {
-                        Alert.alert("등록된 간편 비밀번호가 없습니다.");
+                        dispatch(setMessageModal(true, "등록된 간편 비밀번호가 없습니다."));
                     }
                     const cryptoPW = CryptoJS.AES.decrypt(
                         data.data().SimplePW,
@@ -149,7 +154,7 @@ const Password = () => {
                         .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
                         .update({ AuthState: false });
                     if (originalPW === password) {
-                        Alert.alert("간편 인증을 완료했습니다.");
+                        dispatch(setMessageModal(true, "간편 인증을 완료했습니다."));
                         db.collection("Auth")
                             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
                             .update({ AuthState: true });
@@ -167,11 +172,11 @@ const Password = () => {
                         // }, 1000);
                         navigation.navigate("Profile");
                     } else {
-                        return Alert.alert("간편 비밀번호를 잘못 입력하였습니다.");
+                        return dispatch(setMessageModal(true, "간편 비밀번호를 잘못 입력하였습니다."));
                     }
                 });
         } catch (e) {
-            Alert.alert("간편 비밀번호 인증 오류입니다.");
+            dispatch(setMessageModal(true, "간편 비밀번호 인증 오류입니다."));
         }
     };
     const goToEditPW = () => {
@@ -180,7 +185,7 @@ const Password = () => {
             .get()
             .then((data) => {
                 if (data.data().SimplePWEditState === true) {
-                    Alert.alert("이미 간편 비밀번호가 등록되어 있습니다.");
+                    dispatch(setMessageModal(true, "이미 간편 비밀번호가 등록되어 있습니다."));
                 } else {
                     navigation.navigate("Stack", {
                         screen: "Edit",
@@ -195,7 +200,7 @@ const Password = () => {
             .get()
             .then((data) => {
                 if (data.data().SimplePW === undefined) {
-                    Alert.alert("등록된 간편 비밀번호가 없습니다.");
+                    dispatch(setMessageModal(true, "등록된 간편 비밀번호가 없습니다."));
                 } else {
                     navigation.navigate("Stack", {
                         screen: "FindPW",
@@ -209,6 +214,7 @@ const Password = () => {
     }, []);
     return (
         <Container isDark={isDark}>
+            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             <PasswordText isDark={isDark}>간편 비밀번호 6자리 입력</PasswordText>
             <PasswordLine isDark={isDark}>
                 <PasswordNum

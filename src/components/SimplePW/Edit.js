@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components/native";
-import { useColorScheme, Alert } from "react-native";
+import { useColorScheme } from "react-native";
 import { setEditPassword } from "../../redux/actions";
-import { useDispatch } from "react-redux";
 import { BLACK_COLOR } from "../../color";
 import { useNavigation } from "@react-navigation/native";
+import { setMessageModal } from "../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
+import MessageModal from "../MessageModal";
 
 const Container = styled.View`
     flex: 1;
@@ -68,12 +70,13 @@ const Edit = () => {
     const inputRef = useRef(null);
     const [password, setPassword] = useState(null);
     const [loading, setLoading] = useState(false);
+    const { messageModal } = useSelector((state) => state.modalReducer);
     const passowrdEditing = () => {
         if (password === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         if (password.length >= 1 && password.length < 6) {
-            return Alert.alert("간편 비밀번호는 6자리입니다.");
+            return dispatch(setMessageModal(true, "간편 비밀번호는 6자리입니다."));
         }
         setLoading(true);
         try {
@@ -82,8 +85,7 @@ const Edit = () => {
                 screen: "PasswordCheck",
             });
         } catch (e) {
-            console.log(e);
-            Alert.alert("간편 비밀번호 등록 오류입니다.");
+            dispatch(setMessageModal(true, "간편 비밀번호 등록 오류입니다."));
         }
     };
     useEffect(() => {
@@ -93,6 +95,7 @@ const Edit = () => {
     const isDark = useColorScheme() === "dark";
     return (
         <Container isDark={isDark}>
+            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             <EditText isDark={isDark}>간편 비밀번호 6자리 입력</EditText>
             <PasswordEditLine isDark={isDark}>
                 <PasswordEditNum

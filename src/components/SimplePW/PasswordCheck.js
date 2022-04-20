@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components/native";
-import { useColorScheme, Alert } from "react-native";
+import { useColorScheme } from "react-native";
 import { BLACK_COLOR } from "../../color";
-import { useSelector } from "react-redux";
 import CryptoJS from "react-native-crypto-js";
 import auth from "@react-native-firebase/auth";
+import MessageModal from "../MessageModal";
 import { firebase } from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
+import { setMessageModal } from "../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.View`
     flex: 1;
@@ -86,21 +88,23 @@ const HintTextInput = styled.TextInput`
 `;
 
 const PasswordCheck = () => {
+    const dispatch = useDispatch();
     const db = firebase.firestore();
     const navigation = useNavigation();
     const inputRef = useRef(null);
     const hintRef = useRef(null);
     const { editpw } = useSelector((state) => state.authReducer);
+    const { messageModal } = useSelector((state) => state.modalReducer);
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [hint, setHint] = useState("");
 
     const checkEditing = () => {
         if (password === "" || hint === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         if (password.length >= 1 && password.length < 6) {
-            return Alert.alert("간편 비밀번호는 6자리입니다.");
+            return dispatch(setMessageModal(true, "간편 비밀번호는 6자리입니다."));
         }
         setLoading(true);
         try {
@@ -123,10 +127,10 @@ const PasswordCheck = () => {
                     screen: "Password",
                 });
             } else {
-                return Alert.alert("간편 비밀번호가 일치하지 않습니다.");
+                return dispatch(setMessageModal(true, "간편 비밀번호가 일치하지 않습니다."));
             }
         } catch (e) {
-            Alert.alert("간편 비밀번호 등록 오류입니다.");
+            dispatch(setMessageModal(true, "간편 비밀번호 등록 오류입니다."));
         }
     };
     useEffect(() => {
@@ -142,6 +146,7 @@ const PasswordCheck = () => {
     const isDark = useColorScheme() === "dark";
     return (
         <Container isDark={isDark}>
+            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             <CheckText isDark={isDark}>간편 비밀번호 확인</CheckText>
             <PasswordCheckLine isDark={isDark}>
                 <PasswordCehckNum
