@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useColorScheme, Alert, ActivityIndicator, Linking, Platform } from "react-native";
+import { useColorScheme, ActivityIndicator, Linking, Platform } from "react-native";
 import styled from "styled-components/native";
 import TouchID from "react-native-touch-id";
 import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/firestore";
 import BackgroundTimer from "react-native-background-timer";
+import MessageModal from "../components/MessageModal";
 import { BLACK_COLOR, GREEN_COLOR } from "../color";
+import { setMessageModal } from "../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const CheckContainer = styled.View`
     flex: 1;
@@ -219,6 +222,7 @@ const SendText = styled.Text`
 `;
 
 const Check = () => {
+    const dispatch = useDispatch();
     const db = firebase.firestore();
     const isDark = useColorScheme() === "dark";
     const navigation = useNavigation();
@@ -237,9 +241,7 @@ const Check = () => {
     const [firstsendLoading, setFirstSendLoading] = useState(false);
     const [secondsendLoading, setSecondSendLoading] = useState(false);
     const [thirdsendLoading, setThirdSendLoading] = useState(false);
-    // const [firstState, setFirstState] = useState(false);
-    // const [secondState, setSecondState] = useState(false);
-    // const [thirdState, setThirdState] = useState(false);
+    const { messageModal } = useSelector((state) => state.modalReducer);
 
     const optionalConfigObject = {
         title: "Authentication Required", // 타이틀
@@ -259,14 +261,14 @@ const Check = () => {
             .get()
             .then((data) => {
                 if (!data.data().SelfAuth || !data.data().IDcardAuth) {
-                    return Alert.alert("성인 인증(본인 인증 / 신분증 인증)이 필요합니다.");
+                    return dispatch(setMessageModal(true, "성인 인증(본인 인증 / 신분증 인증)이 필요합니다."));
                 } else {
                     db.collection("Auth")
                         .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
                         .update({ AuthState: false });
                     TouchID.authenticate("description", optionalConfigObject)
                         .then((success) => {
-                            Alert.alert("간편 인증을 완료했습니다.");
+                            dispatch(setMessageModal(true, "간편 인증을 완료했습니다."));
                             db.collection("Auth")
                                 .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
                                 .update({ AuthState: true });
@@ -286,67 +288,67 @@ const Check = () => {
                         .catch((error) => {
                             switch (error.name) {
                                 case "LAErrorTouchIDNotEnrolled": {
-                                    Alert.alert("등록된 지문이 없습니다. 휴대폰 지문 등록 바랍니다.");
+                                    dispatch(setMessageModal(true, "등록된 지문이 없습니다. 휴대폰 지문 등록 바랍니다."));
                                 }
                             }
                             switch (error.name) {
                                 case "LAErrorUserCancel": {
-                                    Alert.alert("지문 인증을 취소했습니다.");
+                                    dispatch(setMessageModal(true, "지문 인증을 취소했습니다."));
                                 }
                             }
                             switch (error.name) {
                                 case "LAErrorSystemCancel": {
-                                    Alert.alert("시스템에서 인증을 취소했습니다.");
+                                    dispatch(setMessageModal(true, "시스템에서 인증을 취소했습니다."));
                                 }
                             }
                             switch (error.name) {
                                 case "LAErrorTouchIDNotAvailable": {
-                                    Alert.alert("지문 인식 실행 오류입니다.");
+                                    dispatch(setMessageModal(true, "지문 인식 실행 오류입니다."));
                                 }
                             }
                             switch (error.name) {
                                 case "LAErrorAuthenticationFailed": {
-                                    Alert.alert("유효한 자격 증명을 제공하지 못했습니다. 잠시후 다시 시도해주세요.");
+                                    dispatch(setMessageModal(true, "유효한 자격 증명을 제공하지 못했습니다. 잠시후 다시 시도해주세요."));
                                 }
                             }
                             switch (error.name) {
                                 case "LAErrorPasscodeNotSet": {
-                                    Alert.alert("암호가 설정되어 있지 않아 인증을 시작할 수 없습니다.");
+                                    dispatch(setMessageModal(true, "암호가 설정되어 있지 않아 인증을 시작할 수 없습니다."));
                                 }
                             }
                             switch (error.name) {
                                 case "LAErrorTouchIDLockout": {
-                                    Alert.alert("실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요.");
+                                    dispatch(setMessageModal(true, "실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요."));
                                 }
                             }
                             switch (error.name) {
                                 case "RCTTouchIDNotSupported": {
-                                    Alert.alert("지문 인식을 사용할 수 없는 기기입니다.");
+                                    dispatch(setMessageModal(true, "지문 인식을 사용할 수 없는 기기입니다."));
                                 }
                             }
                             switch (error.name) {
                                 case "LAErrorUserFallback": {
-                                    Alert.alert("대체 비밀번호 입력을 선택하였습니다.");
+                                    dispatch(setMessageModal(true, "대체 비밀번호 입력을 선택하였습니다."));
                                 }
                             }
                             switch (error.details) {
                                 case "cancelled": {
-                                    Alert.alert("지문 인증을 취소했습니다.");
+                                    dispatch(setMessageModal(true, "지문 인증을 취소했습니다."));
                                 }
                             }
                             switch (error.details) {
                                 case "failed": {
-                                    Alert.alert("지문 인증에 실패했습니다.");
+                                    dispatch(setMessageModal(true, "지문 인증에 실패했습니다."));
                                 }
                             }
                             switch (error.details) {
                                 case "Too many attempts. Try again Later.": {
-                                    Alert.alert("실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요.");
+                                    dispatch(setMessageModal(true, "실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요."));
                                 }
                             }
                             switch (error.details) {
                                 case "Too many attempts. Fingerprint sensor disabled.": {
-                                    Alert.alert("시도 횟수가 너무 많아 지문 센서가 비활성화 되었습니다.");
+                                    dispatch(setMessageModal(true, "시도 횟수가 너무 많아 지문 센서가 비활성화 되었습니다."));
                                 }
                             }
                         });
@@ -359,7 +361,7 @@ const Check = () => {
             .get()
             .then((data) => {
                 if (!data.data().SelfAuth || !data.data().IDcardAuth) {
-                    return Alert.alert("성인 인증(본인 인증 / 신분증 인증)이 필요합니다.");
+                    return dispatch(setMessageModal(true, "성인 인증(본인 인증 / 신분증 인증)이 필요합니다."));
                 } else {
                     navigation.navigate("Stack", {
                         screen: "Password",
@@ -379,10 +381,10 @@ const Check = () => {
 
     const firstCheck = async () => {
         if (firstPhoneNum === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         if (firstPhoneNum.length !== 11) {
-            return Alert.alert("휴대폰 번호 형식이 아닙니다.");
+            return dispatch(setMessageModal(true, "휴대폰 번호 형식이 아닙니다."));
         }
         if (firstsendLoading) {
             return;
@@ -468,10 +470,10 @@ const Check = () => {
 
     const secondCheck = async () => {
         if (secondPhoneNum === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         if (secondPhoneNum.length !== 11) {
-            return Alert.alert("휴대폰 번호 형식이 아닙니다.");
+            return dispatch(setMessageModal(true, "휴대폰 번호 형식이 아닙니다."));
         }
         if (secondsendLoading) {
             return;
@@ -557,10 +559,10 @@ const Check = () => {
 
     const thirdCheck = async () => {
         if (thirdPhoneNum === "") {
-            return Alert.alert("항목이 비어 있습니다.");
+            return dispatch(setMessageModal(true, "항목이 비어 있습니다."));
         }
         if (thirdPhoneNum.length !== 11) {
-            return Alert.alert("휴대폰 번호 형식이 아닙니다.");
+            return dispatch(setMessageModal(true, "휴대폰 번호 형식이 아닙니다."));
         }
         if (thirdsendLoading) {
             return;
@@ -646,6 +648,7 @@ const Check = () => {
 
     return (
         <>
+            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             {!transformState ? (
                 <>
                     <CheckContainer>

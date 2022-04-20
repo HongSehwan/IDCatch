@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Alert, useColorScheme } from "react-native";
+import React from "react";
+import { useColorScheme } from "react-native";
 import styled from "styled-components/native";
 import auth from "@react-native-firebase/auth";
+import MessageModal from "../components/MessageModal";
 import { BLACK_COLOR } from "../color";
 import { useNavigation } from "@react-navigation/native";
 import { firebase } from "@react-native-firebase/firestore";
+import { setMessageModal } from "../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const SettingContainer = styled.View`
     flex: 1;
@@ -110,9 +113,11 @@ const InquiryText = styled.Text`
 `;
 
 const Setting = () => {
+    const dispatch = useDispatch();
     const db = firebase.firestore();
     const navigation = useNavigation();
     const isDark = useColorScheme() === "dark";
+    const { messageModal } = useSelector((state) => state.modalReducer);
     const onPress = () => {
         if (auth().currentUser) {
             db.collection("Auth")
@@ -127,7 +132,7 @@ const Setting = () => {
         });
     };
     const Alarm = () => {
-        Alert.alert("해당 기능을 준비중입니다.");
+        dispatch(setMessageModal(true, "해당 기능을 준비중입니다."));
     };
     const goToHistory = () => {
         db.collection("Auth")
@@ -139,16 +144,17 @@ const Setting = () => {
                         screen: "History",
                     });
                 } else {
-                    return Alert.alert("사장님 모드 전용입니다.");
+                    return dispatch(setMessageModal(true, "사장님 모드 전용입니다."));
                 }
             });
     };
 
     const InquiryMail = () => {
-        Alert.alert("gg9297@gmail.com으로 문의 바랍니다.");
+        dispatch(setMessageModal(true, "gg9297@gmail.com으로 문의 바랍니다."));
     };
     return (
         <SettingContainer>
+            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             <SignOutBtn onPress={onPress}>
                 <SignOut isDark={isDark}>
                     <SignOutText isDark={isDark}>로그아웃</SignOutText>

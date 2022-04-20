@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Alert, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { BLACK_COLOR } from "../color";
 import auth from "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/firestore";
 import RNRestart from "react-native-restart";
+import MessageModal from "../components/MessageModal";
+import { useSelector, useDispatch } from "react-redux";
+import { setMessageModal } from "../redux/actions";
+import { AdMobBanner } from "expo-ads-admob";
 
 const Container = styled.View`
     flex: 1;
@@ -38,6 +42,7 @@ const CEOBtnText = styled.Text`
 const NoticeView = styled.View`
     align-items: center;
     margin: 0px 20px;
+    margin-top: 60px;
     margin-bottom: 10px;
     padding: 20px 10px;
     border-width: 1px;
@@ -155,12 +160,20 @@ const NText = styled.Text`
     font-size: 13px;
 `;
 
+const AdMobContainer = styled.View`
+    align-items: center;
+    justify-content: center;
+`;
+
 const Profile = () => {
+    const dispatch = useDispatch();
     const db = firebase.firestore();
     const navigation = useNavigation();
     const isDark = useColorScheme() === "dark";
     const [certification, setCertification] = useState(false);
     const [transformResult, setTransformResult] = useState(false);
+    const { messageModal } = useSelector((state) => state.modalReducer);
+
     const goToIDcardAuth = () => {
         db.collection("Auth")
             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
@@ -171,13 +184,13 @@ const Profile = () => {
                         screen: "IDcardAuth",
                     });
                 } else {
-                    Alert.alert("본인인증 완료 후 가능합니다.");
+                    dispatch(setMessageModal(true, "본인인증 완료 후 가능합니다."));
                 }
             });
     };
     const goToCEOAuth = () => {
         if (certification === true) {
-            Alert.alert("이미 사장님 인증을 완료했습니다. 인증 삭제 요청 시 gg9297@gmail.com으로 문의 바랍니다.");
+            dispatch(setMessageModal(true, "이미 사장님 인증을 완료했습니다. 인증 삭제 요청 시 이용 문의 메일로 문의 바랍니다."));
         } else {
             navigation.navigate("Stack", {
                 screen: "CEOAuth",
@@ -210,50 +223,56 @@ const Profile = () => {
     }, []);
 
     return (
-        <Container>
-            <NoticeView isDark={isDark}>
-                <Notice>IDCatch는 주류 배달 비대면 성인인증 애플리케이션으로</Notice>
-                <Notice>미성년자 주류 판매를 제한하는 다중 인증 시스템을 지원합니다.</Notice>
-            </NoticeView>
-            <TitleView isDark={isDark}>
-                <Title isDark={isDark}>성인 인증</Title>
-            </TitleView>
-            <Certification>
-                <SelfAuthenticationBtn onPress={goToNICE}>
-                    <SelfAuthentication isDark={isDark}>
-                        <SelfAuthenticationText>본인 인증</SelfAuthenticationText>
-                    </SelfAuthentication>
-                </SelfAuthenticationBtn>
-                <IdCertificationBtn onPress={goToIDcardAuth}>
-                    <IdCertification isDark={isDark}>
-                        <IdCertificationText>신분증 인증</IdCertificationText>
-                    </IdCertification>
-                </IdCertificationBtn>
-                <Auth>
-                    <AuthText>본인인증과 신분증 인증 정보는 일치해야 하며 최초 1회만 인증합니다.</AuthText>
-                </Auth>
-            </Certification>
-            <TitleView isDark={isDark}>
-                <Title isDark={isDark}>사장님 모드</Title>
-            </TitleView>
-            <CEOBtn onPress={goToCEOAuth}>
-                <CEO isDark={isDark}>
-                    <CEOBtnText>사장님 인증</CEOBtnText>
-                </CEO>
-            </CEOBtn>
-            {certification ? (
-                <>
-                    <TransformBtn onPress={TransformData}>
-                        <Transform isDark={isDark}>
-                            <TransformText>모드 전환</TransformText>
-                        </Transform>
-                    </TransformBtn>
-                    <NView>
-                        <NText>사장님 / 고객님 모드 전환</NText>
-                    </NView>
-                </>
-            ) : null}
-        </Container>
+        <>
+            <Container>
+                <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
+                <NoticeView isDark={isDark}>
+                    <Notice>IDCatch는 주류 배달 비대면 성인인증 애플리케이션으로</Notice>
+                    <Notice>미성년자 주류 판매를 제한하는 인증 시스템을 지원합니다.</Notice>
+                </NoticeView>
+                <TitleView isDark={isDark}>
+                    <Title isDark={isDark}>성인 인증</Title>
+                </TitleView>
+                <Certification>
+                    <SelfAuthenticationBtn onPress={goToNICE}>
+                        <SelfAuthentication isDark={isDark}>
+                            <SelfAuthenticationText>본인 인증</SelfAuthenticationText>
+                        </SelfAuthentication>
+                    </SelfAuthenticationBtn>
+                    <IdCertificationBtn onPress={goToIDcardAuth}>
+                        <IdCertification isDark={isDark}>
+                            <IdCertificationText>신분증 인증</IdCertificationText>
+                        </IdCertification>
+                    </IdCertificationBtn>
+                    <Auth>
+                        <AuthText>본인인증과 신분증 인증 정보는 일치해야 하며 최초 1회만 인증합니다.</AuthText>
+                    </Auth>
+                </Certification>
+                <TitleView isDark={isDark}>
+                    <Title isDark={isDark}>사장님 모드</Title>
+                </TitleView>
+                <CEOBtn onPress={goToCEOAuth}>
+                    <CEO isDark={isDark}>
+                        <CEOBtnText>사장님 인증</CEOBtnText>
+                    </CEO>
+                </CEOBtn>
+                {certification ? (
+                    <>
+                        <TransformBtn onPress={TransformData}>
+                            <Transform isDark={isDark}>
+                                <TransformText>모드 전환</TransformText>
+                            </Transform>
+                        </TransformBtn>
+                        <NView>
+                            <NText>사장님 / 고객님 모드 전환</NText>
+                        </NView>
+                    </>
+                ) : null}
+            </Container>
+            <AdMobContainer>
+                <AdMobBanner style={{ width: "100%" }} bannerSize="fullBanner" adUnitID="ca-app-pub-3940256099942544/6300978111" />
+            </AdMobContainer>
+        </>
     );
 };
 
