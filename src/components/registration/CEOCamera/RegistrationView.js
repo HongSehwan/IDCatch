@@ -14,9 +14,7 @@ const RegistrationView = ({ route }) => {
     const navigation = useNavigation();
     const [loadingExtract, setLoadingExtract] = useState(true);
     const [extractData, setExtractData] = useState("");
-    const [b_numResult, setB_numResult] = useState(false);
-    const [nameResult, setNameResult] = useState(false);
-    const [b_startResult, setB_startResult] = useState(false);
+    const [b_Result, setB_Result] = useState(false);
     const [message, setMessage] = useState("");
     const { uri } = route.params;
     useEffect(async () => {
@@ -25,7 +23,28 @@ const RegistrationView = ({ route }) => {
                 encoding: "base64",
             });
             const extract = await callGoogleVIsionApi(result);
-            if (b_numResult && nameResult && b_startResult) {
+            const data = {
+                b_no: ["xxxxxxx"], // 사업자번호 "xxxxxxx" 로 조회 시,
+            };
+
+            $.ajax({
+                url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=xxxxxx", // serviceKey 값을 xxxxxx에 입력
+                type: "POST",
+                data: JSON.stringify(data), // json 을 string으로 변환하여 전송
+                dataType: "JSON",
+                contentType: "application/json",
+                accept: "application/json",
+                success: function (result) {
+                    console.log(result);
+                    setB_Result(true);
+                },
+                error: function (result) {
+                    console.log(result.responseText); //responseText의 에러메세지 확인
+                    setB_Result(false);
+                },
+            });
+
+            if (b_Result) {
                 const userInfo = CryptoJS.AES.encrypt(
                     extract,
                     0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
@@ -34,6 +53,7 @@ const RegistrationView = ({ route }) => {
                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
                     .update({ b_no: userInfo, name: userInfo, b_st: userInfo });
                 setMessage("인증 성공");
+                setB_Result(false);
             } else {
                 setMessage("인증 실패");
             }

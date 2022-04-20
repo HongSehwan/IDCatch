@@ -10,6 +10,7 @@ import MessageModal from "../components/MessageModal";
 import { BLACK_COLOR, GREEN_COLOR } from "../color";
 import { setMessageModal } from "../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { AdMobBanner } from "expo-ads-admob";
 
 const CheckContainer = styled.View`
     flex: 1;
@@ -20,6 +21,7 @@ const CheckContainer = styled.View`
 const Container = styled.View`
     flex: 1;
     justify-content: center;
+    margin-top: 70px;
 `;
 
 const IdCheckBtn = styled.TouchableOpacity`
@@ -219,6 +221,11 @@ const SendView = styled.View`
 
 const SendText = styled.Text`
     color: white;
+`;
+
+const AdMobContainer = styled.View`
+    align-items: center;
+    justify-content: center;
 `;
 
 const Check = () => {
@@ -759,6 +766,9 @@ const Check = () => {
                     </Container>
                 </>
             )}
+            <AdMobContainer>
+                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-3940256099942544/6300978111" />
+            </AdMobContainer>
         </>
     );
 };

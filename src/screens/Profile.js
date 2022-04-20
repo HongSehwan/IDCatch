@@ -189,13 +189,24 @@ const Profile = () => {
             });
     };
     const goToCEOAuth = () => {
-        if (certification === true) {
-            dispatch(setMessageModal(true, "이미 사장님 인증을 완료했습니다. 인증 삭제 요청 시 이용 문의 메일로 문의 바랍니다."));
-        } else {
-            navigation.navigate("Stack", {
-                screen: "CEOAuth",
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                if (data.data().SelfAuth && data.data().IDcardAuth) {
+                    if (certification === true) {
+                        dispatch(
+                            setMessageModal(true, "이미 사장님 인증을 완료했습니다. 인증 삭제 요청 시 이용 문의 메일로 문의 바랍니다.")
+                        );
+                    } else {
+                        navigation.navigate("Stack", {
+                            screen: "CEOAuth",
+                        });
+                    }
+                } else {
+                    dispatch(setMessageModal(true, "성인인증 완료 후 가능합니다."));
+                }
             });
-        }
     };
     const TransformData = () => {
         db.collection("Auth")
@@ -270,7 +281,7 @@ const Profile = () => {
                 ) : null}
             </Container>
             <AdMobContainer>
-                <AdMobBanner style={{ width: "100%" }} bannerSize="fullBanner" adUnitID="ca-app-pub-3940256099942544/6300978111" />
+                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-3940256099942544/6300978111" />
             </AdMobContainer>
         </>
     );
