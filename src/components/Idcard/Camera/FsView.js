@@ -8,12 +8,19 @@ import { useNavigation } from "@react-navigation/native";
 import CryptoJS from "react-native-crypto-js";
 import auth from "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/firestore";
+import MessageModal from "../../MessageModal";
+import { setMessageModal } from "../../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const FsView = ({ route }) => {
+    const dispatch = useDispatch();
     const db = firebase.firestore();
     const navigation = useNavigation();
     const [loadingExtract, setLoadingExtract] = useState(true);
     const [extractData, setExtractData] = useState("");
+    const [userInfo, setUserInfo] = useState(false);
+    const [message, setMessage] = useState("");
+    const { messageModal } = useSelector((state) => state.modalReducer);
     const { uri } = route.params;
     useEffect(async () => {
         if (uri) {
@@ -21,10 +28,19 @@ const FsView = ({ route }) => {
                 encoding: "base64",
             });
             const extract = await callGoogleVIsionApi(result);
-            const userInfo = CryptoJS.AES.encrypt(extract, 0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]).toString();
             db.collection("Auth")
-                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                .update({ name: userInfo });
+                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "User")
+                .get()
+                .then((data) => {
+                    if (data.data().UserName === extract이름 && data.data().Birthday === extract생년월일 && data.data().Gender) {
+                        setUserInfo(true);
+                        setMessage("인증 성공");
+                    } else {
+                        setUserInfo(false);
+                        dispatch(setMessageModal(true, "본인인증과 개인 정보가 일치하지 않습니다."));
+                        setMessage("인증 실패");
+                    }
+                });
             setExtractData(extract);
             setLoadingExtract(false);
         }
@@ -35,7 +51,7 @@ const FsView = ({ route }) => {
     };
 
     const CertificationCheck = () => {
-        navigation.navigate("Certification");
+        navigation.navigate("Certification", { message: message });
     };
 
     return (

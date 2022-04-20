@@ -11,7 +11,8 @@ const Check = styled.View``;
 
 const CheckText = styled.Text``;
 
-const Certification = ({ message }) => {
+const Certification = ({ route }) => {
+    const { message } = route.params;
     const [result, setResult] = useState(false);
     const IDCardCertification = () => {
         const db = firebase.firestore();
@@ -33,18 +34,25 @@ const Certification = ({ message }) => {
     }, []);
     return (
         <Container>
-            <Notice>인증 성공</Notice>
-            <CheckBtn onPress={IDCardCertification}>
-                <Check>
-                    <CheckText>완료하기</CheckText>
-                </Check>
-            </CheckBtn>
-            <Notice>인증 실패</Notice>
-            <CheckBtn onPress={IDCardCertification}>
-                <Check>
-                    <CheckText>다시찍기</CheckText>
-                </Check>
-            </CheckBtn>
+            {result ? (
+                <>
+                    <Notice>인증 성공</Notice>
+                    <CheckBtn onPress={IDCardCertification}>
+                        <Check>
+                            <CheckText>완료하기</CheckText>
+                        </Check>
+                    </CheckBtn>
+                </>
+            ) : (
+                <>
+                    <Notice>인증 실패</Notice>
+                    <CheckBtn onPress={IDCardCertification}>
+                        <Check>
+                            <CheckText>다시찍기</CheckText>
+                        </Check>
+                    </CheckBtn>
+                </>
+            )}
         </Container>
     );
 };
