@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useColorScheme, ActivityIndicator, Linking, Platform } from "react-native";
+import { AppState, useColorScheme, ActivityIndicator, Linking, Platform } from "react-native";
 import styled from "styled-components/native";
 import TouchID from "react-native-touch-id";
 import { useNavigation } from "@react-navigation/native";
@@ -11,6 +11,7 @@ import { BLACK_COLOR, GREEN_COLOR } from "../color";
 import { setMessageModal } from "../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { AdMobBanner } from "expo-ads-admob";
+import LocalNotification from "../components/notification/Notification";
 
 const CheckContainer = styled.View`
     flex: 1;
@@ -150,7 +151,7 @@ const ClientPhoneText = styled.Text`
 const InputContainer = styled.View`
     color: white;
     margin-top: 10px;
-    padding: 20px 20px;
+    padding: 5px 20px;
     /* background-color: white; */
 `;
 
@@ -226,6 +227,22 @@ const SendText = styled.Text`
 const AdMobContainer = styled.View`
     align-items: center;
     justify-content: center;
+`;
+
+const HistoryBtn = styled.TouchableOpacity`
+    width: 205px;
+`;
+
+const HistoryView = styled.View`
+    border-width: 1px;
+    border-color: grey;
+    align-items: center;
+    margin-top: 5px;
+`;
+
+const HistoryText = styled.Text`
+    font-size: 15px;
+    color: grey;
 `;
 
 const Check = () => {
@@ -423,6 +440,12 @@ const Check = () => {
                                                 .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                 .set({
                                                     PhoneNumHistory: ["" + firstPhoneNum],
+                                                })
+                                                .then((res) => {
+                                                    LocalNotification.register();
+                                                    if (AppState.currentState === "active") {
+                                                        dispatch(setMessageModal(true, `${firstPhoneNum}님이 인증에 성공하였습니다.`));
+                                                    }
                                                 });
                                         } else {
                                             const firstNums = data.data().PhoneNumHistory[0];
@@ -434,12 +457,24 @@ const Check = () => {
                                                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                     .update({
                                                         PhoneNumHistory: [firstText + "," + firstPhoneNum],
+                                                    })
+                                                    .then((res) => {
+                                                        LocalNotification.register();
+                                                        if (AppState.currentState === "active") {
+                                                            dispatch(setMessageModal(true, `${firstPhoneNum}님이 인증에 성공하였습니다.`));
+                                                        }
                                                     });
                                             } else {
                                                 db.collection("Auth")
                                                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                     .update({
                                                         PhoneNumHistory: [data.data().PhoneNumHistory + "," + firstPhoneNum],
+                                                    })
+                                                    .then((res) => {
+                                                        LocalNotification.register();
+                                                        if (AppState.currentState === "active") {
+                                                            dispatch(setMessageModal(true, `${firstPhoneNum}님이 인증에 성공하였습니다.`));
+                                                        }
                                                     });
                                             }
                                         }
@@ -492,7 +527,7 @@ const Check = () => {
                 .doc(secondPhoneNum + "A")
                 .set({ AuthState: false });
             Linking.openURL(
-                `sms:${firstPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
+                `sms:${secondPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
             );
             const secondInterval = BackgroundTimer.setInterval(() => {
                 secondCount.current += 1;
@@ -512,6 +547,12 @@ const Check = () => {
                                                 .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                 .set({
                                                     PhoneNumHistory: ["" + secondPhoneNum],
+                                                })
+                                                .then((res) => {
+                                                    LocalNotification.register();
+                                                    if (AppState.currentState === "active") {
+                                                        dispatch(setMessageModal(true, `${secondPhoneNum}님이 인증에 성공하였습니다.`));
+                                                    }
                                                 });
                                         } else {
                                             const secondNums = data.data().PhoneNumHistory[0];
@@ -523,12 +564,24 @@ const Check = () => {
                                                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                     .update({
                                                         PhoneNumHistory: [secondText + "," + secondPhoneNum],
+                                                    })
+                                                    .then((res) => {
+                                                        LocalNotification.register();
+                                                        if (AppState.currentState === "active") {
+                                                            dispatch(setMessageModal(true, `${secondPhoneNum}님이 인증에 성공하였습니다.`));
+                                                        }
                                                     });
                                             } else {
                                                 db.collection("Auth")
                                                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                     .update({
                                                         PhoneNumHistory: [data.data().PhoneNumHistory + "," + secondPhoneNum],
+                                                    })
+                                                    .then((res) => {
+                                                        LocalNotification.register();
+                                                        if (AppState.currentState === "active") {
+                                                            dispatch(setMessageModal(true, `${secondPhoneNum}님이 인증에 성공하였습니다.`));
+                                                        }
                                                     });
                                             }
                                         }
@@ -581,7 +634,7 @@ const Check = () => {
                 .doc(thirdPhoneNum + "A")
                 .set({ AuthState: false });
             Linking.openURL(
-                `sms:${firstPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
+                `sms:${thirdPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
             );
             const thirdInterval = BackgroundTimer.setInterval(() => {
                 thirdCount.current += 1;
@@ -601,6 +654,12 @@ const Check = () => {
                                                 .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                 .set({
                                                     PhoneNumHistory: ["" + thirdPhoneNum],
+                                                })
+                                                .then((res) => {
+                                                    LocalNotification.register();
+                                                    if (AppState.currentState === "active") {
+                                                        dispatch(setMessageModal(true, `${thirdPhoneNum}님이 인증에 성공하였습니다.`));
+                                                    }
                                                 });
                                         } else {
                                             const thirdNums = data.data().PhoneNumHistory[0];
@@ -612,12 +671,24 @@ const Check = () => {
                                                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                     .update({
                                                         PhoneNumHistory: [thirdText + "," + thirdPhoneNum],
+                                                    })
+                                                    .then((res) => {
+                                                        LocalNotification.register();
+                                                        if (AppState.currentState === "active") {
+                                                            dispatch(setMessageModal(true, `${thirdPhoneNum}님이 인증에 성공하였습니다.`));
+                                                        }
                                                     });
                                             } else {
                                                 db.collection("Auth")
                                                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "NUM")
                                                     .update({
                                                         PhoneNumHistory: [data.data().PhoneNumHistory + "," + thirdPhoneNum],
+                                                    })
+                                                    .then((res) => {
+                                                        LocalNotification.register();
+                                                        if (AppState.currentState === "active") {
+                                                            dispatch(setMessageModal(true, `${thirdPhoneNum}님이 인증에 성공하였습니다.`));
+                                                        }
                                                     });
                                             }
                                         }
@@ -651,6 +722,12 @@ const Check = () => {
         } catch (error) {
             setThirdSendLoading(false);
         }
+    };
+
+    const goToHistory = () => {
+        navigation.navigate("Stack", {
+            screen: "History",
+        });
     };
 
     return (
@@ -701,6 +778,11 @@ const Check = () => {
                         </NoticeView>
                         <ClientPhoneNum>
                             <ClientPhoneText isDark={isDark}>고객 휴대폰 번호</ClientPhoneText>
+                            <HistoryBtn onPress={goToHistory}>
+                                <HistoryView>
+                                    <HistoryText>지나간 인증 성공 내역 확인하기</HistoryText>
+                                </HistoryView>
+                            </HistoryBtn>
                         </ClientPhoneNum>
                         <InputContainer>
                             <InputLine>
