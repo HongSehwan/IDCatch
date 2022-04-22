@@ -108,7 +108,7 @@ const History = () => {
                     setEmpty(false);
                     const stringNums = data.data().PhoneNumHistory[0];
                     const arrayNums = stringNums.split(",");
-                    setHistoryData(arrayNums);
+                    setHistoryData(arrayNums.reverse());
                 }
             });
     }, []);

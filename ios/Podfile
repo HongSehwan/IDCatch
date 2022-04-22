@@ -38,6 +38,8 @@ target 'IDCatch' do
 
   pod 'RNCCheckbox', :path => '../node_modules/@react-native-community/checkbox'
 
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
   post_install do |installer|
     react_native_post_install(installer)
 

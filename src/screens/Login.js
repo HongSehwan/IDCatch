@@ -398,9 +398,6 @@ const Login = () => {
                     ) : null}
                 </InputContainer>
             </Container>
-            <FooterInfo>
-                <FooterText>사업자등록번호: 501-19-39107 상호: 에스캐처(S-Catcher) 문의: 043-255-9297</FooterText>
-            </FooterInfo>
             <Footer>
                 <FooterText>&copy; {new Date().getFullYear()} IDCatch. All rights reserved.</FooterText>
             </Footer>
