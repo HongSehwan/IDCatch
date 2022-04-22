@@ -43,7 +43,6 @@
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.10",
     "firebase-admin": "^10.0.2",
-    "iamport-react-native": "^2.0.0-rc.2",
     "metro-react-native-babel-preset": "^0.70.1",
     "prop-types": "^15.8.1",
     "react": "17.0.1",
