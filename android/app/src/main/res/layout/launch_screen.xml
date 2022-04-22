@@ -8,8 +8,6 @@
     <ImageView 
         android:layout_width="match_parent" 
         android:layout_height="match_parent"
-        android:contentDescription="Splashscreen" 
         android:src="@drawable/launch_screen" 
-        android:background="@color/splashprimary"
         android:scaleType="centerCrop" />
 </RelativeLayout>
