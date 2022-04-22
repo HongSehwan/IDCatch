@@ -12,6 +12,7 @@ import { setMessageModal } from "../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { AdMobBanner } from "expo-ads-admob";
 import LocalNotification from "../components/notification/Notification";
+import SplashScreen from "react-native-splash-screen";
 
 const CheckContainer = styled.View`
     flex: 1;
@@ -506,6 +507,7 @@ const Check = () => {
             }, 1000);
             setFirstSendLoading(false);
         } catch (error) {
+            SplashScreen.hide();
             setFirstSendLoading(false);
         }
     };
@@ -613,6 +615,7 @@ const Check = () => {
             }, 1000);
             setSecondSendLoading(false);
         } catch (error) {
+            SplashScreen.hide();
             setSecondSendLoading(false);
         }
     };
@@ -720,6 +723,7 @@ const Check = () => {
             }, 1000);
             setThirdSendLoading(false);
         } catch (error) {
+            SplashScreen.hide();
             setThirdSendLoading(false);
         }
     };

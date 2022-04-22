@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.multidex.MultiDexApplication;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
@@ -57,6 +59,7 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactNativeFirebaseAppPackage();
           new BackgroundTimerPackage();
           new ReactCheckBoxPackage();
+          new SplashScreenReactPackage();
           return packages;
         }
 

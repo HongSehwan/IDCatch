@@ -47,7 +47,7 @@ const FsView = ({ route }) => {
     }, []);
 
     const TryAgain = () => {
-        navigation.navigate("Auth");
+        navigation.navigate("IDcardAuth");
     };
 
     const CertificationCheck = () => {

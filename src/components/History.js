@@ -125,8 +125,8 @@ const History = () => {
                     </NoticeView>
                     <HistoryScroll>
                         <HistoryLine isDark={isDark}>
-                            {historyData.map((data) => (
-                                <HistoryView>
+                            {historyData.map((data, index) => (
+                                <HistoryView key={index}>
                                     <HistoryText isDark={isDark}>{data}</HistoryText>
                                     <AuthResult>
                                         <ResultText>인증 완료</ResultText>

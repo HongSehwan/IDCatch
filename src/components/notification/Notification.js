@@ -23,7 +23,6 @@ const _registerLocalNotification = () => {
             const nums = data.data().PhoneNumHistory[0];
             const numsArr = nums.split(",");
             const resultNum = numsArr[numsArr.length - 1];
-            console.log(resultNum);
             PushNotification.createChannel(
                 {
                     channelId: "com.idcatch", // (required)
@@ -39,7 +38,6 @@ const _registerLocalNotification = () => {
 
             const messages = [`${resultNum}님이 인증에 성공하였습니다.`];
             const message = messages[0];
-            console.log("들어왔니?");
             PushNotification.localNotificationSchedule({
                 /* Android Only Properties */
                 channelId: "com.idcatch",
