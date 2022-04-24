@@ -214,9 +214,9 @@ const Profile = () => {
             .update({ Transform: !transformResult });
         RNRestart.Restart();
     };
-    const goToNICE = () => {
+    const goToIamport = () => {
         navigation.navigate("Stack", {
-            screen: "NICE",
+            screen: "Iamport",
             // params: {
             //   ...fullData,
             // },
@@ -245,7 +245,7 @@ const Profile = () => {
                     <Title isDark={isDark}>성인 인증</Title>
                 </TitleView>
                 <Certification>
-                    <SelfAuthenticationBtn onPress={goToNICE}>
+                    <SelfAuthenticationBtn onPress={goToIamport}>
                         <SelfAuthentication isDark={isDark}>
                             <SelfAuthenticationText>본인 인증</SelfAuthenticationText>
                         </SelfAuthentication>
