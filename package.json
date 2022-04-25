@@ -43,6 +43,7 @@
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.10",
     "firebase-admin": "^10.0.2",
+    "iamport-react-native": "^2.0.0",
     "metro-react-native-babel-preset": "^0.70.1",
     "prop-types": "^15.8.1",
     "react": "17.0.1",
@@ -68,7 +69,6 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-splash-screen": "^3.3.0",
-    "react-native-svg": "^12.3.0",
     "react-native-touch-id": "^4.4.1",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
@@ -79,7 +79,8 @@
     "react-redux": "^7.2.7",
     "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.3",
-    "uri-scheme": "^1.0.115"
+    "uri-scheme": "^1.0.115",
+    "react-native-svg": "12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
