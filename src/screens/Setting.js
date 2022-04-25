@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { View, useColorScheme, Animated } from "react-native";
+import React from "react";
+import { useColorScheme } from "react-native";
 import styled from "styled-components/native";
 import auth from "@react-native-firebase/auth";
 import MessageModal from "../components/MessageModal";
@@ -14,7 +14,7 @@ const SettingContainer = styled.View`
     justify-content: center;
 `;
 
-const SignOut = styled(Animated.createAnimatedComponent(View))`
+const SignOut = styled.View`
     align-items: center;
     justify-content: center;
     border-width: 5px;
@@ -36,7 +36,7 @@ const HistoryBtn = styled.TouchableOpacity`
     margin-top: 100px;
 `;
 
-const History = styled(Animated.createAnimatedComponent(View))`
+const History = styled.View`
     align-items: center;
     justify-content: center;
     border-width: 5px;
@@ -56,7 +56,7 @@ const RegularBtn = styled.TouchableOpacity`
     margin-top: 100px;
 `;
 
-const Regular = styled(Animated.createAnimatedComponent(View))`
+const Regular = styled.View`
     align-items: center;
     justify-content: center;
     border-width: 5px;
@@ -76,7 +76,7 @@ const ServiceBtn = styled.TouchableOpacity`
     margin-top: 100px;
 `;
 
-const Service = styled(Animated.createAnimatedComponent(View))`
+const Service = styled.View`
     align-items: center;
     justify-content: center;
     border-width: 5px;
@@ -96,7 +96,7 @@ const InquiryBtn = styled.TouchableOpacity`
     margin-top: 100px;
 `;
 
-const Inquiry = styled(Animated.createAnimatedComponent(View))`
+const Inquiry = styled.View`
     align-items: center;
     justify-content: center;
     border-width: 5px;
@@ -116,15 +116,8 @@ const Setting = () => {
     const dispatch = useDispatch();
     const db = firebase.firestore();
     const navigation = useNavigation();
-    const scale = useRef(new Animated.Value(1)).current;
     const isDark = useColorScheme() === "dark";
     const { messageModal } = useSelector((state) => state.modalReducer);
-
-    const scaleUp = Animated.spring(scale, {
-        toValue: 1.5,
-        useNativeDriver: false,
-    });
-
     const onPress = () => {
         if (auth().currentUser) {
             db.collection("Auth")
@@ -163,7 +156,7 @@ const Setting = () => {
         <SettingContainer>
             <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             <SignOutBtn onPress={onPress}>
-                <SignOut isDark={isDark} style={{ transform: [{ scale: scaleUp }] }}>
+                <SignOut isDark={isDark}>
                     <SignOutText isDark={isDark}>로그아웃</SignOutText>
                 </SignOut>
             </SignOutBtn>
