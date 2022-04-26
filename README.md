@@ -27,7 +27,8 @@
 
 <img width="330" alt="스크린샷 2022-04-25 오후 2 15 46" src="https://user-images.githubusercontent.com/85854164/165124758-0a935387-23c7-40bd-8a38-d5ed70f2b625.png"><img width="330" alt="스크린샷 2022-04-25 오후 2 22 40" src="https://user-images.githubusercontent.com/85854164/165124831-73270503-6c29-4abb-827b-430d40a8e88f.png">
 
-<img width="330" alt="스크린샷 2022-04-25 오후 2 23 25" src="https://user-images.githubusercontent.com/85854164/165124869-104fbc8e-d105-4722-bc9d-492c5fb2a9a2.png"><img width="330" alt="스크린샷 2022-04-25 오후 2 25 17" src="https://user-images.githubusercontent.com/85854164/165124892-df727eda-561e-4538-be87-4cb822a7d151.png">
+<img width="330" alt="스크린샷 2022-04-25 오후 2 23 25" src="https://user-images.githubusercontent.com/85854164/165124869-104fbc8e-d105-4722-bc9d-492c5fb2a9a2.png"><img width="330" alt="스크린샷 2022-04-27 오전 3 06 14" src="https://user-images.githubusercontent.com/85854164/165364169-bc7ab198-f1ad-4ccd-a7f9-090103cfbf65.png">
+
 
 <h2>BLOG Link</h2>
 https://velog.io/@dormahd114
