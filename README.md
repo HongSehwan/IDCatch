@@ -17,6 +17,7 @@
 * 놓친 알림은 History에서 확인
 
 <h2>기술 스택</h2>
+<img width=""406 alt="IDCatchStack" src="https://user-images.githubusercontent.com/85854164/165278410-334f88ae-9734-4f41-a733-ed0eec21ef66.png">
 
 <h2>Apple App Store Link</h2>
 
