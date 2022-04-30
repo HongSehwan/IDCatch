@@ -7,18 +7,102 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:416756726883:android:d8d4dfa95e9254208c8c56",
+        "mobilesdk_app_id": "1:416756726883:android:178ee3b261cbb0c88c8c56",
+        "android_client_info": {
+          "package_name": "com.idcatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416756726883-ccjfuorbmd0q3nmbu7ad666ins52m2ha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idcatch",
+            "certificate_hash": "2996ea2f8fabd5d86d79ca020e444f2f2caff3e5"
+          }
+        },
+        {
+          "client_id": "416756726883-ddia30guo7cb9ajbsaedkk2s73qt26dr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idcatch",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "416756726883-uj4du3lcnpltd7s2gh7dr2qqr238cupa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idcatch",
+            "certificate_hash": "bd1c3ae5679de08973bf293af3a4a3bdec4ea3ac"
+          }
+        },
+        {
+          "client_id": "416756726883-bf2np8d4r09ueo07shb26joqvg3aa6i6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbC4Xw0aHPCWPjk-Dll_mNZGEwjzZO750"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416756726883-bf2np8d4r09ueo07shb26joqvg3aa6i6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "416756726883-8fovqkcauhtf3j0g3r5btj85n7f00uh8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.name.IDCatch-dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416756726883:android:aa592c821a9dae2d8c8c56",
         "android_client_info": {
           "package_name": "com.idcatch.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "416756726883-flu6b3c0brn0o8msog2d95lk4ulh7lhg.apps.googleusercontent.com",
+          "client_id": "416756726883-0m3ebv2sf2mamsum2lp1f34aa477kb4u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.idcatch.dev",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "416756726883-g6psf12r3ulgmis37pf41g0spc0ba2dk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idcatch.dev",
+            "certificate_hash": "2996ea2f8fabd5d86d79ca020e444f2f2caff3e5"
+          }
+        },
+        {
+          "client_id": "416756726883-r86fbrlt15kgkqae6cpjvjtojn1f3lvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idcatch.dev",
+            "certificate_hash": "59ad898e5f06517533c851a97aaf80b3dcf0d446"
+          }
+        },
+        {
+          "client_id": "416756726883-u0fah7kqopgs92prb4kv5vil4uh1kr6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idcatch.dev",
+            "certificate_hash": "bd1c3ae5679de08973bf293af3a4a3bdec4ea3ac"
           }
         },
         {
