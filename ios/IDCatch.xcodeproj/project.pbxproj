@@ -11,6 +11,7 @@
 		08857F5427F091A0006922C7 /* Restart.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 08857F5327F091A0006922C7 /* Restart.xcworkspace */; };
 		08857F6D27F46F37006922C7 /* RNCCameraroll.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 08857F6C27F46F36006922C7 /* RNCCameraroll.xcworkspace */; };
 		08857F8627FD3B42006922C7 /* project.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 08857F8527FD3B42006922C7 /* project.xcworkspace */; };
+		08C2CCC8281CD91200122AE2 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		08C43D372812F22A00D34871 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C43D362812F22900D34871 /* SplashScreen.storyboard */; };
 		08C440D028131AFD00D34871 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08C440CF28131AFC00D34871 /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -216,6 +217,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08C2CCC8281CD91200122AE2 /* main.jsbundle in Resources */,
 				08857F6D27F46F37006922C7 /* RNCCameraroll.xcworkspace in Resources */,
 				08C440D028131AFD00D34871 /* GoogleService-Info.plist in Resources */,
 				08C43D372812F22A00D34871 /* SplashScreen.storyboard in Resources */,

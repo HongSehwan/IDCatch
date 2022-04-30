@@ -281,7 +281,7 @@ const Profile = () => {
                 ) : null}
             </Container>
             <AdMobContainer>
-                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-3940256099942544/6300978111" />
+                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-7375395662986319/4570214489" />
             </AdMobContainer>
         </>
     );
