@@ -32,17 +32,34 @@ const FsView = ({ route }) => {
                 .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "User")
                 .get()
                 .then((data) => {
-                    if (data.data().UserName === extract이름 && data.data().Birthday === extract생년월일 && data.data().Gender) {
-                        setUserInfo(true);
-                        setMessage("인증 성공");
+                    if (extract.includes("주민등록증")) {
+                        setExtractData(extract.split("민등록증 ")[1].split("(")[0] + " " + extract.split("-")[0].slice(-6));
+                        const name = extract.split("민등록증 ")[1].split("(")[0];
+                        const birthD = extract.split("-")[0].slice(-6);
+                        if (data.data().UserName === name && data.data().Birthday === birthD) {
+                            setUserInfo(true);
+                        } else {
+                            setUserInfo(false);
+                            dispatch(setMessageModal(true, "본인인증과 개인 정보가 일치하지 않습니다."));
+                        }
+                        setLoadingExtract(false);
+                    } else if (extract.includes("자동차운전면허증")) {
+                        setExtractData(extract.split("-")[3].slice(3, -7) + " " + extract.split("-")[3].slice(-6));
+                        const name = extract.split("-")[3].slice(3, -7);
+                        const birthD = extract.split("-")[3].slice(-6);
+                        if (data.data().UserName === name && data.data().Birthday === birthD) {
+                            setUserInfo(true);
+                            setMessage("인증 성공");
+                        } else {
+                            setUserInfo(false);
+                            dispatch(setMessageModal(true, "본인인증과 개인 정보가 일치하지 않습니다."));
+                            setMessage("인증 실패");
+                        }
+                        setLoadingExtract(false);
                     } else {
-                        setUserInfo(false);
-                        dispatch(setMessageModal(true, "본인인증과 개인 정보가 일치하지 않습니다."));
-                        setMessage("인증 실패");
+                        dispatch(setMessageModal(true, "유효한 신분증이 아닙니다."));
                     }
                 });
-            setExtractData(extract);
-            setLoadingExtract(false);
         }
     }, []);
 
@@ -51,11 +68,17 @@ const FsView = ({ route }) => {
     };
 
     const CertificationCheck = () => {
-        navigation.navigate("Certification", { message: message });
+        navigation.navigate("Certification", { userInfo: userInfo });
     };
 
     return (
         <SafeAreaView style={styles.container}>
+            {/* <View style={{ marginTop: 30, borderWidth: 1, padding: 10, borderRadius: 5, backgroundColor: "#dfe6e9" }}>
+                <Text style={{ color: "tomato", fontSize: 15, fontWeight: 700 }}>운전면허증인 경우 보다 정확한 검사를 위해</Text>
+                <Text style={{ color: "tomato", fontSize: 15, fontWeight: 700 }}>사진 부분을 제외한 글자 부분을 찍어주시기 바랍니다.</Text>
+                <Text style={{ color: "tomato", fontSize: 15, fontWeight: 700 }}>촬영 결과는 이름과 생년월일이 조회되어야 합니다.</Text>
+            </View> */}
+            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             <Image style={styles.image} source={{ uri: uri }} />
             <Text style={styles.heading}>신분증 촬영 결과</Text>
             <Text style={styles.extracted}>{loadingExtract ? "Loading..." : extractData ? extractData : null}</Text>
@@ -85,7 +108,7 @@ const styles = StyleSheet.create({
     image: {
         width: 200,
         height: 200,
-        marginTop: 50,
+        marginTop: 30,
         marginBottom: 30,
         borderRadius: 10,
     },

@@ -5,9 +5,9 @@ import { callGoogleVIsionApi } from "../../Idcard/Camera/TextDetection";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { BLACK_COLOR } from "../../../color";
 import { useNavigation } from "@react-navigation/native";
-import CryptoJS from "react-native-crypto-js";
-import auth from "@react-native-firebase/auth";
-import { firebase } from "@react-native-firebase/firestore";
+import MessageModal from "../../MessageModal";
+import { setMessageModal } from "../../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const RegistrationView = ({ route }) => {
     const db = firebase.firestore();
@@ -15,7 +15,7 @@ const RegistrationView = ({ route }) => {
     const [loadingExtract, setLoadingExtract] = useState(true);
     const [extractData, setExtractData] = useState("");
     const [b_Result, setB_Result] = useState(false);
-    const [message, setMessage] = useState("");
+    const { messageModal } = useSelector((state) => state.modalReducer);
     const { uri } = route.params;
     useEffect(async () => {
         if (uri) {
@@ -23,42 +23,30 @@ const RegistrationView = ({ route }) => {
                 encoding: "base64",
             });
             const extract = await callGoogleVIsionApi(result);
-            const data = {
-                b_no: ["xxxxxxx"], // 사업자번호 "xxxxxxx" 로 조회 시,
-            };
+            setExtractData(extract.split("-")[0] + extract.split("-")[1] + extract.split("-")[2]);
+            if (extract.includes("사업자등록증")) {
+                const data = {
+                    b_no: [extract.split("-")[0] + extract.split("-")[1] + extract.split("-")[2]], // 사업자번호 "xxxxxxx" 로 조회 시,
+                };
 
-            $.ajax({
-                url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=xxxxxx", // serviceKey 값을 xxxxxx에 입력
-                type: "POST",
-                data: JSON.stringify(data), // json 을 string으로 변환하여 전송
-                dataType: "JSON",
-                contentType: "application/json",
-                accept: "application/json",
-                success: function (result) {
-                    console.log(result);
-                    setB_Result(true);
-                },
-                error: function (result) {
-                    console.log(result.responseText); //responseText의 에러메세지 확인
-                    setB_Result(false);
-                },
-            });
-
-            if (b_Result) {
-                const userInfo = CryptoJS.AES.encrypt(
-                    extract,
-                    0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
-                ).toString();
-                db.collection("Auth")
-                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                    .update({ b_no: userInfo, name: userInfo, b_st: userInfo });
-                setMessage("인증 성공");
-                setB_Result(false);
+                $.ajax({
+                    url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=xxxxxx", // serviceKey 값을 xxxxxx에 입력
+                    type: "POST",
+                    data: JSON.stringify(data), // json 을 string으로 변환하여 전송
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    accept: "application/json",
+                    success: function (result) {
+                        setB_Result(true);
+                    },
+                    error: function (result) {
+                        setB_Result(false);
+                    },
+                });
+                setLoadingExtract(false);
             } else {
-                setMessage("인증 실패");
+                dispatch(setMessageModal(true, "유효한 사업자등록증이 아닙니다."));
             }
-            setExtractData(extract);
-            setLoadingExtract(false);
         }
     }, []);
 
@@ -67,11 +55,12 @@ const RegistrationView = ({ route }) => {
     };
 
     const CertificationCheck = () => {
-        navigation.navigate("CEOCertification", { message: message });
+        navigation.navigate("CEOCertification", { b_Result: b_Result });
     };
 
     return (
         <SafeAreaView style={styles.container}>
+            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
             <Image style={styles.image} source={{ uri: uri }} />
             <Text style={styles.heading}>사업자등록증 촬영 결과</Text>
             <Text style={styles.extracted}>{loadingExtract ? "Loading..." : extractData ? extractData : null}</Text>
