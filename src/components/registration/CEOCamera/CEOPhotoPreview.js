@@ -12,7 +12,7 @@ function CEOPhotoPreview({ route }) {
     const __savePicture = async (photoUri) => {
         try {
             const resPermission = await MediaLibrary.getPermissionsAsync();
-            if (resPermission.granted) {
+            if (resPermission.granted && photoUri) {
                 const asset = await MediaLibrary.createAssetAsync(photoUri);
             } else {
                 const res = await MediaLibrary.requestPermissionsAsync();

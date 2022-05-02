@@ -138,8 +138,8 @@ android {
         resValue "string", "build_config_package", "com.idcatch"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 27
-        versionName "3.6"
+        versionCode 28
+        versionName "3.7"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
     }

@@ -10,7 +10,6 @@ import { setMessageModal } from "../../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const RegistrationView = ({ route }) => {
-    const db = firebase.firestore();
     const navigation = useNavigation();
     const [loadingExtract, setLoadingExtract] = useState(true);
     const [extractData, setExtractData] = useState("");
