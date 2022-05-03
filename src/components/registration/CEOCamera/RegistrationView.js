@@ -27,7 +27,7 @@ const RegistrationView = ({ route }) => {
             setExtractData(extract.split("-")[0].slice(-3) + extract.split("-")[1].slice(-2) + extract.split("-")[2].slice(0, 5));
             if (extract.includes("사업자")) {
                 const data = {
-                    b_no: [extractData], // 사업자번호 "xxxxxxx" 로 조회 시,
+                    b_no: [String(extractData)], // 사업자번호 "xxxxxxx" 로 조회 시,
                 };
 
                 $.ajax({
