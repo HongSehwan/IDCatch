@@ -22,10 +22,10 @@ const RegistrationView = ({ route }) => {
                 encoding: "base64",
             });
             const extract = await callGoogleVIsionApi(result);
-            setExtractData(extract.split("-")[0] + extract.split("-")[1] + extract.split("-")[2]);
+            setExtractData(extract.split("-")[0].slice(-3) + extract.split("-")[1].slice(-2) + extract.split("-")[2].slice(0, 5));
             if (extract.includes("사업자등록증")) {
                 const data = {
-                    b_no: [extract.split("-")[0] + extract.split("-")[1] + extract.split("-")[2]], // 사업자번호 "xxxxxxx" 로 조회 시,
+                    b_no: [extract.split("-")[0].slice(-3) + extract.split("-")[1].slice(-2) + extract.split("-")[2].slice(0, 5)], // 사업자번호 "xxxxxxx" 로 조회 시,
                 };
 
                 $.ajax({

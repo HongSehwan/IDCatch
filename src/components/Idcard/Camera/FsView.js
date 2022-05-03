@@ -33,8 +33,8 @@ const FsView = ({ route }) => {
                 .get()
                 .then((data) => {
                     if (extract.includes("주민등록증")) {
-                        setExtractData(extract.split("민등록증 ")[1].split("(")[0] + " " + extract.split("-")[0].slice(-6));
-                        const name = extract.split("민등록증 ")[1].split("(")[0];
+                        setExtractData(extract.split("주민등록증 ")[1].split(" (")[0] + " " + extract.split("-")[0].slice(-6));
+                        const name = extract.split("주민등록증 ")[1].split(" (")[0];
                         const birthD = extract.split("-")[0].slice(-6);
                         if (data.data().UserName === name && data.data().Birthday === birthD) {
                             setUserInfo(true);
