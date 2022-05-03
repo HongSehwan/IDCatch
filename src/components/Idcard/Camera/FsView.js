@@ -32,9 +32,10 @@ const FsView = ({ route }) => {
                 .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "User")
                 .get()
                 .then((data) => {
+                    setLoadingExtract(false);
                     if (extract.includes("주민등록증")) {
-                        setExtractData(extract.split("주민등록증 ")[1].split(" (")[0] + " " + extract.split("-")[0].slice(-6));
-                        const name = extract.split("주민등록증 ")[1].split(" (")[0];
+                        setExtractData(extract.split("증")[1].split("(")[0] + " " + extract.split("-")[0].slice(-6));
+                        const name = extract.split("증")[1].split("(")[0];
                         const birthD = extract.split("-")[0].slice(-6);
                         if (data.data().UserName === name && data.data().Birthday === birthD) {
                             setUserInfo(true);
@@ -49,11 +50,9 @@ const FsView = ({ route }) => {
                         const birthD = extract.split("-")[3].slice(-6);
                         if (data.data().UserName === name && data.data().Birthday === birthD) {
                             setUserInfo(true);
-                            setMessage("인증 성공");
                         } else {
                             setUserInfo(false);
                             dispatch(setMessageModal(true, "본인인증과 개인 정보가 일치하지 않습니다."));
-                            setMessage("인증 실패");
                         }
                         setLoadingExtract(false);
                     } else {

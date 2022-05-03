@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import MessageModal from "../../MessageModal";
 import { setMessageModal } from "../../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
+import Config from "react-native-config";
 
 const RegistrationView = ({ route }) => {
     const navigation = useNavigation();
@@ -22,14 +23,15 @@ const RegistrationView = ({ route }) => {
                 encoding: "base64",
             });
             const extract = await callGoogleVIsionApi(result);
+            setLoadingExtract(false);
             setExtractData(extract.split("-")[0].slice(-3) + extract.split("-")[1].slice(-2) + extract.split("-")[2].slice(0, 5));
-            if (extract.includes("사업자등록증")) {
+            if (extract.includes("사업자")) {
                 const data = {
-                    b_no: [extract.split("-")[0].slice(-3) + extract.split("-")[1].slice(-2) + extract.split("-")[2].slice(0, 5)], // 사업자번호 "xxxxxxx" 로 조회 시,
+                    b_no: [extractData], // 사업자번호 "xxxxxxx" 로 조회 시,
                 };
 
                 $.ajax({
-                    url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=xxxxxx", // serviceKey 값을 xxxxxx에 입력
+                    url: `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${Config.B_SERVICE_KEY}`, // serviceKey 값을 xxxxxx에 입력
                     type: "POST",
                     data: JSON.stringify(data), // json 을 string으로 변환하여 전송
                     dataType: "JSON",
