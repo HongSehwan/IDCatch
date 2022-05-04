@@ -34,8 +34,10 @@ const FsView = ({ route }) => {
                 .then((data) => {
                     setLoadingExtract(false);
                     if (extract.includes("주민등록증")) {
-                        setExtractData(extract.split("증 ")[1].split("(")[0] + " " + extract.split("-")[0].slice(-6));
-                        const name = extract.split("증 ")[1].split("(")[0];
+                        setExtractData(
+                            `이름/주민등록번호: ${extract.split("증")[1].slice(1).split("(")[0]} ${extract.split("-")[0].slice(-6)}`
+                        );
+                        const name = extract.split("증")[1].slice(1).split("(")[0];
                         const birthD = extract.split("-")[0].slice(-6);
                         if (data.data().UserName === name && data.data().Birthday === birthD) {
                             setUserInfo(true);
@@ -45,7 +47,7 @@ const FsView = ({ route }) => {
                         }
                         setLoadingExtract(false);
                     } else if (extract.includes("자동차운전면허증")) {
-                        setExtractData(extract.split("-")[3].slice(3, -7) + " " + extract.split("-")[3].slice(-6));
+                        setExtractData(`이름/주민등록번호: ${extract.split("-")[3].slice(3, -7)} ${extract.split("-")[3].slice(-6)}`);
                         const name = extract.split("-")[3].slice(3, -7);
                         const birthD = extract.split("-")[3].slice(-6);
                         if (data.data().UserName === name && data.data().Birthday === birthD) {

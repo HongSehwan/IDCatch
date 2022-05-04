@@ -24,10 +24,12 @@ const RegistrationView = ({ route }) => {
             });
             const extract = await callGoogleVIsionApi(result);
             setLoadingExtract(false);
-            setExtractData(extract.split("-")[0].slice(-3) + extract.split("-")[1].slice(-2) + extract.split("-")[2].slice(0, 5));
+            setExtractData(
+                `사업자등록번호: ${extract.split("-")[0].slice(-3)}${extract.split("-")[1].slice(-2)}${extract.split("-")[2].slice(0, 5)}`
+            );
             if (extract.includes("사업자")) {
                 const data = {
-                    b_no: [String(extractData)], // 사업자번호 "xxxxxxx" 로 조회 시,
+                    b_no: [`${extract.split("-")[0].slice(-3)}${extract.split("-")[1].slice(-2)}${extract.split("-")[2].slice(0, 5)}`], // 사업자번호 "xxxxxxx" 로 조회 시,
                 };
 
                 $.ajax({
