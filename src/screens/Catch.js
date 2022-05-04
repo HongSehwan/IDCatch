@@ -151,7 +151,7 @@ const ClientPhoneText = styled.Text`
 
 const InputContainer = styled.View`
     color: white;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     padding: 5px 20px;
     /* background-color: white; */
 `;

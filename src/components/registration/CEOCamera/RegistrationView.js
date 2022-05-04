@@ -9,8 +9,10 @@ import MessageModal from "../../MessageModal";
 import { setMessageModal } from "../../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import Config from "react-native-config";
+import axios from "axios";
 
 const RegistrationView = ({ route }) => {
+    const dispatch = useDispatch();
     const navigation = useNavigation();
     const [loadingExtract, setLoadingExtract] = useState(true);
     const [extractData, setExtractData] = useState("");
@@ -32,21 +34,23 @@ const RegistrationView = ({ route }) => {
                     b_no: [`${extract.split("-")[0].slice(-3)}${extract.split("-")[1].slice(-2)}${extract.split("-")[2].slice(0, 5)}`], // 사업자번호 "xxxxxxx" 로 조회 시,
                 };
 
-                $.ajax({
-                    url: `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${Config.B_SERVICE_KEY}`, // serviceKey 값을 xxxxxx에 입력
-                    type: "POST",
-                    data: JSON.stringify(data), // json 을 string으로 변환하여 전송
-                    dataType: "JSON",
-                    contentType: "application/json",
-                    accept: "application/json",
-                    success: function (result) {
-                        setB_Result(true);
-                    },
-                    error: function (result) {
-                        setB_Result(false);
-                    },
-                });
-                setLoadingExtract(false);
+                axios
+                    .post(`https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${Config.B_SERVICE_KEY}`, data, {
+                        headers: {
+                            contentType: "application/json",
+                            accept: "application/json",
+                        },
+                    })
+                    .then((result) => {
+                        if (result.data.data[0].b_stt === "01") {
+                            setB_Result(true);
+                        } else {
+                            setB_Result(false);
+                        }
+                    })
+                    .catch((err) => {
+                        dispatch(setMessageModal(true, "인증 오류입니다."));
+                    });
             } else {
                 dispatch(setMessageModal(true, "유효한 사업자등록증이 아닙니다."));
             }

@@ -21,7 +21,6 @@ const callGoogleVIsionApi = async (base64) => {
     });
     try {
         const result = await googleVisionRes.json();
-        console.log(result.responses);
         const [data] = result?.responses;
         const fullText = data?.fullTextAnnotation?.text;
         return fullText;
