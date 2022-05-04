@@ -42,7 +42,7 @@ const RegistrationView = ({ route }) => {
                         },
                     })
                     .then((result) => {
-                        if (result.data.data[0].b_stt === "01") {
+                        if (result.data.data[0].b_stt_cd === "01") {
                             setB_Result(true);
                         } else {
                             setB_Result(false);
