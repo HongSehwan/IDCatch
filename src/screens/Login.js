@@ -14,9 +14,15 @@ import { setMessageModal } from "../redux/actions";
 const Container = styled.View`
     flex: 1;
     background-color: white;
-    justify-content: center;
+    /* justify-content: center; */
 `;
 const InputContainer = styled.View`
+    color: white;
+    padding: 60px 20px;
+    background-color: white;
+`;
+const AfterInputContainer = styled.View`
+    margintop: 40px;
     color: white;
     padding: 60px 20px;
     background-color: white;
@@ -101,12 +107,16 @@ const CheckLine = styled.View`
 
 const ImgView = styled.View`
     align-items: center;
-    margin-top: -10px;
+    margin-top: 50px;
+    /* margin-top: -10px; -> 안드로이드 전용*/
+    /* margin-top: 20px; -> 아이폰 전용*/
 `;
 
 const Img = styled.Image`
     width: 100%;
-    height: 300px;
+    height: 200px;
+    /* height: 300px; -> 안드로이드 전용*/
+    /* height: 300px; -> 아이폰 전용*/
 `;
 
 const Agreement = styled.View`
@@ -327,76 +337,148 @@ const Login = () => {
         <>
             <Container>
                 <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
-                <ImgView>
-                    <Img resizeMode="stretch" source={require("../assets/img/IDCatch_logo.png")} />
-                </ImgView>
-                <InputContainer>
-                    <Title>휴대폰 번호</Title>
-                    <InputLine>
-                        <PhoneTextInput
-                            placeholder="- 없이 입력"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            placeholderTextColor="grey"
-                            keyboardType="number-pad"
-                            returnKeyType="next"
-                            value={phoneNum}
-                            onChangeText={(num) => setPhoneNum(num)}
-                            onSubmitEditing={onSubmitPhoneEditing}
-                        />
-                        <Agreement>
-                            <CheckBox
-                                disabled={false}
-                                tintColor={"#b2bec3"}
-                                onTintColor={"white"}
-                                value={toggleCheckBox}
-                                onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                {phoneState ? null : (
+                    <ImgView>
+                        <Img resizeMode="stretch" source={require("../assets/img/IDCatch_logo.png")} />
+                    </ImgView>
+                )}
+                {phoneState ? (
+                    <AfterInputContainer>
+                        <Title>휴대폰 번호</Title>
+                        <InputLine>
+                            <PhoneTextInput
+                                placeholder="- 없이 입력"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                placeholderTextColor="grey"
+                                keyboardType="number-pad"
+                                returnKeyType="next"
+                                value={phoneNum}
+                                onChangeText={(num) => setPhoneNum(num)}
+                                onSubmitEditing={onSubmitPhoneEditing}
                             />
-                            <AgreementText>개인정보 수집·이용 동의</AgreementText>
-                            <DetailBtn onPress={goToAgreement}>
-                                <Detail>
-                                    <DetailText>보기</DetailText>
-                                </Detail>
-                            </DetailBtn>
-                        </Agreement>
-                        {toggleCheckBox ? (
-                            <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
-                                {sendLoading ? <ActivityIndicator color="tomato" /> : <BtnText>Send</BtnText>}
-                            </PhoneCheckBtn>
-                        ) : (
-                            <Disabled>
-                                <DisabledText>Send</DisabledText>
-                            </Disabled>
-                        )}
-                    </InputLine>
-                    {phoneState ? (
-                        <>
-                            <Title>인증번호</Title>
-                            <InputLine>
-                                <CheckLine>
-                                    <PasswordTextInput
-                                        ref={passwordInput}
-                                        placeholder="인증번호 6자리"
-                                        placeholderTextColor="grey"
-                                        keyboardType="number-pad"
-                                        returnKeyType="done"
-                                        value={password}
-                                        onChangeText={(text) => setPassword(text)}
-                                        onSubmitEditing={onSubmitCheckEditing}
-                                    />
-                                    <Timer>
-                                        <TimerText>
-                                            {min}분 {sec}초
-                                        </TimerText>
-                                    </Timer>
-                                </CheckLine>
-                                <PasswordCheckBtn onPress={onSubmitCheckEditing}>
-                                    {checkLoading ? <ActivityIndicator color="tomato" /> : <BtnText>Log In</BtnText>}
-                                </PasswordCheckBtn>
-                            </InputLine>
-                        </>
-                    ) : null}
-                </InputContainer>
+                            <Agreement>
+                                <CheckBox
+                                    disabled={false}
+                                    tintColor={"#b2bec3"}
+                                    onTintColor={"white"}
+                                    value={toggleCheckBox}
+                                    onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                                />
+                                <AgreementText>개인정보 수집·이용 동의</AgreementText>
+                                <DetailBtn onPress={goToAgreement}>
+                                    <Detail>
+                                        <DetailText>보기</DetailText>
+                                    </Detail>
+                                </DetailBtn>
+                            </Agreement>
+                            {toggleCheckBox ? (
+                                <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
+                                    {sendLoading ? <ActivityIndicator color="tomato" /> : <BtnText>Send</BtnText>}
+                                </PhoneCheckBtn>
+                            ) : (
+                                <Disabled>
+                                    <DisabledText>Send</DisabledText>
+                                </Disabled>
+                            )}
+                        </InputLine>
+                        {phoneState ? (
+                            <>
+                                <Title>인증번호</Title>
+                                <InputLine>
+                                    <CheckLine>
+                                        <PasswordTextInput
+                                            ref={passwordInput}
+                                            placeholder="인증번호 6자리"
+                                            placeholderTextColor="grey"
+                                            keyboardType="number-pad"
+                                            returnKeyType="done"
+                                            value={password}
+                                            onChangeText={(text) => setPassword(text)}
+                                            onSubmitEditing={onSubmitCheckEditing}
+                                        />
+                                        <Timer>
+                                            <TimerText>
+                                                {min}분 {sec}초
+                                            </TimerText>
+                                        </Timer>
+                                    </CheckLine>
+                                    <PasswordCheckBtn onPress={onSubmitCheckEditing}>
+                                        {checkLoading ? <ActivityIndicator color="tomato" /> : <BtnText>Log In</BtnText>}
+                                    </PasswordCheckBtn>
+                                </InputLine>
+                            </>
+                        ) : null}
+                    </AfterInputContainer>
+                ) : (
+                    <InputContainer>
+                        <Title>휴대폰 번호</Title>
+                        <InputLine>
+                            <PhoneTextInput
+                                placeholder="- 없이 입력"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                placeholderTextColor="grey"
+                                keyboardType="number-pad"
+                                returnKeyType="next"
+                                value={phoneNum}
+                                onChangeText={(num) => setPhoneNum(num)}
+                                onSubmitEditing={onSubmitPhoneEditing}
+                            />
+                            <Agreement>
+                                <CheckBox
+                                    disabled={false}
+                                    tintColor={"#b2bec3"}
+                                    onTintColor={"white"}
+                                    value={toggleCheckBox}
+                                    onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                                />
+                                <AgreementText>개인정보 수집·이용 동의</AgreementText>
+                                <DetailBtn onPress={goToAgreement}>
+                                    <Detail>
+                                        <DetailText>보기</DetailText>
+                                    </Detail>
+                                </DetailBtn>
+                            </Agreement>
+                            {toggleCheckBox ? (
+                                <PhoneCheckBtn onPress={onSubmitPhoneEditing}>
+                                    {sendLoading ? <ActivityIndicator color="tomato" /> : <BtnText>Send</BtnText>}
+                                </PhoneCheckBtn>
+                            ) : (
+                                <Disabled>
+                                    <DisabledText>Send</DisabledText>
+                                </Disabled>
+                            )}
+                        </InputLine>
+                        {phoneState ? (
+                            <>
+                                <Title>인증번호</Title>
+                                <InputLine>
+                                    <CheckLine>
+                                        <PasswordTextInput
+                                            ref={passwordInput}
+                                            placeholder="인증번호 6자리"
+                                            placeholderTextColor="grey"
+                                            keyboardType="number-pad"
+                                            returnKeyType="done"
+                                            value={password}
+                                            onChangeText={(text) => setPassword(text)}
+                                            onSubmitEditing={onSubmitCheckEditing}
+                                        />
+                                        <Timer>
+                                            <TimerText>
+                                                {min}분 {sec}초
+                                            </TimerText>
+                                        </Timer>
+                                    </CheckLine>
+                                    <PasswordCheckBtn onPress={onSubmitCheckEditing}>
+                                        {checkLoading ? <ActivityIndicator color="tomato" /> : <BtnText>Log In</BtnText>}
+                                    </PasswordCheckBtn>
+                                </InputLine>
+                            </>
+                        ) : null}
+                    </InputContainer>
+                )}
             </Container>
             <Footer>
                 <FooterText>&copy; {new Date().getFullYear()} IDCatch. All rights reserved.</FooterText>
