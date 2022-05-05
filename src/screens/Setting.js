@@ -14,6 +14,10 @@ const SettingContainer = styled.View`
     justify-content: center;
 `;
 
+const SettingScroll = styled.ScrollView`
+    flex: 1;
+`;
+
 const SignOut = styled.View`
     align-items: center;
     justify-content: center;
@@ -154,32 +158,34 @@ const Setting = () => {
     };
     return (
         <SettingContainer>
-            <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
-            <SignOutBtn onPress={onPress}>
-                <SignOut isDark={isDark}>
-                    <SignOutText isDark={isDark}>로그아웃</SignOutText>
-                </SignOut>
-            </SignOutBtn>
-            <HistoryBtn onPress={goToHistory}>
-                <History isDark={isDark}>
-                    <HistoryText isDark={isDark}>최근 이력</HistoryText>
-                </History>
-            </HistoryBtn>
-            <RegularBtn onPress={Alarm}>
-                <Regular isDark={isDark}>
-                    <RegularText isDark={isDark}>단골 고객</RegularText>
-                </Regular>
-            </RegularBtn>
-            <ServiceBtn onPress={goToTerms}>
-                <Service isDark={isDark}>
-                    <ServiceText isDark={isDark}>서비스 약관</ServiceText>
-                </Service>
-            </ServiceBtn>
-            <InquiryBtn onPress={InquiryMail}>
-                <Inquiry isDark={isDark}>
-                    <InquiryText isDark={isDark}>이용 문의</InquiryText>
-                </Inquiry>
-            </InquiryBtn>
+            <SettingScroll>
+                <MessageModal isOpen={messageModal.isModalOpen} content={messageModal.content} />
+                <SignOutBtn onPress={onPress}>
+                    <SignOut isDark={isDark}>
+                        <SignOutText isDark={isDark}>로그아웃</SignOutText>
+                    </SignOut>
+                </SignOutBtn>
+                <HistoryBtn onPress={goToHistory}>
+                    <History isDark={isDark}>
+                        <HistoryText isDark={isDark}>최근 이력</HistoryText>
+                    </History>
+                </HistoryBtn>
+                <RegularBtn onPress={Alarm}>
+                    <Regular isDark={isDark}>
+                        <RegularText isDark={isDark}>단골 고객</RegularText>
+                    </Regular>
+                </RegularBtn>
+                <ServiceBtn onPress={goToTerms}>
+                    <Service isDark={isDark}>
+                        <ServiceText isDark={isDark}>서비스 약관</ServiceText>
+                    </Service>
+                </ServiceBtn>
+                <InquiryBtn onPress={InquiryMail}>
+                    <Inquiry isDark={isDark}>
+                        <InquiryText isDark={isDark}>이용 문의</InquiryText>
+                    </Inquiry>
+                </InquiryBtn>
+            </SettingScroll>
         </SettingContainer>
     );
 };

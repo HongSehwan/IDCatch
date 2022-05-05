@@ -22,7 +22,7 @@ const InputContainer = styled.View`
     background-color: white;
 `;
 const AfterInputContainer = styled.View`
-    margintop: 40px;
+    margin-top: 30px;
     color: white;
     padding: 60px 20px;
     background-color: white;
@@ -107,7 +107,7 @@ const CheckLine = styled.View`
 
 const ImgView = styled.View`
     align-items: center;
-    margin-top: 50px;
+    margin-top: 40px;
     /* margin-top: -10px; -> 안드로이드 전용*/
     /* margin-top: 20px; -> 아이폰 전용*/
 `;
