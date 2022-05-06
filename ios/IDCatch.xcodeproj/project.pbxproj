@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		0856A2702825101B000E3FB2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../IOS Apple key/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0856A272282515BC000E3FB2 /* IDCatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IDCatch.entitlements; path = IDCatch/IDCatch.entitlements; sourceTree = "<group>"; };
 		085CEDCE28002F000058E96B /* project.pbxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.pbxproject; name = project.pbxproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj/project.pbxproj"; sourceTree = "<group>"; };
 		08857F5327F091A0006922C7 /* Restart.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = Restart.xcworkspace; path = "../node_modules/react-native-restart/ios/Restart.xcworkspace"; sourceTree = "<group>"; };
 		08857F6C27F46F36006922C7 /* RNCCameraroll.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = RNCCameraroll.xcworkspace; path = "../node_modules/@react-native-community/cameraroll/ios/RNCCameraroll.xcworkspace"; sourceTree = "<group>"; };
@@ -62,6 +63,7 @@
 		13B07FAE1A68108700A75B9A /* IDCatch */ = {
 			isa = PBXGroup;
 			children = (
+				0856A272282515BC000E3FB2 /* IDCatch.entitlements */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -453,6 +455,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = IDCatch/IDCatch.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJWZ5TQF36;
 				DISPLAY_NAME = "Dev-IDCatch";
@@ -525,7 +528,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -603,6 +606,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = IDCatch/IDCatch.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJWZ5TQF36;
 				DISPLAY_NAME = "Stage-IDCatch";
@@ -675,7 +679,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -695,6 +699,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = IDCatch/IDCatch.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJWZ5TQF36;
 				DISPLAY_NAME = "Debug-IDCatch";
@@ -767,7 +772,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -787,6 +792,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = IDCatch/IDCatch.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CJWZ5TQF36;
 				DISPLAY_NAME = IDCatch;
@@ -854,7 +860,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
