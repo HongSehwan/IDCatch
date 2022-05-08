@@ -82,6 +82,15 @@
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:scheme="" />
         <data android:scheme="idcatch" />
+        <data
+            android:host="idcatch.page.link"
+            android:path="/IDCatch"
+            android:scheme="https" />
+
+        <data
+            android:host="idcatch.page.link"
+            android:path="/IDCatch"
+            android:scheme="http" />
       </intent-filter>
     </activity>
     <activity
