@@ -46,7 +46,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-7375395662986319~6189136651</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -233,6 +233,8 @@
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
+	<string>SplashScreen</string>
+	<key>UIMainStoryboardFile</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

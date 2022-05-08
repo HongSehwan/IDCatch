@@ -421,7 +421,7 @@ const Check = () => {
                 .doc(firstPhoneNum + "A")
                 .set({ AuthState: false });
             Linking.openURL(
-                `sms:${firstPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
+                `sms:${firstPhoneNum}${SMSDivider}body=https://idcatch.page.link/IDCatch 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
             );
             const firstInterval = BackgroundTimer.setInterval(() => {
                 firstCount.current += 1;
@@ -529,7 +529,7 @@ const Check = () => {
                 .doc(secondPhoneNum + "A")
                 .set({ AuthState: false });
             Linking.openURL(
-                `sms:${secondPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
+                `sms:${secondPhoneNum}${SMSDivider}body=https://idcatch.page.link/IDCatch 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
             );
             const secondInterval = BackgroundTimer.setInterval(() => {
                 secondCount.current += 1;
@@ -637,7 +637,7 @@ const Check = () => {
                 .doc(thirdPhoneNum + "A")
                 .set({ AuthState: false });
             Linking.openURL(
-                `sms:${thirdPhoneNum}${SMSDivider}body=IDatchLink.app 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
+                `sms:${thirdPhoneNum}${SMSDivider}body=https://idcatch.page.link/IDCatch 해당 링크를 이용해 IDCatch(비대면 성인인증 애플리케이션) 앱을 실행하여 가입 후 인증 바랍니다. 제한 시간은 10분입니다.`
             );
             const thirdInterval = BackgroundTimer.setInterval(() => {
                 thirdCount.current += 1;
