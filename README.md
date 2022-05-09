@@ -22,6 +22,7 @@
 <h2>Apple App Store Link</h2>
 
 <h2>Google Play Store Link</h2>
+https://play.google.com/store/apps/details?id=com.idcatch
 
 <h2>APP 화면</h2>
 
