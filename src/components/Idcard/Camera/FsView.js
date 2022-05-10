@@ -33,13 +33,25 @@ const FsView = ({ route }) => {
                 .get()
                 .then((data) => {
                     setLoadingExtract(false);
+                    const cryptoName = CryptoJS.AES.decrypt(
+                        data.data().name,
+                        0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
+                    );
+                    let originalName = cryptoName.toString(CryptoJS.enc.Utf8);
+                    const cryptoBirth = CryptoJS.AES.decrypt(
+                        data.data().birth_D,
+                        0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
+                    );
+                    let originalBirth_D = cryptoBirth.toString(CryptoJS.enc.Utf8);
+                    console.log(originalName);
+                    console.log(originalBirth_D);
                     if (extract.includes("주민등록증")) {
                         setExtractData(
                             `이름/주민등록번호: ${extract.split("증")[1].slice(1).split("(")[0]} ${extract.split("-")[0].slice(-6)}`
                         );
                         const name = extract.split("증")[1].slice(1).split("(")[0];
                         const birthD = extract.split("-")[0].slice(-6);
-                        if (data.data().UserName === name && data.data().Birthday === birthD) {
+                        if (originalName === name && originalBirth_D === birthD) {
                             setUserInfo(true);
                         } else {
                             setUserInfo(false);
@@ -50,7 +62,7 @@ const FsView = ({ route }) => {
                         setExtractData(`이름/주민등록번호: ${extract.split("-")[3].slice(3, -7)} ${extract.split("-")[3].slice(-6)}`);
                         const name = extract.split("-")[3].slice(3, -7);
                         const birthD = extract.split("-")[3].slice(-6);
-                        if (data.data().UserName === name && data.data().Birthday === birthD) {
+                        if (originalName === name && originalBirth_D === birthD) {
                             setUserInfo(true);
                         } else {
                             setUserInfo(false);

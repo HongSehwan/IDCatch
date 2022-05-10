@@ -7,9 +7,8 @@ import auth from "@react-native-firebase/auth";
 import Loading from "./Loading";
 
 const Iamport = ({ route, navigation }) => {
-    console.log(IMP.Certification);
     const userCode = "imp78021912";
-    // IMP.init(userCode)
+    // IMP.init(userCode);
     function callback(response) {
         navigation.replace("CertificationResult", response);
     }
@@ -18,8 +17,6 @@ const Iamport = ({ route, navigation }) => {
     const data = {
         merchant_uid: `mid_${new Date().getTime()}`,
         company: "IDCatch",
-        carrier: "SKT",
-        name: "홍길동",
         phone: 0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1],
         min_age: "19",
     };
