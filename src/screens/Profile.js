@@ -215,12 +215,21 @@ const Profile = () => {
         RNRestart.Restart();
     };
     const goToIamport = () => {
-        navigation.navigate("Stack", {
-            screen: "Iamport",
-            // params: {
-            //   ...fullData,
-            // },
-        });
+        db.collection("Auth")
+            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+            .get()
+            .then((data) => {
+                if (data.data().IDcardAuth) {
+                    dispatch(setMessageModal(true, "이미 성인인증 완료하였습니다."));
+                } else {
+                    navigation.navigate("Stack", {
+                        screen: "Iamport",
+                        // params: {
+                        //   ...fullData,
+                        // },
+                    });
+                }
+            });
     };
 
     useEffect(() => {
@@ -281,7 +290,7 @@ const Profile = () => {
                 ) : null}
             </Container>
             <AdMobContainer>
-                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-7375395662986319/4570214489" />
+                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-7375395662986319/2249891649" />
             </AdMobContainer>
         </>
     );

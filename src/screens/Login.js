@@ -278,7 +278,6 @@ const Login = () => {
                                         SelfAuth: false,
                                         CEOAuth: false,
                                         SimplePWEditState: false,
-                                        AuthState: false,
                                         Transform: false,
                                     });
                             } else {
