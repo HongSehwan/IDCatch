@@ -179,7 +179,9 @@ const Profile = () => {
             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
             .get()
             .then((data) => {
-                if (data.data().SelfAuth) {
+                if (data.data().IDcardAuth) {
+                    dispatch(setMessageModal(true, "이미 성인인증을 완료하였습니다."));
+                } else if (data.data().SelfAuth) {
                     navigation.navigate("Stack", {
                         screen: "IDcardAuth",
                     });
@@ -220,7 +222,7 @@ const Profile = () => {
             .get()
             .then((data) => {
                 if (data.data().IDcardAuth) {
-                    dispatch(setMessageModal(true, "이미 성인인증 완료하였습니다."));
+                    dispatch(setMessageModal(true, "이미 성인인증을 완료하였습니다."));
                 } else {
                     navigation.navigate("Stack", {
                         screen: "Iamport",
