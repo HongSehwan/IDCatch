@@ -226,6 +226,23 @@ const Login = () => {
                     setPhoneState(true);
                     passwordInput.current.focus();
                     setSendLoading(false);
+                    db.collection("Auth")
+                        .doc(phoneNum)
+                        .get()
+                        .then((data) => {
+                            if (data._data === undefined) {
+                                db.collection("Auth").doc(phoneNum).set({
+                                    Existing: true,
+                                    IDcardAuth: false,
+                                    SelfAuth: false,
+                                    CEOAuth: false,
+                                    SimplePWEditState: false,
+                                    Transform: false,
+                                });
+                            } else {
+                                return;
+                            }
+                        });
                 });
         } catch (e) {
             switch (e.code) {
@@ -256,34 +273,6 @@ const Login = () => {
             await auth()
                 .signInWithCredential(credential)
                 .then((user) => {
-                    db.collection("Auth")
-                        .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                        .get()
-                        .then((data) => {
-                            const cryptoPW = CryptoJS.AES.encrypt(
-                                token,
-                                0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "T"
-                            ).toString();
-                            db.collection("Auth")
-                                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "T")
-                                .set({
-                                    Token: cryptoPW,
-                                });
-                            if (data._data === undefined) {
-                                db.collection("Auth")
-                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                                    .set({
-                                        Existing: true,
-                                        IDcardAuth: false,
-                                        SelfAuth: false,
-                                        CEOAuth: false,
-                                        SimplePWEditState: false,
-                                        Transform: false,
-                                    });
-                            } else {
-                                return;
-                            }
-                        });
                     dispatch(setMessageModal(true, "로그인에 성공했습니다."));
                     setCheckLoading(false);
                     setPhoneState(false);

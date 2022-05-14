@@ -43,8 +43,6 @@ const FsView = ({ route }) => {
                         0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1]
                     );
                     let originalBirth_D = cryptoBirth.toString(CryptoJS.enc.Utf8);
-                    console.log(originalName);
-                    console.log(originalBirth_D);
                     if (extract.includes("주민등록증")) {
                         setExtractData(
                             `이름/주민등록번호: ${extract.split("증")[1].slice(1).split("(")[0]} ${extract.split("-")[0].slice(-6)}`
