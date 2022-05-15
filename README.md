@@ -20,8 +20,10 @@
 <img width=""406 alt="IDCatchStack" src="https://user-images.githubusercontent.com/85854164/165278410-334f88ae-9734-4f41-a733-ed0eec21ef66.png">
 
 <h2>Apple App Store Link</h2>
+앱 심사 중
 
 <h2>Google Play Store Link</h2>
+https://play.google.com/store/apps/details?id=com.idcatch
 
 <h2>APP 화면</h2>
 

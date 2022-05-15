@@ -47,7 +47,7 @@ const CEOCertification = ({ route }) => {
             if (b_Result === true) {
                 db.collection("Auth")
                     .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
-                    .update({ CEOAuth: true });
+                    .update({ CEOAuth: true, Transform: true });
                 RNRestart.Restart();
             }
         } catch (err) {
