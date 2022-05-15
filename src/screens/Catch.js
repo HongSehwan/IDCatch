@@ -853,7 +853,7 @@ const Check = () => {
                 </>
             )}
             <AdMobContainer>
-                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-7375395662986319/4570214489" />
+                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-7375395662986319/2249891649" />
             </AdMobContainer>
         </>
     );
