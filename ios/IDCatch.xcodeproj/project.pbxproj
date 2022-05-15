@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0856A2712825101B000E3FB2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0856A2702825101B000E3FB2 /* GoogleService-Info.plist */; };
+		08196583283159D8006C85B5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		085CEDCF28002F010058E96B /* project.pbxproj in Resources */ = {isa = PBXBuildFile; fileRef = 085CEDCE28002F000058E96B /* project.pbxproj */; };
 		08857F5427F091A0006922C7 /* Restart.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 08857F5327F091A0006922C7 /* Restart.xcworkspace */; };
 		08857F6D27F46F37006922C7 /* RNCCameraroll.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 08857F6C27F46F36006922C7 /* RNCCameraroll.xcworkspace */; };
 		08857F8627FD3B42006922C7 /* project.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 08857F8527FD3B42006922C7 /* project.xcworkspace */; };
+		08AB688C28316B9C00AA1666 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08AB688B28316B9C00AA1666 /* GoogleService-Info.plist */; };
 		08C2CCC8281CD91200122AE2 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		08C43D372812F22A00D34871 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C43D362812F22900D34871 /* SplashScreen.storyboard */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		96905EF65AED1B983A6B3ABC /* libPods-IDCatch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-IDCatch.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
@@ -24,12 +24,12 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		0856A2702825101B000E3FB2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../IOS Apple key/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0856A272282515BC000E3FB2 /* IDCatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IDCatch.entitlements; path = IDCatch/IDCatch.entitlements; sourceTree = "<group>"; };
 		085CEDCE28002F000058E96B /* project.pbxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.pbxproject; name = project.pbxproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj/project.pbxproj"; sourceTree = "<group>"; };
 		08857F5327F091A0006922C7 /* Restart.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = Restart.xcworkspace; path = "../node_modules/react-native-restart/ios/Restart.xcworkspace"; sourceTree = "<group>"; };
 		08857F6C27F46F36006922C7 /* RNCCameraroll.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = RNCCameraroll.xcworkspace; path = "../node_modules/@react-native-community/cameraroll/ios/RNCCameraroll.xcworkspace"; sourceTree = "<group>"; };
 		08857F8527FD3B42006922C7 /* project.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = project.xcworkspace; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj/project.xcworkspace"; sourceTree = "<group>"; };
+		08AB688B28316B9C00AA1666 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Download/IOS 파이어베이스 파일/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08C43D362812F22900D34871 /* SplashScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* IDCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IDCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = IDCatch/AppDelegate.h; sourceTree = "<group>"; };
@@ -63,6 +63,7 @@
 		13B07FAE1A68108700A75B9A /* IDCatch */ = {
 			isa = PBXGroup;
 			children = (
+				08AB688B28316B9C00AA1666 /* GoogleService-Info.plist */,
 				0856A272282515BC000E3FB2 /* IDCatch.entitlements */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -99,7 +100,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				0856A2702825101B000E3FB2 /* GoogleService-Info.plist */,
 				08C43D362812F22900D34871 /* SplashScreen.storyboard */,
 				13B07FAE1A68108700A75B9A /* IDCatch */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -222,7 +222,7 @@
 			files = (
 				08C2CCC8281CD91200122AE2 /* main.jsbundle in Resources */,
 				08857F6D27F46F37006922C7 /* RNCCameraroll.xcworkspace in Resources */,
-				0856A2712825101B000E3FB2 /* GoogleService-Info.plist in Resources */,
+				08AB688C28316B9C00AA1666 /* GoogleService-Info.plist in Resources */,
 				08C43D372812F22A00D34871 /* SplashScreen.storyboard in Resources */,
 				085CEDCF28002F010058E96B /* project.pbxproj in Resources */,
 				08857F5427F091A0006922C7 /* Restart.xcworkspace in Resources */,
@@ -383,7 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				08196583283159D8006C85B5 /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,14 +528,14 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.name.IDCatch-dev";
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.IDCatch;
 				PRODUCT_NAME = IDCatch;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -680,14 +680,14 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.name.IDCatch-dev";
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.IDCatch;
 				PRODUCT_NAME = IDCatch;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -774,14 +774,14 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.name.IDCatch-dev";
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.IDCatch;
 				PRODUCT_NAME = IDCatch;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -863,14 +863,14 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.name.IDCatch-dev";
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.IDCatch;
 				PRODUCT_NAME = IDCatch;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
