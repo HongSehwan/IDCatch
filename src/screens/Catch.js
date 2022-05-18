@@ -10,9 +10,9 @@ import MessageModal from "../components/MessageModal";
 import { BLACK_COLOR, GREEN_COLOR } from "../color";
 import { setMessageModal } from "../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
-import { AdMobBanner } from "expo-ads-admob";
 import LocalNotification from "../components/notification/Notification";
 import SplashScreen from "react-native-splash-screen";
+import AdScreen from "../components/AdScreen";
 
 const CheckContainer = styled.View`
     flex: 1;
@@ -223,11 +223,6 @@ const SendView = styled.View`
 
 const SendText = styled.Text`
     color: white;
-`;
-
-const AdMobContainer = styled.View`
-    align-items: center;
-    justify-content: center;
 `;
 
 const HistoryBtn = styled.TouchableOpacity`
@@ -852,9 +847,7 @@ const Check = () => {
                     </Container>
                 </>
             )}
-            <AdMobContainer>
-                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-7375395662986319/2249891649" />
-            </AdMobContainer>
+            <AdScreen />
         </>
     );
 };
