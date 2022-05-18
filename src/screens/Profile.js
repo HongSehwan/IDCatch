@@ -9,7 +9,7 @@ import RNRestart from "react-native-restart";
 import MessageModal from "../components/MessageModal";
 import { useSelector, useDispatch } from "react-redux";
 import { setMessageModal } from "../redux/actions";
-import { AdMobBanner } from "expo-ads-admob";
+import AdScreen from "../components/AdScreen";
 
 const Container = styled.View`
     flex: 1;
@@ -160,11 +160,6 @@ const NText = styled.Text`
     font-size: 13px;
 `;
 
-const AdMobContainer = styled.View`
-    align-items: center;
-    justify-content: center;
-`;
-
 const Profile = () => {
     const dispatch = useDispatch();
     const db = firebase.firestore();
@@ -291,9 +286,7 @@ const Profile = () => {
                     </>
                 ) : null}
             </Container>
-            <AdMobContainer>
-                <AdMobBanner bannerSize="smartBannerPortrait" adUnitID="ca-app-pub-7375395662986319/2249891649" />
-            </AdMobContainer>
+            <AdScreen />
         </>
     );
 };
