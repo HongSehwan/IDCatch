@@ -240,7 +240,7 @@ const Profile = () => {
                     });
                 } else {
                     if (data.data().IDcardAuth) {
-                        dispatch(setMessageModal(true, "이미 성인인증을 완료하였습니다."));
+                        return dispatch(setMessageModal(true, "이미 성인인증을 완료하였습니다."));
                     } else {
                         navigation.navigate("Stack", {
                             screen: "Iamport",
