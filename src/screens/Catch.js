@@ -280,98 +280,104 @@ const Check = () => {
             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
             .get()
             .then((data) => {
-                if (!data.data().SelfAuth || !data.data().IDcardAuth) {
-                    return dispatch(setMessageModal(true, "성인 인증(본인 인증 / 신분증 인증)이 필요합니다."));
+                if (data._data === undefined) {
+                    dispatch(setMessageModal(true, "성인 인증(본인 인증 / 신분증 인증)이 필요합니다."));
                 } else {
-                    db.collection("Auth")
-                        .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
-                        .update({ AuthState: false });
-                    TouchID.authenticate("description", optionalConfigObject)
-                        .then((success) => {
-                            dispatch(setMessageModal(true, "간편 인증을 완료했습니다."));
-                            db.collection("Auth")
-                                .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
-                                .update({ AuthState: true });
-                            // count.current = 0;
-                            // const intervalId = BackgroundTimer.setInterval(() => {
-                            //     count.current += 1;
-                            //     console.log(count.current);
-                            //     if (count.current >= 25) {
-                            //         db.collection("Auth")
-                            //             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
-                            //             .update({ AuthState: false });
-                            //         BackgroundTimer.clearInterval(intervalId);
-                            //         count.current = 0;
-                            //     }
-                            // }, 1000);
-                        })
-                        .catch((error) => {
-                            switch (error.name) {
-                                case "LAErrorTouchIDNotEnrolled": {
-                                    dispatch(setMessageModal(true, "등록된 지문이 없습니다. 휴대폰 지문 등록 바랍니다."));
+                    if (!data.data().SelfAuth || !data.data().IDcardAuth) {
+                        return dispatch(setMessageModal(true, "성인 인증(본인 인증 / 신분증 인증)이 필요합니다."));
+                    } else {
+                        db.collection("Auth")
+                            .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
+                            .update({ AuthState: false });
+                        TouchID.authenticate("description", optionalConfigObject)
+                            .then((success) => {
+                                dispatch(setMessageModal(true, "간편 인증을 완료했습니다."));
+                                db.collection("Auth")
+                                    .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
+                                    .update({ AuthState: true });
+                                // count.current = 0;
+                                // const intervalId = BackgroundTimer.setInterval(() => {
+                                //     count.current += 1;
+                                //     console.log(count.current);
+                                //     if (count.current >= 25) {
+                                //         db.collection("Auth")
+                                //             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1] + "A")
+                                //             .update({ AuthState: false });
+                                //         BackgroundTimer.clearInterval(intervalId);
+                                //         count.current = 0;
+                                //     }
+                                // }, 1000);
+                            })
+                            .catch((error) => {
+                                switch (error.name) {
+                                    case "LAErrorTouchIDNotEnrolled": {
+                                        dispatch(setMessageModal(true, "등록된 지문이 없습니다. 휴대폰 지문 등록 바랍니다."));
+                                    }
                                 }
-                            }
-                            switch (error.name) {
-                                case "LAErrorUserCancel": {
-                                    dispatch(setMessageModal(true, "지문 인증을 취소했습니다."));
+                                switch (error.name) {
+                                    case "LAErrorUserCancel": {
+                                        dispatch(setMessageModal(true, "지문 인증을 취소했습니다."));
+                                    }
                                 }
-                            }
-                            switch (error.name) {
-                                case "LAErrorSystemCancel": {
-                                    dispatch(setMessageModal(true, "시스템에서 인증을 취소했습니다."));
+                                switch (error.name) {
+                                    case "LAErrorSystemCancel": {
+                                        dispatch(setMessageModal(true, "시스템에서 인증을 취소했습니다."));
+                                    }
                                 }
-                            }
-                            switch (error.name) {
-                                case "LAErrorTouchIDNotAvailable": {
-                                    dispatch(setMessageModal(true, "지문 인식 실행 오류입니다."));
+                                switch (error.name) {
+                                    case "LAErrorTouchIDNotAvailable": {
+                                        dispatch(setMessageModal(true, "지문 인식 실행 오류입니다."));
+                                    }
                                 }
-                            }
-                            switch (error.name) {
-                                case "LAErrorAuthenticationFailed": {
-                                    dispatch(setMessageModal(true, "유효한 자격 증명을 제공하지 못했습니다. 잠시후 다시 시도해주세요."));
+                                switch (error.name) {
+                                    case "LAErrorAuthenticationFailed": {
+                                        dispatch(
+                                            setMessageModal(true, "유효한 자격 증명을 제공하지 못했습니다. 잠시후 다시 시도해주세요.")
+                                        );
+                                    }
                                 }
-                            }
-                            switch (error.name) {
-                                case "LAErrorPasscodeNotSet": {
-                                    dispatch(setMessageModal(true, "암호가 설정되어 있지 않아 인증을 시작할 수 없습니다."));
+                                switch (error.name) {
+                                    case "LAErrorPasscodeNotSet": {
+                                        dispatch(setMessageModal(true, "암호가 설정되어 있지 않아 인증을 시작할 수 없습니다."));
+                                    }
                                 }
-                            }
-                            switch (error.name) {
-                                case "LAErrorTouchIDLockout": {
-                                    dispatch(setMessageModal(true, "실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요."));
+                                switch (error.name) {
+                                    case "LAErrorTouchIDLockout": {
+                                        dispatch(setMessageModal(true, "실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요."));
+                                    }
                                 }
-                            }
-                            switch (error.name) {
-                                case "RCTTouchIDNotSupported": {
-                                    dispatch(setMessageModal(true, "지문 인식을 사용할 수 없는 기기입니다."));
+                                switch (error.name) {
+                                    case "RCTTouchIDNotSupported": {
+                                        dispatch(setMessageModal(true, "지문 인식을 사용할 수 없는 기기입니다."));
+                                    }
                                 }
-                            }
-                            switch (error.name) {
-                                case "LAErrorUserFallback": {
-                                    dispatch(setMessageModal(true, "대체 비밀번호 입력을 선택하였습니다."));
+                                switch (error.name) {
+                                    case "LAErrorUserFallback": {
+                                        dispatch(setMessageModal(true, "대체 비밀번호 입력을 선택하였습니다."));
+                                    }
                                 }
-                            }
-                            switch (error.details) {
-                                case "cancelled": {
-                                    dispatch(setMessageModal(true, "지문 인증을 취소했습니다."));
+                                switch (error.details) {
+                                    case "cancelled": {
+                                        dispatch(setMessageModal(true, "지문 인증을 취소했습니다."));
+                                    }
                                 }
-                            }
-                            switch (error.details) {
-                                case "failed": {
-                                    dispatch(setMessageModal(true, "지문 인증에 실패했습니다."));
+                                switch (error.details) {
+                                    case "failed": {
+                                        dispatch(setMessageModal(true, "지문 인증에 실패했습니다."));
+                                    }
                                 }
-                            }
-                            switch (error.details) {
-                                case "Too many attempts. Try again Later.": {
-                                    dispatch(setMessageModal(true, "실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요."));
+                                switch (error.details) {
+                                    case "Too many attempts. Try again Later.": {
+                                        dispatch(setMessageModal(true, "실패 횟수가 초과되었습니다. 잠시후 다시 시도해주세요."));
+                                    }
                                 }
-                            }
-                            switch (error.details) {
-                                case "Too many attempts. Fingerprint sensor disabled.": {
-                                    dispatch(setMessageModal(true, "시도 횟수가 너무 많아 지문 센서가 비활성화 되었습니다."));
+                                switch (error.details) {
+                                    case "Too many attempts. Fingerprint sensor disabled.": {
+                                        dispatch(setMessageModal(true, "시도 횟수가 너무 많아 지문 센서가 비활성화 되었습니다."));
+                                    }
                                 }
-                            }
-                        });
+                            });
+                    }
                 }
             });
     };
@@ -380,12 +386,16 @@ const Check = () => {
             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
             .get()
             .then((data) => {
-                if (!data.data().SelfAuth || !data.data().IDcardAuth) {
-                    return dispatch(setMessageModal(true, "성인 인증(본인 인증 / 신분증 인증)이 필요합니다."));
+                if (data._data === undefined) {
+                    dispatch(setMessageModal(true, "성인 인증(본인 인증 / 신분증 인증)이 필요합니다."));
                 } else {
-                    navigation.navigate("Stack", {
-                        screen: "Password",
-                    });
+                    if (!data.data().SelfAuth || !data.data().IDcardAuth) {
+                        return dispatch(setMessageModal(true, "성인 인증(본인 인증 / 신분증 인증)이 필요합니다."));
+                    } else {
+                        navigation.navigate("Stack", {
+                            screen: "Password",
+                        });
+                    }
                 }
             });
     };
