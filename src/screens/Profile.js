@@ -174,14 +174,18 @@ const Profile = () => {
             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
             .get()
             .then((data) => {
-                if (data.data().IDcardAuth) {
-                    dispatch(setMessageModal(true, "이미 성인인증을 완료하였습니다."));
-                } else if (data.data().SelfAuth) {
-                    navigation.navigate("Stack", {
-                        screen: "IDcardAuth",
-                    });
-                } else {
+                if (data._data === undefined) {
                     dispatch(setMessageModal(true, "본인인증 완료 후 가능합니다."));
+                } else {
+                    if (data.data().IDcardAuth) {
+                        dispatch(setMessageModal(true, "이미 성인인증을 완료하였습니다."));
+                    } else if (data.data().SelfAuth) {
+                        navigation.navigate("Stack", {
+                            screen: "IDcardAuth",
+                        });
+                    } else {
+                        dispatch(setMessageModal(true, "본인인증 완료 후 가능합니다."));
+                    }
                 }
             });
     };
@@ -190,18 +194,22 @@ const Profile = () => {
             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
             .get()
             .then((data) => {
-                if (data.data().SelfAuth && data.data().IDcardAuth) {
-                    if (certification === true) {
-                        dispatch(
-                            setMessageModal(true, "이미 사장님 인증을 완료했습니다. 인증 삭제 요청 시 이용 문의 메일로 문의 바랍니다.")
-                        );
-                    } else {
-                        navigation.navigate("Stack", {
-                            screen: "CEOAuth",
-                        });
-                    }
-                } else {
+                if (data._data === undefined) {
                     dispatch(setMessageModal(true, "성인인증 완료 후 가능합니다."));
+                } else {
+                    if (data.data().SelfAuth && data.data().IDcardAuth) {
+                        if (certification === true) {
+                            dispatch(
+                                setMessageModal(true, "이미 사장님 인증을 완료했습니다. 인증 삭제 요청 시 이용 문의 메일로 문의 바랍니다.")
+                            );
+                        } else {
+                            navigation.navigate("Stack", {
+                                screen: "CEOAuth",
+                            });
+                        }
+                    } else {
+                        dispatch(setMessageModal(true, "성인인증 완료 후 가능합니다."));
+                    }
                 }
             });
     };
@@ -216,15 +224,26 @@ const Profile = () => {
             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
             .get()
             .then((data) => {
-                if (data.data().IDcardAuth) {
-                    dispatch(setMessageModal(true, "이미 성인인증을 완료하였습니다."));
-                } else {
+                if (data._data === undefined) {
+                    db.collection("Auth").doc(phoneNum).set({
+                        Existing: true,
+                        IDcardAuth: false,
+                        SelfAuth: false,
+                        CEOAuth: false,
+                        SimplePWEditState: false,
+                        Transform: false,
+                    });
                     navigation.navigate("Stack", {
                         screen: "Iamport",
-                        // params: {
-                        //   ...fullData,
-                        // },
                     });
+                } else {
+                    if (data.data().IDcardAuth) {
+                        dispatch(setMessageModal(true, "이미 성인인증을 완료하였습니다."));
+                    } else {
+                        navigation.navigate("Stack", {
+                            screen: "Iamport",
+                        });
+                    }
                 }
             });
     };
@@ -234,8 +253,10 @@ const Profile = () => {
             .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
             .get()
             .then((data) => {
-                setCertification(data.data().CEOAuth);
-                setTransformResult(data.data().Transform);
+                if (data._data !== undefined) {
+                    setCertification(data.data().CEOAuth);
+                    setTransformResult(data.data().Transform);
+                }
             });
     }, []);
 
