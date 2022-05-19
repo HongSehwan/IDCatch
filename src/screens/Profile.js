@@ -225,14 +225,16 @@ const Profile = () => {
             .get()
             .then((data) => {
                 if (data._data === undefined) {
-                    db.collection("Auth").doc(phoneNum).set({
-                        Existing: true,
-                        IDcardAuth: false,
-                        SelfAuth: false,
-                        CEOAuth: false,
-                        SimplePWEditState: false,
-                        Transform: false,
-                    });
+                    db.collection("Auth")
+                        .doc(0 + auth().currentUser?.providerData[0].phoneNumber.split("+82")[1])
+                        .set({
+                            Existing: true,
+                            IDcardAuth: false,
+                            SelfAuth: false,
+                            CEOAuth: false,
+                            SimplePWEditState: false,
+                            Transform: false,
+                        });
                     navigation.navigate("Stack", {
                         screen: "Iamport",
                     });
