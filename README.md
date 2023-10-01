@@ -21,7 +21,7 @@
 
 <h2>Google Play Store Link</h2>
 
-~~https://play.google.com/store/apps/details?id=com.idcatch~~
+~~https://play.google.com/store/apps/details?id=com.idcatch~~ (앱 배포 중단)
 
 <h2>APP 화면</h2>
 
