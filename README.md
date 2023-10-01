@@ -14,16 +14,14 @@
 * 배달 주문 시 고객에게 인증 SMS 링크 발송
 * 고객 성인 인증 완료 시 인증 결과 실시간 알림 기능
 * 동시에 다수 고객에게 인증 링크 발송 및 실시간 인증 결과 확인
-* 놓친 알림은 History에서 확인
+* 놓친 알림은 History에서 확인 
 
 <h2>기술 스택</h2>
 <img width=""406 alt="IDCatchStack" src="https://user-images.githubusercontent.com/85854164/165278410-334f88ae-9734-4f41-a733-ed0eec21ef66.png">
 
-<h2>Apple App Store Link</h2>
-앱 심사 중
-
 <h2>Google Play Store Link</h2>
-https://play.google.com/store/apps/details?id=com.idcatch
+
+~~https://play.google.com/store/apps/details?id=com.idcatch~~
 
 <h2>APP 화면</h2>
 
